@@ -1,17 +1,18 @@
-var HistoryData = function () {
-//航段飞行时间表单参数
-  var flyDataForm = {
+var PredictionData = function () {
+  /*
+  * 表单查询对象
+  * */
+  var DataForm = {
     startDate:'',
     endDate:'',
     currentType:'',
+    currentStatus:'',
     airportName:''
   }
-  //终端区航路点表单数据
-  var terminalDataForm = {
-    startDate:'',
-    endDate:'',
-    currentType:'',
-    airportName:''
+  var ipHost = 'http://192.168.243.191:8080/module-trajectoryCorrect-service/trajectory/correct/'
+  var searchUrl = {
+    terMinalTime:ipHost,
+    terMinalHeight:ipHost+'point'
   }
   // 初始化组件
   var initComponent = function () {
@@ -36,82 +37,69 @@ var HistoryData = function () {
    * */
 
   var initNavTabEvent = function () {
-    $('.nav-history-data-statistics').on('click', function () {
-      resizeToFitContainer();
-      hideConditions();
+    //导航栏
+
+    var nav = $('#nav');
+    //航段飞行时间误差统计
+    $('.nav_monitor').on('click',function () {
+      $('li',nav).removeClass('active');
+      $(this).addClass('active');
+      if($('.header_name').text() == '航段飞行时间误差统计'){
+        return
+      }else{
+        $('.header_name').text('航段飞行时间误差统计')
+      }
+    });
+    // 终端区航路点过点时间统计
+    $('.nav-history-data-statistics').on('click',function () {
+        if($('.header_name').text() == '航段飞行时间误差统计'){
+          $('.header_name').text('终端区航路点过点时间统计')
+        }else{
+          return
+        }
+      $('li',nav).removeClass('active');
+      $(this).addClass('active');
 
     });
-    $('.nav_monitor').on('click', function () {
-      resizeToFitContainer();
-      hideConditions();
-    });
-
-    $('.fly_dep').on('click',function () {
+    $('.dep').on('click',function () {
       if($(this).hasClass('selected')){
-        $('.fly_arr').removeClass('selected')
+        $('.arr').removeClass('selected')
       }else{
         $(this).addClass('selected')
-        $('.fly_arr').removeClass('selected')
+        $('.arr').removeClass('selected')
       }
     });
-    $('.fly_arr').on('click',function () {
+    $('.arr').on('click',function () {
       if ($(this).hasClass('selected')) {
-        $('.fly_dep').removeClass('selected')
+        $('.dep').removeClass('selected')
       } else {
         $(this).addClass('selected')
-        $('.fly_dep').removeClass('selected')
+        $('.dep').removeClass('selected')
       }
     });
-    $('.ter_dep').on('click',function () {
-        if($(this).hasClass('selected')){
-          $('ter_arr').removeClass('selected')
-        }else{
-          $(this).addClass('selected')
-          $('.ter_arr').removeClass('selected')
-        }
-      });
-    $('.ter_arr').on('click',function () {
-        if($(this).hasClass('selected')){
-          $('.ter_dep').removeClass('selected')
-        }else{
-          $(this).addClass('selected')
-          $('.ter_dep').removeClass('selected')
-        }
-  });
   }
   /**判断机场状态*/
   var airportStatus = function () {
-    if($(".fly_time").is(":visible")){
-      if($('.fly_dep').hasClass('selected')){
+      if($('.dep').hasClass('selected')){
         return '起飞机场'
       }else{
         return '降落机场'
       }
-    }
-    if($(".pass_point").is(":visible")){
-      if($('.ter_dep').hasClass('selected')){
-        return '起飞机场'
-      }else{
-        return '降落机场'
-      }
-    }
   }
   /*
   * 获取表单数据
   * */
   var getFormData = function (formObj) {
     if($(".fly_time").is(":visible")){
-      formObj.startDate = $(".fly_start_time").val();
-      formObj.endDate = $(".fly_end_time").val();
-      formObj.currentType = airportStatus();
-      formObj.airportName = $(".fly_airport_Name").val().toUpperCase();
-
-    }
-    if($(".pass_point").is(":visible")){
-      formObj.startDate = $(".terminal_start_time").val();
-      formObj.endDate = $(".terminal_end_time").val();
-      formObj.currentType = airportStatus();
-      formObj.airportName = $(".terminal_flight_name").val().toUpperCase();
+      formObj.startDate = $(".start-date-input").val().replace(/(^\s*)|(\s*$)/g, "");
+      formObj.endDate = $(".flight-end-date").val().replace(/(^\s*)|(\s*$)/g, "");
+      formObj.currentType = airportStatus().replace(/(^\s*)|(\s*$)/g, "");
+      formObj.airportName = $(".fly_airport_Name").val().toUpperCase().replace(/(^\s*)|(\s*$)/g, "");
+      if(formObj.currentType == '起飞机场'){
+        formObj.currentStatus = 'D'
+      }else{
+        formObj.currentStatus = 'A'
+      }
     }
     return formObj;
   }
@@ -119,21 +107,17 @@ var HistoryData = function () {
    * 提交按钮事件
    * */
   var initSubmitEvent = function () {
-    $('.flight_search').on('click', function () {
+    $('.search_data').on('click', function () {
       $(".no-datas-tip").hide()
-      var config = tableDataConfig();
-      initGridTable(config.flyErrorTableDataConfig,'fly_error_grid_table')
-      getFormData(flyDataForm);
+      getFormData(DataForm);
       // 处理表单提交
-      handleSubmitForm(flyDataForm)
+      handleSubmitForm(DataForm)
+      if($('.header_name').text() == '航段飞行时间误差统计'){
+        searchData(DataForm,searchUrl.terMinalTime)
+      }else{
+        searchData(DataForm,searchUrl.terMinalHeight)
+      }
 
-    });
-    $('.treminal_search').on('click', function () {
-      var config = tableDataConfig();
-      initGridTable(config.flyErrorTableDataConfig,'terminal_table')
-      getFormData(terminalDataForm);
-      // 处理表单提交
-      handleSubmitForm(terminalDataForm)
     });
   };
   /**
@@ -292,11 +276,11 @@ var HistoryData = function () {
   /**
    * 数据查询
    * */
-  var searchData = function (str) {
+  var searchData = function (formData,searchUrl) {
     var loading = Ladda.create($('.history-data-btn')[0]);
     loading.start();
     $('.form-wrap').addClass('no-event');
-    var url = submitUrl + str;
+    var url = searchUrl +''+formData.startDate+'/' +''+formData.endDate+'/'+''+formData.airportName+'/'+''+formData.currentStatus+'';
     $.ajax({
       url: url,
       type: 'GET',
@@ -307,11 +291,14 @@ var HistoryData = function () {
           //提取数据
           var time = data.generatetime;
           var result = data.hisData;
+          console.log(result);
           // 更新数据时间
           if ($.isValidVariable(time)) {
             // 更新数据时间
             updateGeneratetime(time);
           }
+          // var config = tableDataConfig();
+          // initGridTable(config.flyErrorTableDataConfig,'flight_grid_table')
           // 若数据为空
           if (!$.isValidObject(result)) {
             //显示提示
@@ -388,18 +375,10 @@ var HistoryData = function () {
     var body = $('body').height();
     var head = $('.headbar').outerHeight() + parseInt($('.headbar').css('marginBottom'));
     var nav = $('.nav-menu').outerHeight() + parseInt($('.nav-menu').css('marginBottom'));
-    if($(".fly_time").is(":visible")){
-      var innerNav = $($('.history-data-title')[0]).outerHeight() + parseInt($('.history-data-title').css('marginBottom'));
-      var form = $($('.form-wrap')[0]).outerHeight() + parseInt($('.form-wrap').css('marginBottom'));
+      var innerNav = $('.history-data-title').outerHeight() + parseInt($('.history-data-title').css('marginBottom'));
+      var form = $('.form-wrap').outerHeight() + parseInt($('.form-wrap').css('marginBottom'));
       var wrapHeight = body - head - nav - innerNav - form - 20;
-      var chartHeight = wrapHeight - $($('.conditions')[0]).outerHeight();
-    }
-    if($(".pass_point").is("visible")){
-      var innerNav = $($('.history-data-title')[1]).outerHeight() + parseInt($('.history-data-title').css('marginBottom'));
-      var form = $($('.form-wrap')[1]).outerHeight() + parseInt($('.form-wrap').css('marginBottom'));
-      var wrapHeight = body - head - nav - innerNav - form - 20;
-      var chartHeight = wrapHeight - $($('.conditions')[1]).outerHeight();
-    }
+      var chartHeight = wrapHeight - $('.conditions').outerHeight();
     $('.charts-wrap').height(wrapHeight);
     $('.echart-row').height(chartHeight);
   };
@@ -443,5 +422,5 @@ var HistoryData = function () {
 }();
 
 $(document).ready(function () {
-  HistoryData.init();
+  PredictionData.init();
 })

@@ -7,9 +7,6 @@
     padding-bottom: 1rem;
     border-bottom: 1px solid #dddddd;
 }
-.history-data-statistics .history-data-btn{
-    margin-top: 1.8rem;
-}
 .history-data-statistics .box{
     margin-bottom: 0;
 }
@@ -82,9 +79,6 @@
     padding-bottom: 1rem;
     border-bottom: 1px solid #dddddd;
 }
-.fly_time .history-data-btn{
-    margin-top: 1.8rem;
-}
 .fly_time .box{
     margin-bottom: 0;
     overflow: hidden;
@@ -147,6 +141,16 @@
 .fly_time .conditions-content > span.conditions-unit {
     border: none;
     box-shadow: none;
+}
+.fly_time .form-group{
+    margin-right: 10px;
+}
+.pass_point .form-group{
+    margin-right: 10px;
+}
+.fly_time .cy-pad-hor-s{
+    font-weight: normal;
+    color: #093857;
 }
 .airport_status{
     height: 56px;
@@ -270,7 +274,7 @@
 .no-event {
     pointer-events: none !important;
 }
-.date-datepicker .form-control[readonly] {
+.flight-end-date[readonly] {
     background: #fff;
 }
 .flight_name{

@@ -227,11 +227,85 @@ var tableDataConfig = function () {
     }
     var terminalPointDataConfigTop = {
         colName:['起飞机场','终端区航路点','SCH中位数时间差','FPL中位数时间差','DEP中位数时间差','DYN10中位数时间差','DYN20中位数时间差','SCH平均时间差','FPL平均高度差','DEP平均高度差','DYN10平均高度差','DYN20平均高度差'],
-        colModel:[{},{},{},{}]
+        colModel:[{
+            name:'depAirport',
+            index:'depAirport'
+        },{
+            name:'terPoint',
+            index:'terPoint'
+        },{
+            name:'schAvgHLevel',
+            index:'schAvgHLevel'
+        },{
+            name:'fplAvgHLevel',
+            index:'fplAvgHLevel'
+        },{
+            name:'depAvgHLevel',
+            index:'depAvgHLevel'
+        },{
+            name:'dyn10AvgHLevel',
+            index:'dyn10AvgHLevel'
+        },{
+            name:'dyn20AvgHLevel',
+            index:'dyn20AvgHLevel'
+        }]
     }
     var terminalPointDataConfigDown = {
         colName:['起飞机场','终端区航路点','SCH中位数高度差','FPL中位数高度差','DEP中位数高度差','DYN10中位数高度差','DYN20中位数高度差','SCH平均高度差','FPL平均高度差','DEP平均高度差','DYN10平均高度差','DYN20平均高度差'],
-        colModel:[]
+        colModel:[{
+            name:'depAirport',
+            index:'depAirport'
+        },{
+            name:'terPoint',
+            index:'terPoint'
+        }
+            ,{
+                name:'schAvgDis',
+                index:'schAvgDis'
+            },{
+                name:'fplAvgDis',
+                index:'fplAvgDis'
+            },{
+                name:'depAvgDis',
+                index:'depAvgDis'
+            },{
+                name:'dyn10mAvgDis',
+                index:'dyn10mAvgDis'
+            },{
+                name:'dyn20mAvgDis',
+                index:'dyn20mAvgDis'
+            },{
+                name:'schMeHLevel',
+                index:'schMeHLevel'
+            },{
+                name:'fplMeHLevel',
+                index:'fplMeHLevel'
+            },{
+                name:'depMeHLevel',
+                index:'depMeHLevel'
+            },{
+                name:'dyn10MeHLevel',
+                index:'dyn10MeHLevel'
+            },{
+                name:'dyn20MeHLevel',
+                index:'dyn20MeHLevel'
+            },{
+                name:'schMeDis',
+                index:'schMeDis'
+            },{
+                name:'fplMeDis',
+                index:'fplMeDis'
+            },{
+                name:'depMeDis',
+                index:'depMeDis'
+            },{
+                name:'dyn10mMeDis',
+                index:'dyn10mMeDis'
+            },{
+                name:'dyn20mMeDis',
+                index:'dyn20mMeDis'
+            }
+        ]
     }
     var flyDetailDataConfig = {
         colName:['ID','航班号','机型','实际飞行时间','SHC飞行时间','FPL飞行时间','DEP飞行时间','DYN10飞行时间','DYN20飞行时间'],
@@ -359,7 +433,55 @@ var tableDataConfig = function () {
     }
     var terminalDetailDataConfig = {
         colName:['ID','航班号','机型','实际过点时间','SHC过点时间','FPL过点时间','DEP过点时间','DYN10过点时间','DYN20过点时间','实际过点高度','SHC过点高度','FPL过点高度','DEP过点高度','DYN10过点高度','DYN20过点高度'],
-        colModel:[],
+        colModel:[
+            {
+                name:'id',
+                index:'id',
+                frozen : true
+            },{
+                name:'flightId',
+                index:'flightId'
+            },{
+                name:'aricraftType',
+                index:'aricraftType'
+            },{
+                name:'rPastTime',
+                index:'rPastTime'
+            },{
+                name:'schPastTime',
+                index:'schPastTime'
+            },{
+                name:'fplPastTime',
+                index:'fplPastTime'
+            },{
+                name:'depPastTime',
+                index:'depPastTime'
+            },{
+                name:'dyn10PastTime',
+                index:'dyn10PastTime'
+            },{
+                name:'dyn20PastTime',
+                index:'dyn20PastTime'
+            },{
+                name:'rPasthlevel',
+                index:'rPasthlevel'
+            },{
+                name:'schhlevel',
+                index:'schhlevel'
+            },{
+                name:'fplhlevel',
+                index:'fplhlevel'
+            },{
+                name:'dephlevel',
+                index:'dephlevel'
+            },{
+                name:'dyn10hlevel',
+                index:'dyn10hlevel'
+            },{
+                name:'dyn20hlevel',
+                index:'dyn20hlevel'
+            }
+        ],
         data:[]
     }
     /**
