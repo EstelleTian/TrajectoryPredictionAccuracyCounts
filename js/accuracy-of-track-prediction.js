@@ -115,13 +115,13 @@ var PredictionData = function () {
       if($('.header_name').text() == '航段飞行时间误差统计'){
         var tableDataConfigs = tableDataConfig()
         dataConvert(tableDataConfigs.data,tableDataConfigs,'flyErrorTableDataConfig','flyDetailDataConfig')
-        initGridTable(tableDataConfigs.flyErrorTableDataConfig,'flyErrorTableDataConfig')
+        initGridTable(tableDataConfigs.flyErrorTableDataConfig,'flight_grid_table')
         //searchData(DataForm,searchUrl.terMinalTime)
       }else{
         var tableDataConfigs = tableDataConfig()
         dataConvert(tableDataConfigs.data,tableDataConfigs,'terminalPointDataConfigTop','terminalDetailDataConfig')
         dataConvert(tableDataConfigs.data,tableDataConfigs,'terminalPointDataConfigDown','terminalDetailDataConfig')
-        initGridTable(tableDataConfigs.flyErrorTableDataConfig,'flyErrorTableDataConfig')
+        initGridTable(tableDataConfigs.flyErrorTableDataConfig,'flight_grid_table')
         //searchData(DataForm,searchUrl.terMinalHeight)
       }
 
@@ -189,7 +189,8 @@ var PredictionData = function () {
             mtop:180
           }
           BootstrapDialogFactory.dialog(option);
-          initGridTable(config,rowid+'table')
+          var tableDataConfig = tableDataConfig();
+          initGridTable(tableDataConfig.flyDetailDataConfig[contents],rowid+'table')
         }
       }
     })

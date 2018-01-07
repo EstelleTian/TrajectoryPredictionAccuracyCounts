@@ -374,6 +374,8 @@ var tableDataConfig = function () {
             terminalPointDataConfigTop:terminalPointDataConfigTop,
             terminalPointDataConfigDown:terminalPointDataConfigDown,
             resizeToFitContainer:resizeToFitContainer,
+            flyDetailDataConfig:flyDetailDataConfig,
+            terminalDetailDataConfig:terminalDetailDataConfig,
             data:data
         }
     };
