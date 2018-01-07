@@ -113,13 +113,48 @@ var PredictionData = function () {
       // 处理表单提交
       handleSubmitForm(DataForm)
       if($('.header_name').text() == '航段飞行时间误差统计'){
-        searchData(DataForm,searchUrl.terMinalTime)
+        var tableDataConfigs = tableDataConfig()
+        dataConvert(tableDataConfigs.data,tableDataConfigs,'flyErrorTableDataConfig','flyDetailDataConfig')
+        initGridTable(tableDataConfigs.flyErrorTableDataConfig,'flyErrorTableDataConfig')
+        //searchData(DataForm,searchUrl.terMinalTime)
       }else{
-        searchData(DataForm,searchUrl.terMinalHeight)
+        var tableDataConfigs = tableDataConfig()
+        dataConvert(tableDataConfigs.data,tableDataConfigs,'terminalPointDataConfigTop','terminalDetailDataConfig')
+        dataConvert(tableDataConfigs.data,tableDataConfigs,'terminalPointDataConfigDown','terminalDetailDataConfig')
+        initGridTable(tableDataConfigs.flyErrorTableDataConfig,'flyErrorTableDataConfig')
+        //searchData(DataForm,searchUrl.terMinalHeight)
       }
 
     });
   };
+  /*
+  * 数据转换方法
+  * */
+  var dataConvert = function(data,gridParam,option,optionDetail){
+  //航段飞行时间误差数据转换
+    if($.isValidObject(data)){
+      if($.isValidObject(data.map)){
+        $.each(data.map,function(i,e){
+          gridParam[option].data = [];
+          var obj = {}
+          if(option == 'flyErrorTableDataConfig'){
+            obj.flyDepPointType  = i;
+          }
+          $.each(gridParam[option].colModel,function(index,ele){
+            if(ele['index']!='flyDepPointType'){
+              obj[ele['index']]  = e[ele['index']];
+            }
+          })
+          gridParam[option].data.push(obj)
+        })
+      }
+      //航段飞行时间误差数据详情转换
+      if($.isValidObject(data.infoMap)){
+        gridParam[optionDetail].data = [];
+        gridParam[optionDetail].data = data.infoMap;
+      }
+    }
+  }
   /**
    * 初始化表格
    */

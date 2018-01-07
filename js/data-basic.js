@@ -43,190 +43,10 @@ var tableDataConfig = function () {
             name:'dyn20mAvgDis',
             index:'dyn20mAvgDis'
         }],
-        data:[{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'1234',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'1236',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        },{
-            id:'123456',
-            flyDepPointType:'UHBD15',
-            rdepAvgTime:'1205',
-            rdepMeTime:'1205',
-            schMeDis:'2540',
-            fplMeDis:'2518',
-            depMeDis:'5555',
-            dyn10mMeDis:'4444',
-            dyn20mMeDis:'5845',
-            schAvgDis:'20',
-            fplAvgDis:'30',
-            depAvgDis:'50',
-            dyn10mAvgDis:'20',
-            dyn20mAvgDis:'30'
-        }]
+        data:[]
     }
     var terminalPointDataConfigTop = {
-        colName:['起飞机场','终端区航路点','SCH中位数时间差','FPL中位数时间差','DEP中位数时间差','DYN10中位数时间差','DYN20中位数时间差','SCH平均时间差','FPL平均高度差','DEP平均高度差','DYN10平均高度差','DYN20平均高度差'],
+        colName:['起飞机场','终端区航路点','SCH中位数时间差','FPL中位数时间差','DEP中位数时间差','DYN10中位数时间差','DYN20中位数时间差','SCH平均数时间差','FPL平均数时间差','DEP平均数时间差','DYN10平均数时间差','DYN20平均数时间差'],
         colModel:[{
             name:'depAirport',
             index:'depAirport'
@@ -234,24 +54,39 @@ var tableDataConfig = function () {
             name:'terPoint',
             index:'terPoint'
         },{
-            name:'schAvgHLevel',
-            index:'schAvgHLevel'
+            name:'schMeDis',
+            index:'schMeDis'
         },{
-            name:'fplAvgHLevel',
-            index:'fplAvgHLevel'
+            name:'fplMeDis',
+            index:'fplMeDis'
         },{
-            name:'depAvgHLevel',
-            index:'depAvgHLevel'
+            name:'depMeDis',
+            index:'depMeDis'
         },{
-            name:'dyn10AvgHLevel',
-            index:'dyn10AvgHLevel'
+            name:'dyn10mMeDis',
+            index:'dyn10mMeDis'
         },{
-            name:'dyn20AvgHLevel',
-            index:'dyn20AvgHLevel'
+            name:'dyn20mMeDis',
+            index:'dyn20mMeDis'
+        },{
+            name:'schAvgDis',
+            index:'schAvgDis'
+        },{
+            name:'fplAvgDis',
+            index:'fplAvgDis'
+        },{
+            name:'depAvgDis',
+            index:'depAvgDis'
+        },{
+            name:'dyn10AvgDis',
+            index:'dyn10AvgDis'
+        },{
+            name:'dyn20AvgDis',
+            index:'dyn20AvgDis'
         }]
     }
     var terminalPointDataConfigDown = {
-        colName:['起飞机场','终端区航路点','SCH中位数高度差','FPL中位数高度差','DEP中位数高度差','DYN10中位数高度差','DYN20中位数高度差','SCH平均高度差','FPL平均高度差','DEP平均高度差','DYN10平均高度差','DYN20平均高度差'],
+        colName:['起飞机场','终端区航路点','SCH中位数高度差','FPL中位数高度差','DEP中位数高度差','DYN10中位数高度差','DYN20中位数高度差','SCH平均数高度差','FPL平均数高度差','DEP平均数高度差','DYN10平均数高度差','DYN20平均数高度差'],
         colModel:[{
             name:'depAirport',
             index:'depAirport'
@@ -260,20 +95,20 @@ var tableDataConfig = function () {
             index:'terPoint'
         }
             ,{
-                name:'schAvgDis',
-                index:'schAvgDis'
+                name:'schMeHLevel',
+                index:'schMeHLevel'
             },{
-                name:'fplAvgDis',
-                index:'fplAvgDis'
+                name:'fplMeHLevel',
+                index:'fplMeHLevel'
             },{
-                name:'depAvgDis',
-                index:'depAvgDis'
+                name:'depMeHLevel',
+                index:'depMeHLevel'
             },{
-                name:'dyn10mAvgDis',
-                index:'dyn10mAvgDis'
+                name:'dyn10MeHLevel',
+                index:'dyn10MeHLevel'
             },{
-                name:'dyn20mAvgDis',
-                index:'dyn20mAvgDis'
+                name:'dyn20MeHLevel',
+                index:'dyn20MeHLevel'
             },{
                 name:'schMeHLevel',
                 index:'schMeHLevel'
@@ -290,20 +125,20 @@ var tableDataConfig = function () {
                 name:'dyn20MeHLevel',
                 index:'dyn20MeHLevel'
             },{
-                name:'schMeDis',
-                index:'schMeDis'
+                name:'schAvgHLevel',
+                index:'schAvgHLevel'
             },{
-                name:'fplMeDis',
-                index:'fplMeDis'
+                name:'fplAvgHLevel',
+                index:'fplAvgHLevel'
             },{
-                name:'depMeDis',
-                index:'depMeDis'
+                name:'depAvgHLevel',
+                index:'depAvgHLevel'
             },{
-                name:'dyn10mMeDis',
-                index:'dyn10mMeDis'
+                name:'dyn10AvgHLevel',
+                index:'dyn10AvgHLevel'
             },{
-                name:'dyn20mMeDis',
-                index:'dyn20mMeDis'
+                name:'dyn20AvgHLevel',
+                index:'dyn20AvgHLevel'
             }
         ]
     }
@@ -315,121 +150,31 @@ var tableDataConfig = function () {
                 index:'id',
                 frozen : true
             },{
-                name:'flightId',
-                index:'flightId'
+                name:'flightID',
+                index:'flightID'
             },{
-                name:'aricraftType',
-                index:'aricraftType'
+                name:'aircraftType',
+                index:'aircraftType'
             },{
-                name:'rpasttime',
-                index:'rpasttime'
+                name:'rPastTime',
+                index:'rPastTime'
             },{
-                name:'sschtime',
-                index:'sschtime'
+                name:'schPastTime',
+                index:'schPastTime'
             },{
-                name:'sfpltime',
-                index:'sfpltime'
+                name:'fplPastTime',
+                index:'fplPastTime'
             },{
-                name:'sdeptime',
-                index:'sdeptime'
+                name:'depPastTime',
+                index:'depPastTime'
             },{
-                name:'dyn1Time',
-                index:'dyn1Time'
+                name:'dyn10PastTime',
+                index:'dyn10PastTime'
             },{
-                name:'dyn2Time',
-                index:'dyn2Time'
+                name:'dyn20PastTime',
+                index:'dyn20PastTime'
             }],
-        data:[{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        },{
-            id:'123456',
-            flightID:'UHBD15',
-            aricraftType:'1205',
-            rpasttime:'1205',
-            sschtime:'2540',
-            sfpltime:'2518',
-            sdeptime:'5555',
-            dyn1Time:'4444',
-            dyn2Time:'5845',
-        }]
+        data:[]
     }
     var terminalDetailDataConfig = {
         colName:['ID','航班号','机型','实际过点时间','SHC过点时间','FPL过点时间','DEP过点时间','DYN10过点时间','DYN20过点时间','实际过点高度','SHC过点高度','FPL过点高度','DEP过点高度','DYN10过点高度','DYN20过点高度'],
@@ -505,13 +250,133 @@ var tableDataConfig = function () {
         $('#' + tableId).jqGrid('setGridHeight', gridTableHeight);
         $('#' + tableId).jqGrid('setGridWidth', (gridTableWidth - 2));
     }
+    /*数据样例*/
+    var data = {
+        "map": {
+            "ZBAA-BOBAK": {
+                "schAvgHLevel": -42,
+                "fplAvgHLevel": -2,
+                "depAvgHLevel": -24,
+                "dyn10AvgHLevel": -34,
+                "dyn20AvgHLevel": -47,
+                "schAvgDis": 1023,
+                "fplAvgDis": 1505,
+                "depAvgDis": 215,
+                "dyn10mAvgDis": 185,
+                "dyn20mAvgDis": 157,
+                "schMeHLevel": -53,
+                "fplMeHLevel": 0,
+                "depMeHLevel": -9,
+                "dyn10MeHLevel": -30,
+                "dyn20MeHLevel": -57,
+                "schMeDis": 727,
+                "fplMeDis": 1089,
+                "depMeDis": 194,
+                "dyn10mMeDis": 153,
+                "dyn20mMeDis": 142,
+                "flightcount": 55
+            }
+        },
+        "infoMap": {
+            "ZBAA-BOBAK": [
+                {
+                    "id": 37266253,
+                    "flightID": "CCA1206",
+                    "aircraftType": "A321",
+                    "rPastTime": "20180105104459",
+                    "schPastTime": "20180105100756",
+                    "fplPastTime": "20180105100915",
+                    "depPastTime": "20180105104144",
+                    "dyn10PastTime": "20180105104144",
+                    "dyn20PastTime": "20180105104226",
+                    "rPasthlevel": "FL147",
+                    "schhlevel": "FL220",
+                    "fplhlevel": "FL220",
+                    "dephlevel": "FL220",
+                    "dyn10hlevel": "FL220",
+                    "dyn20hlevel": "FL220"
+                },
+                {
+                    "id": 37266253,
+                    "flightID": "CCA1206",
+                    "aircraftType": "A321",
+                    "rPastTime": "20180105104459",
+                    "schPastTime": "20180105100756",
+                    "fplPastTime": "20180105100915",
+                    "depPastTime": "20180105104144",
+                    "dyn10PastTime": "20180105104144",
+                    "dyn20PastTime": "20180105104226",
+                    "rPasthlevel": "FL147",
+                    "schhlevel": "FL220",
+                    "fplhlevel": "FL220",
+                    "dephlevel": "FL220",
+                    "dyn10hlevel": "FL220",
+                    "dyn20hlevel": "FL220"
+                },
+            ]
+        },
+        "commonTypeMap": {
+            "B738": {
+                "schAvgHLevel": -34,
+                "fplAvgHLevel": 0,
+                "depAvgHLevel": -8,
+                "dyn10AvgHLevel": -18,
+                "dyn20AvgHLevel": -30,
+                "schAvgDis": 767,
+                "fplAvgDis": 690,
+                "depAvgDis": 199,
+                "dyn10mAvgDis": 203,
+                "dyn20mAvgDis": 190,
+                "schMeHLevel": -33,
+                "fplMeHLevel": 0,
+                "depMeHLevel": 0,
+                "dyn10MeHLevel": -9,
+                "dyn20MeHLevel": -34,
+                "schMeDis": 574,
+                "fplMeDis": 577,
+                "depMeDis": 131,
+                "dyn10mMeDis": 133,
+                "dyn20mMeDis": 136,
+                "flightcount": 46
+            },
+        },
+        "typeMap": {
+            "D": {
+                "schAvgHLevel": -13,
+                "fplAvgHLevel": 10,
+                "depAvgHLevel": -2,
+                "dyn10AvgHLevel": -20,
+                "dyn20AvgHLevel": -8,
+                "schAvgDis": 1446,
+                "fplAvgDis": 2084,
+                "depAvgDis": 173,
+                "dyn10mAvgDis": 246,
+                "dyn20mAvgDis": 163,
+                "schMeHLevel": -10,
+                "fplMeHLevel": 9,
+                "depMeHLevel": 0,
+                "dyn10MeHLevel": -14,
+                "dyn20MeHLevel": -16,
+                "schMeDis": 908,
+                "fplMeDis": 1344,
+                "depMeDis": 120,
+                "dyn10mMeDis": 266,
+                "dyn20mMeDis": 188,
+                "flightcount": 19
+            },
+
+        },
+        "generateTime": "201801051203",
+        "status": 0
+    }
     return {
             flyErrorTableDataConfig:flyErrorTableDataConfig, 
             terminalPointDataConfigTop:terminalPointDataConfigTop,
             terminalPointDataConfigDown:terminalPointDataConfigDown,
-            resizeToFitContainer:resizeToFitContainer
+            resizeToFitContainer:resizeToFitContainer,
+            data:data
         }
-    }
+    };
 
 $(document).ready(function () {
     tableDataConfig();
