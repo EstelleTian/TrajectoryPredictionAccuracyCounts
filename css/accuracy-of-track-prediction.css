@@ -265,9 +265,17 @@
 
 }
 .echart-row .fly_table{
-    height: 100%;
-}
 
+}
+.echart-row .down_table{
+    display: none;
+}
+.h50{
+    height: 50%;
+}
+.h100{
+    height:100%;
+}
 .datepicker .table-condensed td {
     padding: 0.45rem 0.9rem;
 }
@@ -281,7 +289,8 @@
     text-transform: uppercase;
 }
 .selected{
-    background-color: #eee;
+    background-color: #204d74 !important;
+    color: white !important;
 }
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
     border: 1px solid #ddd !important;

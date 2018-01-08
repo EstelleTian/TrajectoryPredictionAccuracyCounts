@@ -85,9 +85,9 @@
                                         <span class="cy-pad-hor-s">起止时间 : </span>
                                     </div>
                                     <div class="input-daterange input-group" id="datepicker">
-                                        <input type="text" class="form-control start-date-input" name="start" readonly />
+                                        <input type="text" class="form-control start-date-input" name="start"  />
                                         <span class="input-group-addon">至</span>
-                                        <input type="text" class="form-control flight-end-date" name="end" id="qEndTime" readonly />
+                                        <input type="text" class="form-control flight-end-date" name="end" id="qEndTime"  />
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,12 @@
                         </div>
                         <h3 class="no-datas-tip">暂无数据</h3>
                         <div class="echart-row">
-                            <table class="fly_table" id="flight_grid_table"></table>
+                            <div class="fly_table h100">
+                                <table  id="flight_grid_table"></table>
+                            </div>
+                            <div class="down_table">
+                                <table id="d_flight_grid_table"></table>
+                            </div>
                         </div>
                     </div>
                 </div>
