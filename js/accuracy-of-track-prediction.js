@@ -31,6 +31,8 @@ var PredictionData = function () {
   var initComponent = function () {
     //初始化日历插件datepicker
     initDatepicker();
+    // 设置默认时间
+    setDefaultDates();
     //绑定Window事件，窗口变化时重新调整表格大小
     initDocumentResize();
 
@@ -160,12 +162,11 @@ var PredictionData = function () {
    * */
   var initSubmitEvent = function () {
     $('.search_data').on('click', function () {
-      $(".no-datas-tip").hide()
-      alertClearData(tableObject);
+      $(".no-datas-tip").hide();
       //获取 表单数据
       getFormData(DataForm);
       // 处理表单提交
-      handleSubmitForm(DataForm)
+      handleSubmitForm(DataForm);
 
     });
   };
@@ -209,6 +210,37 @@ var PredictionData = function () {
             }
         }
         return true;
+    };
+
+    /**
+     *  设置起止时间输入框日历插件的可选范围及默认选中日期
+     * */
+    var setStartdDataRange = function () {
+        // 起始时间值
+        var start = $('.start-date-input').val();
+        // 截止时间值
+        var end = $('.flight-end-date').val();
+        // 截止时间前1天
+        var preDay = $.addStringTime(end + '0000', 3600 * 1000 * 24 * -1);
+        // 截止时间前7天的日期值
+        var day7 = $.addStringTime(end + '0000', 3600 * 1000 * 24 * -7);
+        // 求得起止时间相差天数
+        var diff = Math.abs($.calculateStringTimeDiff(start + '0000', end + '0000') / (1000 * 60 * 60 * 24));
+        // 设置起止日期的可选开始日期
+        $('.start-date-input').datepicker('setStartDate', $.parseFullTime(day7));
+        // 设置起止日期的可选结束日期
+        $('.start-date-input').datepicker('setEndDate', $.parseFullTime(end+'0000'));
+        // 若截止日期小于起止日期,设置起止日期的默认选中日期为截止日期的前1天
+        if(end*1 < start*1){
+            // 设置起止日期的默认选中日期为截止日期的前1天
+            $('.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
+        }else if (diff > 7) { // 若起止时间相差天数大于7天
+            // 设置起止日期的默认选中日期为截止日期的前1天
+            $('.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
+        }else {
+            // 设置起止日期的默认选中日期为当前数值(用于解决输入框数值与日历默认选中日期数值不一致的问题)
+            $('.start-date-input').datepicker('setDate', $.parseFullTime(start+'0000'));
+        }
     };
 
   /*
@@ -468,10 +500,10 @@ var PredictionData = function () {
    * */
   var showConditions = function (obj) {
     //当前选中的类型
-    $('.conditions-start-data').text('时间:' + obj.startDate).attr('title', '时间: ' + obj.endDate + '-' + obj.startDate);
+    $('.conditions-start-data').text('起止时间:' + obj.startDate).attr('title', '起止时间: ' + obj.startDate + '-' + obj.endDate);
     $('.conditions-end-data').text(obj.endDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
-    $('.conditions-type').text('机场类型:' + obj.currentType).attr('title', '机场类型: ' + obj.currentType);
-    $('.conditions-subtype').text('机场名称:' + obj.airportName).attr('title', '机场: ' + obj.airportName);
+    $('.conditions-type').text('机场状态:' + obj.currentType).attr('title', '机场状态: ' + obj.currentType);
+    $('.conditions-subtype').text('机场名称:' + obj.airportName).attr('title', '机场名称: ' + obj.airportName);
     $('.conditions-content').removeClass('hidden');
   };
 /**
@@ -488,7 +520,7 @@ var PredictionData = function () {
     var loading = Ladda.create($('.history-data-btn')[0]);
     loading.start();
     $('.form-wrap').addClass('no-event');
-    var url = searchUrl + formData.endDate + '/' + formData.startDate + '/' + formData.airportName + '/' + formData.currentStatus + '';
+    var url = searchUrl +formData.startDate + '/' +   formData.endDate + '/' + formData.airportName + '/' + formData.currentStatus + '';
     $.ajax({
       url: url,
       type: 'GET',
@@ -622,13 +654,31 @@ var PredictionData = function () {
       });
       //事件绑定
       $('.start-date-input').on('changeDate', function () {
+          // 校验起止日期范围是否有效，无效则弹出警告
           validateDates();
       });
       $('.flight-end-date').on('changeDate', function () {
+          // 设置起止时间输入框日历插件的可选范围及默认选中日期
+          setStartdDataRange();
+          // 校验起止日期范围是否有效，无效则弹出警告
           validateDates();
       });
   };
-  return {
+
+/**
+ * 设置默认日期
+ * */
+  var setDefaultDates = function () {
+      //当前日期
+      var now = $.getFullTime(new Date()).substring(0, 8);
+      // 当前日期前1天
+      var preDay = $.addStringTime(now + '0000', 3600 * 1000 * 24 * -1);
+      // 设置起止日期
+      $('.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
+      // 设置截止日期
+      $('.flight-end-date').datepicker('setDate', $.parseFullTime(now+'0000'));
+  };
+    return {
     init: function () {
       // 初始化组件
       initComponent();
