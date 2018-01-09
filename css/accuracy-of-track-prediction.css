@@ -22,6 +22,7 @@
 }
 .history-data-statistics .echart-row {
     height:100%;
+    position: relative;
 }
 .history-data-statistics .echart-col{
     height: 95%;

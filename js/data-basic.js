@@ -290,12 +290,15 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
+        width:100,
         frozen: true
       }, {
         name: 'flightID',
+        width:100,
         index: 'flightID'
       }, {
         name: 'aircraftType',
+        width:100,
         index: 'aircraftType'
       }, {
         name: 'rPastTime',
@@ -366,16 +369,20 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
+        width:100,
         frozen: true
       }, {
         name: 'flightID',
-        index: 'flightID'
+        index: 'flightID',
+        width:100
       }, {
         name: 'aircraftType',
-        index: 'aircraftType'
+        index: 'aircraftType',
+        width:100
       }, {
         name: 'rPastTime',
         index: 'rPastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return cellvalue.substring(8, 12);
@@ -386,6 +393,7 @@ var tableDataConfig = function () {
       }, {
         name: 'schPastTime',
         index: 'schPastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return cellvalue.substring(8, 12);
@@ -396,6 +404,7 @@ var tableDataConfig = function () {
       }, {
         name: 'fplPastTime',
         index: 'fplPastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return cellvalue.substring(8, 12);
@@ -406,6 +415,7 @@ var tableDataConfig = function () {
       }, {
         name: 'depPastTime',
         index: 'depPastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return cellvalue.substring(8, 12);
@@ -416,6 +426,7 @@ var tableDataConfig = function () {
       }, {
         name: 'dyn10PastTime',
         index: 'dyn10PastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return cellvalue.substring(8, 12);
@@ -426,6 +437,7 @@ var tableDataConfig = function () {
       }, {
         name: 'dyn20PastTime',
         index: 'dyn20PastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return cellvalue.substring(8, 12);
@@ -435,22 +447,28 @@ var tableDataConfig = function () {
         }
       }, {
         name: 'rPasthlevel',
-        index: 'rPasthlevel'
+        index: 'rPasthlevel',
+        width:100
       }, {
         name: 'schhlevel',
-        index: 'schhlevel'
+        index: 'schhlevel',
+        width:100
       }, {
         name: 'fplhlevel',
-        index: 'fplhlevel'
+        index: 'fplhlevel',
+        width:100
       }, {
         name: 'dephlevel',
-        index: 'dephlevel'
+        index: 'dephlevel',
+        width:100
       }, {
         name: 'dyn10hlevel',
-        index: 'dyn10hlevel'
+        index: 'dyn10hlevel',
+        width:100
       }, {
         name: 'dyn20hlevel',
-        index: 'dyn20hlevel'
+        index: 'dyn20hlevel',
+        width:100
       }
     ],
     data: []
@@ -476,6 +494,14 @@ var tableDataConfig = function () {
     // 调用表格修改高度宽度方法
     $('#' + tableId).jqGrid('setGridHeight', gridTableHeight);
     $('#' + tableId).jqGrid('setGridWidth', (gridTableWidth - 2));
+  }
+
+  var timeFormater = function (cellvalue, options, rowObject) {
+    if ($.isValidVariable(cellvalue)) {
+      return cellvalue + '(秒)';
+    } else {
+      return '';
+    }
   }
   /*数据样例*/
   var data = {

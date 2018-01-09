@@ -37,7 +37,7 @@ var PredictionData = function () {
   };
   // 初始化事件绑定
   var initEvent = function () {
-    // 导航
+    // 导航点击事件
     initNavTabEvent();
     // 提交按钮
     initSubmitEvent();
@@ -162,14 +162,17 @@ var PredictionData = function () {
     });
   };
   /*
-   * 数据转换方法
+   * @method dataConvert 数据转换方法
+   * @param data ajax返回数据对象
+   * @param gridParam 表格参数配置
+   * @param option 表格参数具体配置字符串
    * */
   var dataConvert = function (data, gridParam, option) {
-    //航段飞行时间误差数据转换
     if ($.isValidObject(data)) {
       if ($.isValidObject(data.map)) {
         $.each(data.map, function (i, e) {
           var obj = {}
+          //航段飞行时间误差数据转换
           if (option == 'flyErrorTableDataConfig') {
             obj.flyDepPointType = i;
             $.each(gridParam[option].colModel, function (index, ele) {
@@ -178,6 +181,7 @@ var PredictionData = function () {
               }
             })
           } else {
+            //终端区航路点过点时间统计数据转换
             obj.depAirport = i;
             var str = i.split('-')
             obj.terPoint = str[1]
@@ -200,7 +204,6 @@ var PredictionData = function () {
       styleUI: 'Bootstrap',
       datatype: 'local',
       rownumbers: true,
-      autowidth: true,
       height: "auto",
       shrinkToFit: false,
       cmTemplate: {
@@ -215,6 +218,7 @@ var PredictionData = function () {
       // viewrecords: true,
       onCellSelect: function (rowid, index, contents, event) {
         if (index == 1) {
+          //模态框设置
           var option = {
             title: contents + '详情',
             content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table></div>',
@@ -224,18 +228,24 @@ var PredictionData = function () {
             showCancelBtn: false,
             mtop: 180
           }
+          //初始化模态框
           BootstrapDialogFactory.dialog(option);
+          //初始化航段飞行时间误差统计详情表格
           if ($('.header_name').text() == '航段飞行时间误差统计') {
             tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
             initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table')
           } else {
+            //初始化终端区航路点过点时间统计详情表格
             tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
             initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table')
           }
         }
       }
     })
+    //数据填充
     $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
+    $('#' + tableId).jqGrid('setFrozenColumns')
+    //尺寸计算表格适配内容大小
     tableDataConfigs.resizeToFitContainer(tableId)
   };
 /*
@@ -246,7 +256,6 @@ var PredictionData = function () {
       styleUI: 'Bootstrap',
       datatype: 'local',
       rownumbers: true,
-      autowidth: true,
       height: "auto",
       shrinkToFit: false,
       cmTemplate: {
@@ -256,12 +265,14 @@ var PredictionData = function () {
       colNames: config.colName,
       colModel: config.colModel,
       rowNum: 999999, // 一页显示多少条
-      // sortname: 'time', // 初始化的时候排序的字段
+      sortname: 'aircraftType', // 初始化的时候排序的字段
       // sortorder: 'asc', //排序方式,可选desc,asc
       // viewrecords: true,
     })
     $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
     tableDataConfigs.resizeToFitContainer(tableId)
+    $('#' + tableId).jqGrid('setFrozenColumns')
+    $('.modal-content .frozen-bdiv').css('top','35px');
   };
   /**
    * 处理表单提交
@@ -476,9 +487,7 @@ var PredictionData = function () {
    * */
   var initDocumentResize = function () {
     $(window).resize(function () {
-      if ($('.history-data-statistics').is(":visible")) {
         resizeToFitContainer();
-      }
     });
   };
 
@@ -541,7 +550,7 @@ var PredictionData = function () {
       initComponent();
       // 初始化事件绑定
       initEvent();
-
+      //表格容器尺寸适配
       resizeToFitContainer();
     }
   }
