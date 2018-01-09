@@ -147,6 +147,7 @@ var PredictionData = function () {
   var initSubmitEvent = function () {
     $('.search_data').on('click', function () {
       $(".no-datas-tip").hide()
+      //获取 表单数据
       getFormData(DataForm);
       // 处理表单提交
       handleSubmitForm(DataForm)
@@ -213,7 +214,6 @@ var PredictionData = function () {
       // sortorder: 'asc', //排序方式,可选desc,asc
       // viewrecords: true,
       onCellSelect: function (rowid, index, contents, event) {
-        console.log(this)
         if (index == 1) {
           var option = {
             title: contents + '详情',
@@ -227,10 +227,10 @@ var PredictionData = function () {
           BootstrapDialogFactory.dialog(option);
           if ($('.header_name').text() == '航段飞行时间误差统计') {
             tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
-            initGridTable(tableDataConfigs.flyDetailDataConfig, rowid + 'table')
+            initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table')
           } else {
             tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
-            initGridTable(tableDataConfigs.terminalDetailDataConfig, rowid + 'table')
+            initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table')
           }
         }
       }
@@ -238,7 +238,31 @@ var PredictionData = function () {
     $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
     tableDataConfigs.resizeToFitContainer(tableId)
   };
-
+/*
+* 初始化详情表格
+* */
+  var initGridTableDetail = function (config, tableId) {
+    var table = $('#' + tableId).jqGrid({
+      styleUI: 'Bootstrap',
+      datatype: 'local',
+      rownumbers: true,
+      autowidth: true,
+      height: "auto",
+      shrinkToFit: false,
+      cmTemplate: {
+        align: 'center',
+        resize: false
+      },
+      colNames: config.colName,
+      colModel: config.colModel,
+      rowNum: 999999, // 一页显示多少条
+      // sortname: 'time', // 初始化的时候排序的字段
+      // sortorder: 'asc', //排序方式,可选desc,asc
+      // viewrecords: true,
+    })
+    $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
+    tableDataConfigs.resizeToFitContainer(tableId)
+  };
   /**
    * 处理表单提交
    * */
@@ -345,7 +369,9 @@ var PredictionData = function () {
     $('.conditions-subtype').text('机场名称:' + obj.airportName).attr('title', '机场: ' + obj.airportName);
     $('.conditions-content').removeClass('hidden');
   };
-
+/**
+ * 隐藏当前统计条件
+ * */
   var hideConditions = function () {
     $('.conditions-content').addClass('hidden');
   };
@@ -366,14 +392,14 @@ var PredictionData = function () {
         // 当前数据
         if ($.isValidObject(data)) {
           //提取数据
-          var time = data.generatetime;
+          var time = data.generateTime;
           $.extend(tableDataConfigs.data, data)
           // 更新数据时间
           if ($.isValidVariable(time)) {
             // 更新数据时间
             updateGeneratetime(time);
           }
-          if ($('.header_name').text() == '航段飞行时间误差统计') {
+          if (searchUrl == ipHost) {
             tableDataConfigs.flyErrorTableDataConfig.data = [];
             tableDataConfigs.flyDetailDataConfig.data = [];
             dataConvert(tableDataConfigs.data, tableDataConfigs, 'flyErrorTableDataConfig')
@@ -422,7 +448,7 @@ var PredictionData = function () {
 
   var updateGeneratetime = function (time) {
     var timeFormatter = formateTime(time);
-    $('.history-data-statistics .generate-time').text('数据生成时间: ' + timeFormatter);
+    $('.history-data-title .generate-time').text('数据生成时间: ' + timeFormatter);
   };
 
   /**
