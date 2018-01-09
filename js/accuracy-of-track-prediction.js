@@ -67,8 +67,8 @@ var PredictionData = function () {
       //修改标题文字
         $('.header_name').text(itemTitle[index])
       //清空数据
-      clearData(tableObject);
-      hideConditions()
+      // clearData(tableObject);
+      // hideConditions()
     });
     // 终端区航路点过点时间统计导航点击事件
     $('.nav-history-data-statistics').on('click', function () {
@@ -82,8 +82,8 @@ var PredictionData = function () {
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //清空数据
-      clearData(tableObject)
-      hideConditions()
+      // clearData(tableObject)
+      // hideConditions()
     });
     //起飞机场点击事件状态绑定
     initAirportState($('.dep'),$('.arr'))
@@ -108,11 +108,13 @@ var PredictionData = function () {
   * 提示前清空数据
   * */
   var alertClearData = function (table) {
-    if(index == 0){
-      $.jgrid.gridUnload(table.flyTableObj);
-    }else if(index == 1){
-      $.jgrid.gridUnload(table.terTableObjTop);
-      $.jgrid.gridUnload(table.terTableObjDown);
+    if($.isValidObject(table)){
+      if(index == 0){
+        $.jgrid.gridUnload(table.flyTableObj);
+      }else if(index == 1){
+        $.jgrid.gridUnload(table.terTableObjTop);
+        $.jgrid.gridUnload(table.terTableObjDown);
+      }
     }
   }
   /*
@@ -159,6 +161,7 @@ var PredictionData = function () {
   var initSubmitEvent = function () {
     $('.search_data').on('click', function () {
       $(".no-datas-tip").hide()
+      alertClearData(tableObject);
       //获取 表单数据
       getFormData(DataForm);
       // 处理表单提交
@@ -246,7 +249,7 @@ var PredictionData = function () {
   /**
    * 初始化表格
    */
-  var initGridTable = function (config, tableId) {
+  var initGridTable = function (config, tableId,pagerId) {
     var table = $('#' + tableId).jqGrid({
       styleUI: 'Bootstrap',
       datatype: 'local',
@@ -257,18 +260,21 @@ var PredictionData = function () {
         align: 'center',
         resize: false
       },
+      pager:pagerId,
+      pgbuttons: false,
+      pginput: false,
       colNames: config.colName,
       colModel: config.colModel,
       rowNum: 999999, // 一页显示多少条
       // sortname: 'time', // 初始化的时候排序的字段
       // sortorder: 'asc', //排序方式,可选desc,asc
-      // viewrecords: true,
+      viewrecords: true,
       onCellSelect: function (rowid, index, contents, event) {
         if (index == 1) {
           //模态框设置
           var option = {
             title: contents + '详情',
-            content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table></div>',
+            content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>',
             width: 1280,
             height: 960,
             isIcon: false,
@@ -280,17 +286,26 @@ var PredictionData = function () {
           //初始化航段飞行时间误差统计详情表格
           if ($('.header_name').text() == '航段飞行时间误差统计') {
             tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
-            initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table')
+            initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table',rowid +'detail_pager')
           } else {
             //初始化终端区航路点过点时间统计详情表格
             tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
-            initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table')
+            initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table',rowid +'detail_pager')
           }
         }
       }
     })
     //数据填充
     $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
+    $('#' + tableId).jqGrid('navGrid', '#' + pagerId, {
+      add: false,
+      edit: false,
+      view: false,
+      del: false,
+      search: false,
+      refresh: false
+    });
+
     $('#' + tableId).jqGrid('setFrozenColumns')
     //尺寸计算表格适配内容大小
     tableDataConfigs.resizeToFitContainer(tableId)
@@ -298,7 +313,7 @@ var PredictionData = function () {
 /*
 * 初始化详情表格
 * */
-  var initGridTableDetail = function (config, tableId) {
+  var initGridTableDetail = function (config, tableId,pagerId) {
     var table = $('#' + tableId).jqGrid({
       styleUI: 'Bootstrap',
       datatype: 'local',
@@ -309,14 +324,25 @@ var PredictionData = function () {
         align: 'center',
         resize: false
       },
+      pager:pagerId,
+      pgbuttons: false,
+      pginput: false,
       colNames: config.colName,
       colModel: config.colModel,
       rowNum: 999999, // 一页显示多少条
       sortname: 'aircraftType', // 初始化的时候排序的字段
       // sortorder: 'asc', //排序方式,可选desc,asc
-      // viewrecords: true,
+      viewrecords: true,
     })
     $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
+    $('#' + tableId).jqGrid('navGrid', '#' + pagerId, {
+      add: false,
+      edit: false,
+      view: false,
+      del: false,
+      search: false,
+      refresh: false
+    });
     tableDataConfigs.resizeToFitContainer(tableId)
     $('#' + tableId).jqGrid('setFrozenColumns')
     $('.modal-content .frozen-bdiv').css('top','35px');
@@ -442,7 +468,7 @@ var PredictionData = function () {
    * */
   var showConditions = function (obj) {
     //当前选中的类型
-    $('.conditions-start-data').text('时间:' + obj.startDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
+    $('.conditions-start-data').text('时间:' + obj.startDate).attr('title', '时间: ' + obj.endDate + '-' + obj.startDate);
     $('.conditions-end-data').text(obj.endDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
     $('.conditions-type').text('机场类型:' + obj.currentType).attr('title', '机场类型: ' + obj.currentType);
     $('.conditions-subtype').text('机场名称:' + obj.airportName).attr('title', '机场: ' + obj.airportName);
@@ -482,15 +508,15 @@ var PredictionData = function () {
             tableDataConfigs.flyErrorTableDataConfig.data = [];
             tableDataConfigs.flyDetailDataConfig.data = [];
             dataConvert(tableDataConfigs.data, tableDataConfigs, 'flyErrorTableDataConfig')
-            initGridTable(tableDataConfigs.flyErrorTableDataConfig, 'flight_grid_table')
+            initGridTable(tableDataConfigs.flyErrorTableDataConfig, 'flight_grid_table','flight-datas-pager')
           } else {
             tableDataConfigs.terminalPointDataConfigTop.data = []
             tableDataConfigs.terminalPointDataConfigDown.data = []
             tableDataConfigs.terminalDetailDataConfig.data = []
             dataConvert(tableDataConfigs.data, tableDataConfigs, 'terminalPointDataConfigTop')
             dataConvert(tableDataConfigs.data, tableDataConfigs, 'terminalPointDataConfigDown')
-            initGridTable(tableDataConfigs.terminalPointDataConfigTop, tableObject.terTableObjTop)
-            initGridTable(tableDataConfigs.terminalPointDataConfigDown, tableObject.terTableObjDown)
+            initGridTable(tableDataConfigs.terminalPointDataConfigTop, tableObject.terTableObjTop,'flight-datas-pager')
+            initGridTable(tableDataConfigs.terminalPointDataConfigDown, tableObject.terTableObjDown,'d-datas-pager')
           }
           // 若数据为空
           if ($.isEmptyObject(data.map)) {

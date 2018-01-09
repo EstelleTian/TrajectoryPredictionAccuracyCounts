@@ -1,6 +1,6 @@
 var tableDataConfig = function () {
   var flyErrorTableDataConfig = {
-    colName: ['起飞机场-航路点-机型', '实际飞行时间平均值', '实际飞行时间中位数', 'SCH中位数时间差', 'FPL中位数时间差', 'DEP中位数时间差', 'DYN10中位数时间差', 'DYN20中位数时间差,', 'SCH平均时间差', 'FPL平均时间差', 'DEP平均时间差', 'DYN10平均时间差', 'DYN20平均时间差'],
+    colName: ['起飞机场-航路点-机型', '实际飞行时间平均值(秒)', '实际飞行时间中位数(秒)', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均时间差(秒)', 'FPL平均时间差(秒)', 'DEP平均时间差(秒)', 'DYN10平均时间差(秒)', 'DYN20平均时间差(秒)'],
     colModel: [
       {
         name: 'flyDepPointType',
@@ -8,236 +8,83 @@ var tableDataConfig = function () {
         frozen:true
       }, {
         name: 'rdepAvgTime',
-        index: 'rdepAvgTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'rdepAvgTime'
       }, {
         name: 'rdepMeTime',
-        index: 'rdepMeTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'rdepMeTime'
       }, {
         name: 'schMeDis',
-        index: 'schMeDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'schMeDis'
       }, {
         name: 'fplMeDis',
-        index: 'fplMeDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'fplMeDis'
       }, {
         name: 'depMeDis',
-        index: 'depMeDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'depMeDis'
       }, {
         name: 'dyn10mMeDis',
-        index: 'dyn10mMeDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'dyn10mMeDis'
       }, {
         name: 'dyn20mMeDis',
-        index: 'dyn20mMeDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'dyn20mMeDis'
       }, {
         name: 'schAvgDis',
-        index: 'schAvgDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'schAvgDis'
       }, {
         name: 'fplAvgDis',
-        index: 'fplAvgDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'fplAvgDis'
       }, {
         name: 'depAvgDis',
-        index: 'depAvgDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'depAvgDis'
       }, {
         name: 'dyn10mAvgDis',
-        index: 'dyn10mAvgDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'dyn10mAvgDis'
       }, {
         name: 'dyn20mAvgDis',
-        index: 'dyn20mAvgDis',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'dyn20mAvgDis'
       }],
     data: []
   }
   var terminalPointDataConfigTop = {
-    colName: ['起飞机场', '终端区航路点', 'SCH中位数时间差', 'FPL中位数时间差', 'DEP中位数时间差', 'DYN10中位数时间差', 'DYN20中位数时间差', 'SCH平均数时间差', 'FPL平均数时间差', 'DEP平均数时间差', 'DYN10平均数时间差', 'DYN20平均数时间差'],
+    colName: ['起飞机场', '终端区航路点', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均数时间差(秒)', 'FPL平均数时间差(秒)', 'DEP平均数时间差(秒)', 'DYN10平均数时间差(秒)', 'DYN20平均数时间差(秒)'],
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
       frozen: true
     }, {
       name: 'terPoint',
-      index: 'terPoint',
+      index: 'terPoint'
     }, {
       name: 'schMeDis',
-      index: 'schMeDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'schMeDis'
     }, {
       name: 'fplMeDis',
-      index: 'fplMeDis',
-      formatter: function (cellvalue, options, rowObject) {
-    if ($.isValidVariable(cellvalue)) {
-      return cellvalue + '(秒)';
-    } else {
-      return '';
-    }
-  }
+      index: 'fplMeDis'
+
     }, {
       name: 'depMeDis',
-      index: 'depMeDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'depMeDis'
     }, {
       name: 'dyn10mMeDis',
-      index: 'dyn10mMeDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'dyn10mMeDis'
     }, {
       name: 'dyn20mMeDis',
-      index: 'dyn20mMeDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'dyn20mMeDis'
     }, {
       name: 'schAvgDis',
-      index: 'schAvgDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'schAvgDis'
     }, {
       name: 'fplAvgDis',
-      index: 'fplAvgDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'fplAvgDis'
     }, {
       name: 'depAvgDis',
-      index: 'depAvgDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'depAvgDis'
     }, {
       name: 'dyn10mAvgDis',
-      index: 'dyn10mAvgDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'dyn10mAvgDis'
     }, {
       name: 'dyn20mAvgDis',
-      index: 'dyn20mAvgDis',
-      formatter: function (cellvalue, options, rowObject) {
-        if ($.isValidVariable(cellvalue)) {
-          return cellvalue + '(秒)';
-        } else {
-          return '';
-        }
-      }
+      index: 'dyn20mAvgDis'
     }],
     data: []
   }
@@ -285,7 +132,7 @@ var tableDataConfig = function () {
     data: []
   }
   var flyDetailDataConfig = {
-    colName: ['ID', '航班号', '机型', '实际飞行时间', 'SHC飞行时间', 'FPL飞行时间', 'DEP飞行时间', 'DYN10飞行时间', 'DYN20飞行时间'],
+    colName: ['ID', '航班号', '机型', '实际飞行时间(秒)', 'SHC飞行时间(秒)', 'FPL飞行时间(秒)', 'DEP飞行时间(秒)', 'DYN10飞行时间(秒)', 'DYN20飞行时间(秒)'],
     colModel: [
       {
         name: 'id',
@@ -302,64 +149,22 @@ var tableDataConfig = function () {
         index: 'aircraftType'
       }, {
         name: 'rPastTime',
-        index: 'rPastTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'rPastTime'
       }, {
         name: 'schPastTime',
-        index: 'schPastTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'schPastTime'
       }, {
         name: 'fplPastTime',
-        index: 'fplPastTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'fplPastTime'
       }, {
         name: 'depPastTime',
-        index: 'depPastTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'depPastTime'
       }, {
         name: 'dyn10PastTime',
-        index: 'dyn10PastTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'dyn10PastTime'
       }, {
         name: 'dyn20PastTime',
-        index: 'dyn20PastTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return cellvalue + '(秒)';
-          } else {
-            return '';
-          }
-        }
+        index: 'dyn20PastTime'
       }],
     data: []
   }
@@ -385,7 +190,7 @@ var tableDataConfig = function () {
         width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
-            return cellvalue.substring(8, 12);
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
           } else {
             return '';
           }
@@ -396,7 +201,7 @@ var tableDataConfig = function () {
         width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
-            return cellvalue.substring(8, 12);
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
           } else {
             return '';
           }
@@ -407,7 +212,7 @@ var tableDataConfig = function () {
         width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
-            return cellvalue.substring(8, 12);
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
           } else {
             return '';
           }
@@ -418,7 +223,7 @@ var tableDataConfig = function () {
         width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
-            return cellvalue.substring(8, 12);
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
           } else {
             return '';
           }
@@ -429,7 +234,7 @@ var tableDataConfig = function () {
         width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
-            return cellvalue.substring(8, 12);
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
           } else {
             return '';
           }
@@ -440,7 +245,7 @@ var tableDataConfig = function () {
         width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
-            return cellvalue.substring(8, 12);
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
           } else {
             return '';
           }
