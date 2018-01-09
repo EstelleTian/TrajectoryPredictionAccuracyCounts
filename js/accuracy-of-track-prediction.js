@@ -1,10 +1,9 @@
 var PredictionData = function () {
   //Ip地址
-  var ipHost = 'http://192.168.243.191:8080/module-trajectoryCorrect-service/trajectory/correct/'
-  var searchUrl = {
-    terMinalTime: ipHost,
-    terMinalHeight: ipHost + 'point/'
-  }
+  var ipHost = 'http://192.168.243.191:8080/module-trajectoryCorrect-service/trajectory/correct/';
+  // 当前nav索引
+  var index =0;
+  var searchUrl = [ipHost,ipHost + 'point/'];
   /*
    * 表单查询对象
    * */
@@ -51,6 +50,11 @@ var PredictionData = function () {
     //导航栏
 
     var nav = $('#nav');
+    $('.nav li', nav).on('click', function () {
+      // 更新当前nav索引
+       index = $(this).index();
+    });
+
     //航段飞行时间误差统计导航点击事件
     $('.nav_monitor').on('click', function () {
       $('li', nav).removeClass('active');
@@ -151,16 +155,51 @@ var PredictionData = function () {
       getFormData(DataForm);
       // 处理表单提交
       handleSubmitForm(DataForm)
-      //航段飞行时间统计
-      if ($('.header_name').text() == '航段飞行时间误差统计') {
-        searchData(DataForm, searchUrl.terMinalTime)
-      } else {
-        //终端区航路点过点时间统计
-        searchData(DataForm, searchUrl.terMinalHeight)
-      }
 
     });
   };
+
+  /**
+   * 校验起止日期范围是否有效，无效则弹出警告
+   * */
+  var validateDates = function () {
+      // 清空警告
+      clearAlert();
+      // 清空提示
+      clearTip();
+      // 校验起止日期范围是否有效
+      var bool = validateDatesDifference();
+      // 若起止日期范围无效则弹出警告
+      if(!bool){
+        // 弹出警告
+        showAlear({
+            valid: false,
+            mess: "起止时间跨度不能超过7天"
+        })
+      }
+  };
+
+    /**
+     * 校验起止日期范围是否有效
+     * */
+    var validateDatesDifference = function () {
+
+        // 起始时间值
+        var start = $('.start-date-input').val();
+        // 截止时间值
+        var end = $('.flight-end-date').val();
+        // 若起止时间数值均有效
+        if ($.isValidVariable(start) && $.isValidVariable(end)) {
+            // 求得起止时间相差天数
+            var diff = Math.abs($.calculateStringTimeDiff(start + '0000', end + '0000') / (1000 * 60 * 60 * 24));
+            //   若天数差大于7, 则警告
+            if (diff > 7) {
+                return false;
+            }
+        }
+        return true;
+    };
+
   /*
    * @method dataConvert 数据转换方法
    * @param data ajax返回数据对象
@@ -278,49 +317,66 @@ var PredictionData = function () {
    * 处理表单提交
    * */
   var handleSubmitForm = function (obj) {
-    // 清空警告
-    clearAlert();
-    // 清空提示
-    clearTip();
-    //校验表单;
-    var validate = validateForm(obj);
-    if (!validate.valid) {
-      // 清空数据时间
-      clearGeneratetime();
-      //隐藏当前统计条件
-      hideConditions();
-      // 显示警告信息内容
-      showAlear(validate);
-      return;
-    } else {
-      //显示当前统计条件
-      showConditions(obj);
-      //数据查询
-      //searchData(obj);
-    }
+      // 清空警告
+      clearAlert();
+      // 清空提示
+      clearTip();
+      //校验表单;
+      var validate = validateForm(obj);
+      if (!validate.valid) {
+          // 清空数据时间
+          clearGeneratetime();
+          //隐藏当前统计条件
+          hideConditions();
+          // 显示警告信息内容
+          showAlear(validate);
+          return;
+      } else {
+          //显示当前统计条件
+          showConditions(obj);
+          //数据查询
+          searchData(DataForm, searchUrl[index]);
+      }
   }
   /**
    * 校验表单
    * */
   var validateForm = function (obj) {
-    var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
-    //起始时间格式
-    var endDateValid = regexp.test(obj.endDate);
-    if (!endDateValid) {
-      return {
-        valid: false,
-        mess: "请输入正确的截止时间,日期格式:YYYYMMDD"
+      var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
+      //起始时间格式校验
+      var endDateValid = regexp.test(obj.startDate);
+      if (!endDateValid) {
+          return {
+              valid: false,
+              mess: "请输入正确的起始时间,日期格式:YYYYMMDD"
+          }
       }
-    }
-    if (obj.airportName == "") {
-      return {
-        valid: false,
-        mess: "请输入正确的机场名称"
+      //截止时间格式校验
+      var endDateValid = regexp.test(obj.endDate);
+      if (!endDateValid) {
+          return {
+              valid: false,
+              mess: "请输入正确的截止时间,日期格式:YYYYMMDD"
+          }
       }
-    }
-    return {
-      valid: true
-    };
+      // 起止时间范围校验
+      var valid =  validateDatesDifference();
+      if( !valid){
+          return {
+              valid: false,
+              mess: "起止时间跨度不能超过7天"
+          }
+      }
+      // 机场名称校验
+      if (obj.airportName == "") {
+          return {
+              valid: false,
+              mess: "请输入正确的机场名称"
+          }
+      }
+      return {
+          valid: true
+      };
   };
 
   /**
@@ -509,40 +565,29 @@ var PredictionData = function () {
    * 初始化日期插件datepicker
    * */
   var initDatepicker = function () {
-    $('.start-date-input').datepicker({
-      language: "zh-CN",
-      // showOnFocus: false, //是否在获取焦点时显示面板 true显示 false不显示 默认true
-      autoclose: true, //选择日期后自动关闭面板
-      // clearBtn: true, //是否显示清空按钮
-      //todayHighlight: true,
-      //startDate: '-6d', //可选日期的开始日期 0d:当前 -1d:当前的前1天, +1d:当前的后1天
-      endDate: '0d', //可选日期最后日期
-      // keepEmptyValues: true,
-      // forceParse: true,
-      //格式化
-      format: 'yyyymmdd',
-    });
-    $('.flight-end-date').datepicker({
-      language: "zh-CN",
-      // showOnFocus: false, //是否在获取焦点时显示面板 true显示 false不显示 默认true
-      autoclose: true, //选择日期后自动关闭面板
-      // clearBtn: true, //是否显示清空按钮
-      //todayHighlight: true,
-      startDate: '-6d', //可选日期的开始日期 0d:当前 -1d:当前的前1天, +1d:当前的后1天
-      endDate: '0d', //可选日期最后日期
-      // keepEmptyValues: true,
-      // forceParse: true,
-      //格式化
-      format: 'yyyymmdd',
-    });
-    $('.start-date-input').on('changeDate', function () {
-      var  time = $('.start-date-input').val();
-      var day7 = $.addStringTime(time + '0000', 3600*1000*24*-1*6);
-      var endTime  = $.parseFullTime(time+ '0000');
-      $('.flight-end-date').datepicker('setStartDate',  $.parseFullTime(day7));
-      $('.flight-end-date').datepicker('setEndDate',endTime );
-      // $('.flight-end-date').datepicker('setDate',endTime );
-    })
+      // 起始时间输入框
+      $('.start-date-input').datepicker({
+          language: "zh-CN",
+          autoclose: true, //选择日期后自动关闭面板
+          endDate: '0d', //可选日期最后日期
+          //格式化
+          format: 'yyyymmdd',
+      });
+      // 截止时间输入框
+      $('.flight-end-date').datepicker({
+          language: "zh-CN",
+          autoclose: true, //选择日期后自动关闭面板
+          endDate: '0d', //可选日期最后日期
+          //格式化
+          format: 'yyyymmdd',
+      });
+      //事件绑定
+      $('.start-date-input').on('changeDate', function () {
+          validateDates();
+      });
+      $('.flight-end-date').on('changeDate', function () {
+          validateDates();
+      });
   };
   return {
     init: function () {
@@ -558,4 +603,4 @@ var PredictionData = function () {
 
 $(document).ready(function () {
   PredictionData.init();
-})
+});
