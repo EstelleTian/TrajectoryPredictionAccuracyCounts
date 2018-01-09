@@ -4,6 +4,7 @@ var PredictionData = function () {
   // 当前nav索引
   var index =0;
   var searchUrl = [ipHost,ipHost + 'point/'];
+  var itemTitle = ['航段飞行时间误差统计','终端区航路点过点时间统计']
   /*
    * 表单查询对象
    * */
@@ -54,7 +55,6 @@ var PredictionData = function () {
       // 更新当前nav索引
        index = $(this).index();
     });
-
     //航段飞行时间误差统计导航点击事件
     $('.nav_monitor').on('click', function () {
       $('li', nav).removeClass('active');
@@ -65,17 +65,9 @@ var PredictionData = function () {
       $('.fly_table').removeClass('h50');
       $('.fly_table').addClass('h100');
       //修改标题文字
-      if ($('.header_name').text() == '航段飞行时间误差统计') {
-        return
-      } else {
-        $('.header_name').text('航段飞行时间误差统计')
-      }
+        $('.header_name').text(itemTitle[index])
       //清空数据
-      $('.start-date-input').val('');
-      $('.flight-end-date').val('');
-      $('.flight_name').val('')
-      $.jgrid.gridUnload(tableObject.terTableObjTop);
-      $.jgrid.gridUnload(tableObject.terTableObjDown);
+      clearData(tableObject);
       hideConditions()
     });
     // 终端区航路点过点时间统计导航点击事件
@@ -86,39 +78,55 @@ var PredictionData = function () {
       $('.fly_table').removeClass('h100');
       $('.fly_table').addClass('h50');
       //修改标题文字
-      if ($('.header_name').text() == '航段飞行时间误差统计') {
-        $('.header_name').text('终端区航路点过点时间统计')
-      } else {
-        return
-      }
+      $('.header_name').text(itemTitle[index])
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //清空数据
-      $('.start-date-input').val('');
-      $('.flight-end-date').val('');
-      $('.flight_name').val('')
-      $.jgrid.gridUnload(tableObject.flyTableObj);
+      clearData(tableObject)
       hideConditions()
     });
     //起飞机场点击事件状态绑定
-    $('.dep').on('click', function () {
-
-      if ($(this).hasClass('selected')) {
-        $('.arr').removeClass('selected')
-      } else {
-        $(this).addClass('selected')
-        $('.arr').removeClass('selected')
-      }
-    });
+    initAirportState($('.dep'),$('.arr'))
     //降落机场点击事件状态绑定
-    $('.arr').on('click', function () {
+    initAirportState($('.arr'),$('.dep'))
+  }
+  /*
+  * 清空页面数据
+  * */
+  var clearData = function (table) {
+    $('.start-date-input').val('');
+    $('.flight-end-date').val('');
+    $('.flight_name').val('')
+    if(index == 0){
+      $.jgrid.gridUnload(table.flyTableObj);
+    }else if(index == 1){
+      $.jgrid.gridUnload(table.terTableObjTop);
+      $.jgrid.gridUnload(table.terTableObjDown);
+    }
+  }
+  /*
+  * 提示前清空数据
+  * */
+  var alertClearData = function (table) {
+    if(index == 0){
+      $.jgrid.gridUnload(table.flyTableObj);
+    }else if(index == 1){
+      $.jgrid.gridUnload(table.terTableObjTop);
+      $.jgrid.gridUnload(table.terTableObjDown);
+    }
+  }
+  /*
+  * 监控起飞降落机场状态
+  * */
+  var initAirportState = function (state1,state2) {
+    state1.on('click', function () {
       if ($(this).hasClass('selected')) {
-        $('.dep').removeClass('selected')
+        state2.removeClass('selected')
       } else {
         $(this).addClass('selected')
-        $('.dep').removeClass('selected')
+        state2.removeClass('selected')
       }
-    });
+    })
   }
   /**判断机场状态*/
   var airportStatus = function () {
@@ -346,6 +354,7 @@ var PredictionData = function () {
       //起始时间格式校验
       var endDateValid = regexp.test(obj.startDate);
       if (!endDateValid) {
+        alertClearData(tableObject);
           return {
               valid: false,
               mess: "请输入正确的起始时间,日期格式:YYYYMMDD"
@@ -354,6 +363,7 @@ var PredictionData = function () {
       //截止时间格式校验
       var endDateValid = regexp.test(obj.endDate);
       if (!endDateValid) {
+        alertClearData(tableObject);
           return {
               valid: false,
               mess: "请输入正确的截止时间,日期格式:YYYYMMDD"
@@ -362,6 +372,7 @@ var PredictionData = function () {
       // 起止时间范围校验
       var valid =  validateDatesDifference();
       if( !valid){
+        alertClearData(tableObject);
           return {
               valid: false,
               mess: "起止时间跨度不能超过7天"
@@ -369,6 +380,7 @@ var PredictionData = function () {
       }
       // 机场名称校验
       if (obj.airportName == "") {
+        alertClearData(tableObject);
           return {
               valid: false,
               mess: "请输入正确的机场名称"
@@ -414,7 +426,7 @@ var PredictionData = function () {
 
   var showTip = function (mess) {
     mess = mess || '';
-    $('.history-data-statistics .no-datas-tip').text(mess).show();
+    $('.charts-wrap .no-datas-tip').text(mess).show();
   };
 
   /**
@@ -481,7 +493,8 @@ var PredictionData = function () {
             initGridTable(tableDataConfigs.terminalPointDataConfigDown, tableObject.terTableObjDown)
           }
           // 若数据为空
-          if (!$.isValidObject(data)) {
+          if ($.isEmptyObject(data.map)) {
+            alertClearData(tableObject)
             //显示提示
             showTip('本次统计数据结果为空');
             loading.stop();
