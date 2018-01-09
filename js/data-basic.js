@@ -142,7 +142,8 @@ var tableDataConfig = function () {
       }, {
         name: 'flightID',
         width:100,
-        index: 'flightID'
+        index: 'flightID',
+        frozen: true
       }, {
         name: 'aircraftType',
         width:100,
@@ -179,6 +180,7 @@ var tableDataConfig = function () {
       }, {
         name: 'flightID',
         index: 'flightID',
+        frozen: true,
         width:100
       }, {
         name: 'aircraftType',
@@ -293,7 +295,7 @@ var tableDataConfig = function () {
     var container = gridTableGBox.parent();
 
     // 计算表格高度
-    var gridTableHeight = gridTableBDiv.outerHeight() - (gridTableGBox.outerHeight() - container.height());
+    var gridTableHeight = gridTableBDiv.outerHeight() - (gridTableGBox.outerHeight() - container.height()+20);
     var gridTableWidth = container.width();
 
     // 调用表格修改高度宽度方法

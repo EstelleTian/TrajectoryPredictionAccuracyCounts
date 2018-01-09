@@ -64,6 +64,9 @@
 .history-data-statistics .conditions-content > span.conditions-end-data{
     padding-left: 0;
 }
+.ui-jqgrid-view{
+    overflow: hidden;
+}
 .history-data-statistics .conditions-content > span.conditions-tip,
 .history-data-statistics .conditions-content > span.conditions-unit {
     border: none;

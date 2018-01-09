@@ -2,7 +2,7 @@ var PredictionData = function () {
   //Ip地址
   var ipHost = 'http://192.168.243.191:8080/module-trajectoryCorrect-service/trajectory/correct/';
   // 当前nav索引
-  var index =0;
+  var stateIndex =0;
   var searchUrl = [ipHost,ipHost + 'point/'];
   var itemTitle = ['航段飞行时间误差统计','终端区航路点过点时间统计']
   /*
@@ -55,32 +55,22 @@ var PredictionData = function () {
     var nav = $('#nav');
     $('.nav li', nav).on('click', function () {
       // 更新当前nav索引
-       index = $(this).index();
+       stateIndex = $(this).index();
     });
     //航段飞行时间误差统计导航点击事件
     $('.nav_monitor').on('click', function () {
       $('li', nav).removeClass('active');
       $(this).addClass('active');
-      //切换table个数
-      $('.down_table').hide();
-      $('.down_table').removeClass('h50');
-      $('.fly_table').removeClass('h50');
-      $('.fly_table').addClass('h100');
       //修改标题文字
-        $('.header_name').text(itemTitle[index])
+        $('.header_name').text(itemTitle[stateIndex])
       //清空数据
       // clearData(tableObject);
       // hideConditions()
     });
     // 终端区航路点过点时间统计导航点击事件
     $('.nav-history-data-statistics').on('click', function () {
-      //切换table个数
-      $('.down_table').show();
-      $('.down_table').addClass('h50');
-      $('.fly_table').removeClass('h100');
-      $('.fly_table').addClass('h50');
       //修改标题文字
-      $('.header_name').text(itemTitle[index])
+      $('.header_name').text(itemTitle[stateIndex])
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //清空数据
@@ -99,9 +89,9 @@ var PredictionData = function () {
     $('.start-date-input').val('');
     $('.flight-end-date').val('');
     $('.flight_name').val('')
-    if(index == 0){
+    if(stateIndex == 0){
       $.jgrid.gridUnload(table.flyTableObj);
-    }else if(index == 1){
+    }else if(stateIndex == 1){
       $.jgrid.gridUnload(table.terTableObjTop);
       $.jgrid.gridUnload(table.terTableObjDown);
     }
@@ -111,9 +101,9 @@ var PredictionData = function () {
   * */
   var alertClearData = function (table) {
     if($.isValidObject(table)){
-      if(index == 0){
+      if(stateIndex == 0){
         $.jgrid.gridUnload(table.flyTableObj);
-      }else if(index == 1){
+      }else if(stateIndex == 1){
         $.jgrid.gridUnload(table.terTableObjTop);
         $.jgrid.gridUnload(table.terTableObjDown);
       }
@@ -163,6 +153,20 @@ var PredictionData = function () {
   var initSubmitEvent = function () {
     $('.search_data').on('click', function () {
       $(".no-datas-tip").hide();
+      if(stateIndex == 0){
+        //切换table个数
+        $('.down_table').hide();
+        $('.down_table').removeClass('h50');
+        $('.fly_table').removeClass('h50');
+        $('.fly_table').addClass('h100');
+      }else if(stateIndex == 1){
+        //切换table个数
+        $('.down_table').show();
+        $('.down_table').addClass('h50');
+        $('.fly_table').removeClass('h100');
+        $('.fly_table').addClass('h50');
+      }
+      alertClearData(tableObject)
       //获取 表单数据
       getFormData(DataForm);
       // 处理表单提交
@@ -305,7 +309,7 @@ var PredictionData = function () {
         if (index == 1) {
           //模态框设置
           var option = {
-            title: contents + '详情',
+            title: contents + '航班详情',
             content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>',
             width: 1280,
             height: 960,
@@ -316,7 +320,7 @@ var PredictionData = function () {
           //初始化模态框
           BootstrapDialogFactory.dialog(option);
           //初始化航段飞行时间误差统计详情表格
-          if ($('.header_name').text() == '航段飞行时间误差统计') {
+          if (!$('.down_table').is(':visible')) {
             tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
             initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table',rowid +'detail_pager')
           } else {
@@ -401,7 +405,7 @@ var PredictionData = function () {
           //显示当前统计条件
           showConditions(obj);
           //数据查询
-          searchData(DataForm, searchUrl[index]);
+          searchData(DataForm, searchUrl[stateIndex]);
       }
   }
   /**
@@ -615,6 +619,14 @@ var PredictionData = function () {
   var initDocumentResize = function () {
     $(window).resize(function () {
         resizeToFitContainer();
+      if($.isValidObject(tableObject)){
+        if(stateIndex == 0){
+          tableDataConfigs.resizeToFitContainer('flight_grid_table')
+        }else if(stateIndex == 1){
+          tableDataConfigs.resizeToFitContainer('flight_grid_table')
+          tableDataConfigs.resizeToFitContainer('d_flight_grid_table')
+        }
+      }
     });
   };
 
