@@ -302,9 +302,10 @@
 .flight_name{
     text-transform: uppercase;
 }
-.selected{
-    background-color: #204d74 !important;
-    color: white !important;
+.btn-group .selected{
+    background-color: #578ebe ;
+    border-color: #578ebe ;
+    color: white ;
 }
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
     border: 1px solid #ddd !important;
