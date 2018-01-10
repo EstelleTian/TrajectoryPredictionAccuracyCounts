@@ -28,7 +28,6 @@
                 </div>
                 <!--<div class="pull-right user-info">-->
                     <!--<div class="pull-left avatar">-->
-                        <!--<img src="img/img-profile.jpg">-->
                     <!--</div>-->
                     <!--<div class="pull-right">-->
                         <!--<ul class="user_detail">-->
@@ -154,6 +153,91 @@
 
             </div>
         </div>
+        <div class="row active ter_time" id="">
+            <div class="col-md-12">
+                <div class="box round">
+                    <h2 class="history-data-title">
+                        <span class="header_name">航段飞行时间误差统计</span>
+                        <span class="generate-time pull-right">
+                        </span>
+                    </h2>
+                    <div class="form-wrap">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-4">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <span class="cy-pad-hor-s">起止时间 : </span>
+                                    </div>
+                                    <div class="input-daterange input-group" id="datepicker">
+                                        <input type="text" class="form-control start-date-input" name="start"  />
+                                        <span class="input-group-addon">至</span>
+                                        <input type="text" class="form-control flight-end-date" name="end" id="qEndTime"  />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <span class="cy-pad-hor-s">机场状态 : </span>
+                                    </div>
+                                    <div class="flight_status input-group">
+                                        <div class="btn-group" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-default selected dep">起飞机场</button>
+                                            <button type="button" class="btn btn-default arr">降落机场</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <span class="cy-pad-hor-s">机场名称：</span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control fly_airport_Name flight_name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-2">
+                                <button class="atfm-btn atfm-btn-blue search_data history-data-btn ladda-button" data-style="zoom-out">查询</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="charts-wrap">
+                        <div class="conditions ">
+                            <div class="col-md-12">
+                                <h5 class="conditions-content hidden">
+                                    <span class="conditions-tip">当前统计条件:</span>
+                                    <span class="conditions-start-data">20171222</span>
+                                    <span class="conditions-line">-</span>
+                                    <span class="conditions-end-data">20171222</span>
+                                    <span class="conditions-type">type</span>
+                                    <span class="conditions-subtype">subtype</span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class=" alert-row">
+                            <div class="col-md-12 alert-container">
+
+                            </div>
+                        </div>
+                        <h3 class="no-datas-tip">暂无数据</h3>
+                        <div class="echart-row">
+                            <div class="fly_table h100">
+                                <table  id="flight_grid_table"></table>
+                                <div id="flight-datas-pager"></div>
+                            </div>
+                            <div class="down_table">
+                                <table id="d_flight_grid_table"></table>
+                                <div id="d-datas-pager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 
@@ -168,11 +252,6 @@
 <script src="plugins/jqgrid/i18n/grid.locale-cn.js" type="text/javascript"></script>
 <script src="plugins/ladda/js/spin.min.js" type="text/javascript" ></script>
 <script src="plugins/ladda/js/ladda.js" type="text/javascript" ></script>
-<script>
-    var iphost = "http://172.30.8.204:8080/DataShare/";
-//    var iphost = "http://192.168.243.104:1566/";
-//    var iphost = "";
-</script>
 <script src="js/data-basic.js"></script>
 <script src="js/accuracy-of-track-prediction.js"></script>
 

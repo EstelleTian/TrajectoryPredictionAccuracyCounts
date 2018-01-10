@@ -63,6 +63,9 @@ var PredictionData = function () {
       $(this).addClass('active');
       //修改标题文字
         $('.header_name').text(itemTitle[stateIndex])
+      $('#'+tableObject.flyTableObj).jqGrid('clearGridData');
+      $('#'+tableObject.flyTableObj).jqGrid('setCaption', {datatype: 'local', data: tableDataConfigs.flyErrorTableDataConfig.data.colNames}).trigger('reloadGrid')
+      $('#'+tableObject.flyTableObj).jqGrid('setGridParam', {datatype: 'local', data: tableDataConfigs.flyErrorTableDataConfig.data}).trigger('reloadGrid')
       //清空数据
       // clearData(tableObject);
       // hideConditions()
@@ -73,6 +76,12 @@ var PredictionData = function () {
       $('.header_name').text(itemTitle[stateIndex])
       $('li', nav).removeClass('active');
       $(this).addClass('active');
+      $('#'+tableObject.terTableObjTop).clearGridData();
+      $('#'+tableObject.terTableObjTop).jqGrid('setCaption', {datatype: 'local', data: tableDataConfigs.terminalPointDataConfigTop.data.colNames}).trigger('reloadGrid')
+      $('#'+tableObject.terTableObjTop).jqGrid('setGridParam', {datatype: 'local', data: tableDataConfigs.terminalPointDataConfigTop.data}).trigger('reloadGrid')
+      $('#'+tableObject.terTableObjDown).clearGridData();
+      $('#'+tableObject.terTableObjDown).jqGrid('setCaption', {datatype: 'local', data: tableDataConfigs.terminalPointDataConfigDown.data.colNames}).trigger('reloadGrid')
+      $('#'+tableObject.terTableObjDown).jqGrid('setGridParam', {datatype: 'local', data: tableDataConfigs.terminalPointDataConfigDown.data}).trigger('reloadGrid')
       //清空数据
       // clearData(tableObject)
       // hideConditions()
