@@ -79,6 +79,7 @@ var tableDataConfig = function () {
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
+      width:80,
       frozen: true
     }, {
       name: 'terPoint',
@@ -136,6 +137,7 @@ var tableDataConfig = function () {
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
+      width:80,
       frozen: true
     }, {
       name: 'terPoint',
@@ -191,16 +193,13 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
-        width:100,
         frozen: true
       }, {
         name: 'flightID',
-        width:100,
         index: 'flightID',
         frozen: true
       }, {
         name: 'aircraftType',
-        width:100,
         index: 'aircraftType'
       }, {
         name: 'rPastTime',
@@ -251,8 +250,7 @@ var tableDataConfig = function () {
       }, {
         name: 'flightID',
         index: 'flightID',
-        frozen: true,
-        width:100
+        frozen: true
       }, {
         name: 'aircraftType',
         index: 'aircraftType',
@@ -260,7 +258,6 @@ var tableDataConfig = function () {
       }, {
         name: 'rPastTime',
         index: 'rPastTime',
-        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -315,7 +312,6 @@ var tableDataConfig = function () {
       }, {
         name: 'dyn20PastTime',
         index: 'dyn20PastTime',
-        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -325,28 +321,22 @@ var tableDataConfig = function () {
         }
       }, {
         name: 'rPasthlevel',
-        index: 'rPasthlevel',
-        width:100
+        index: 'rPasthlevel'
       }, {
         name: 'schhlevel',
-        index: 'schhlevel',
-        width:100
+        index: 'schhlevel'
       }, {
         name: 'fplhlevel',
-        index: 'fplhlevel',
-        width:100
+        index: 'fplhlevel'
       }, {
         name: 'dephlevel',
-        index: 'dephlevel',
-        width:100
+        index: 'dephlevel'
       }, {
         name: 'dyn10hlevel',
-        index: 'dyn10hlevel',
-        width:100
+        index: 'dyn10hlevel'
       }, {
         name: 'dyn20hlevel',
-        index: 'dyn20hlevel',
-        width:100
+        index: 'dyn20hlevel'
       }
     ],
     data: []

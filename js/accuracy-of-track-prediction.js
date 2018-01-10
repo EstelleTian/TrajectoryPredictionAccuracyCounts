@@ -332,6 +332,7 @@ var PredictionData = function () {
       shrinkToFit: false,
       cmTemplate: {
         align: 'center',
+        width:120,
         resize: false
       },
       pager:pagerId,
@@ -402,7 +403,8 @@ var PredictionData = function () {
       shrinkToFit: false,
       cmTemplate: {
         align: 'center',
-        resize: false
+        resize: false,
+        width:120
       },
       pager:pagerId,
       pgbuttons: false,
