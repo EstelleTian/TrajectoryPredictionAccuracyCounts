@@ -61,8 +61,7 @@ var PredictionData = function () {
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //切换模块
-      $('.fly_time').show();
-      $('.ter_time').hide();
+      tabToggle($('.fly_time'),$('.ter_time'))
       // clearData(tableObject);
       // hideConditions()
     });
@@ -72,8 +71,7 @@ var PredictionData = function () {
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //模块切换
-      $('.fly_time').hide();
-      $('.ter_time').show();
+      tabToggle($('.ter_time'),$('.fly_time'))
       // clearData(tableObject)
       // hideConditions()
     });
@@ -82,6 +80,22 @@ var PredictionData = function () {
     //降落机场点击事件状态绑定
     initAirportState($('.arr'),$('.dep'))
   }
+  /*
+  * tab页状态切换
+  * */
+  var tabToggle = function (tab1,tab2) {
+    if(tab1.hasClass('show')){
+      tab1.removeClass('show');
+      tab1.addClass('hide');
+      tab2.addClass('show')
+      tab2.removeClass('hide')
+    }else{
+      tab1.removeClass('hide');
+      tab1.addClass('show');
+      tab2.addClass('hide')
+      tab2.removeClass('show')
+    }
+  } 
   /*
   * 清空页面数据
   * */
@@ -334,11 +348,11 @@ var PredictionData = function () {
           BootstrapDialogFactory.dialog(option);
           //初始化航段飞行时间误差统计详情表格
           if (!$('.ter_time').is(':visible')) {
-            tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
+            tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.flyData.infoMap[contents];
             initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table',rowid +'detail_pager')
           } else {
             //初始化终端区航路点过点时间统计详情表格
-            tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.data.infoMap[contents];
+            tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.terData.infoMap[contents];
             initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table',rowid +'detail_pager')
           }
         }
@@ -547,7 +561,11 @@ var PredictionData = function () {
         if ($.isValidObject(data)) {
           //提取数据
           var time = data.generateTime;
-          $.extend(tableDataConfigs.data, data)
+          if(stateIndex == 0){
+            $.extend(tableDataConfigs.flyData, data)
+          }else if(stateIndex == 1){
+            $.extend(tableDataConfigs.terData, data)
+          }
           // 更新数据时间
           if ($.isValidVariable(time)) {
             // 更新数据时间
@@ -556,14 +574,14 @@ var PredictionData = function () {
           if (searchUrl == ipHost) {
             tableDataConfigs.flyErrorTableDataConfig.data = [];
             tableDataConfigs.flyDetailDataConfig.data = [];
-            dataConvert(tableDataConfigs.data, tableDataConfigs, 'flyErrorTableDataConfig')
+            dataConvert(tableDataConfigs.flyData, tableDataConfigs, 'flyErrorTableDataConfig')
             initGridTable(tableDataConfigs.flyErrorTableDataConfig, 'flight_grid_table','flight-datas-pager')
           } else {
             tableDataConfigs.terminalPointDataConfigTop.data = []
             tableDataConfigs.terminalPointDataConfigDown.data = []
             tableDataConfigs.terminalDetailDataConfig.data = []
-            dataConvert(tableDataConfigs.data, tableDataConfigs, 'terminalPointDataConfigTop')
-            dataConvert(tableDataConfigs.data, tableDataConfigs, 'terminalPointDataConfigDown')
+            dataConvert(tableDataConfigs.terData, tableDataConfigs, 'terminalPointDataConfigTop')
+            dataConvert(tableDataConfigs.terData, tableDataConfigs, 'terminalPointDataConfigDown')
             initGridTable(tableDataConfigs.terminalPointDataConfigTop, tableObject.terTableObjTop,'flight-datas-pager')
             initGridTable(tableDataConfigs.terminalPointDataConfigDown, tableObject.terTableObjDown,'d-datas-pager')
           }

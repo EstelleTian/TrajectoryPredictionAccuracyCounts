@@ -311,124 +311,8 @@ var tableDataConfig = function () {
     }
   }
   /*数据样例*/
-  var data = {
-    // "map": {
-    //     "ZBAA-BOBAK": {
-    //         "schAvgHLevel": -42,
-    //         "fplAvgHLevel": -2,
-    //         "depAvgHLevel": -24,
-    //         "dyn10AvgHLevel": -34,
-    //         "dyn20AvgHLevel": -47,
-    //         "schAvgDis": 1023,
-    //         "fplAvgDis": 1505,
-    //         "depAvgDis": 215,
-    //         "dyn10mAvgDis": 185,
-    //         "dyn20mAvgDis": 157,
-    //         "schMeHLevel": -53,
-    //         "fplMeHLevel": 0,
-    //         "depMeHLevel": -9,
-    //         "dyn10MeHLevel": -30,
-    //         "dyn20MeHLevel": -57,
-    //         "schMeDis": 727,
-    //         "fplMeDis": 1089,
-    //         "depMeDis": 194,
-    //         "dyn10mMeDis": 153,
-    //         "dyn20mMeDis": 142,
-    //         "flightcount": 55
-    //     }
-    // },
-    // "infoMap": {
-    //     "ZBAA-BOBAK": [
-    //         {
-    //             "id": 37266253,
-    //             "flightID": "CCA1206",
-    //             "aircraftType": "A321",
-    //             "rPastTime": "20180105104459",
-    //             "schPastTime": "20180105100756",
-    //             "fplPastTime": "20180105100915",
-    //             "depPastTime": "20180105104144",
-    //             "dyn10PastTime": "20180105104144",
-    //             "dyn20PastTime": "20180105104226",
-    //             "rPasthlevel": "FL147",
-    //             "schhlevel": "FL220",
-    //             "fplhlevel": "FL220",
-    //             "dephlevel": "FL220",
-    //             "dyn10hlevel": "FL220",
-    //             "dyn20hlevel": "FL220"
-    //         },
-    //         {
-    //             "id": 37266253,
-    //             "flightID": "CCA1206",
-    //             "aircraftType": "A321",
-    //             "rPastTime": "20180105104459",
-    //             "schPastTime": "20180105100756",
-    //             "fplPastTime": "20180105100915",
-    //             "depPastTime": "20180105104144",
-    //             "dyn10PastTime": "20180105104144",
-    //             "dyn20PastTime": "20180105104226",
-    //             "rPasthlevel": "FL147",
-    //             "schhlevel": "FL220",
-    //             "fplhlevel": "FL220",
-    //             "dephlevel": "FL220",
-    //             "dyn10hlevel": "FL220",
-    //             "dyn20hlevel": "FL220"
-    //         },
-    //     ]
-    // },
-    // "commonTypeMap": {
-    //     "B738": {
-    //         "schAvgHLevel": -34,
-    //         "fplAvgHLevel": 0,
-    //         "depAvgHLevel": -8,
-    //         "dyn10AvgHLevel": -18,
-    //         "dyn20AvgHLevel": -30,
-    //         "schAvgDis": 767,
-    //         "fplAvgDis": 690,
-    //         "depAvgDis": 199,
-    //         "dyn10mAvgDis": 203,
-    //         "dyn20mAvgDis": 190,
-    //         "schMeHLevel": -33,
-    //         "fplMeHLevel": 0,
-    //         "depMeHLevel": 0,
-    //         "dyn10MeHLevel": -9,
-    //         "dyn20MeHLevel": -34,
-    //         "schMeDis": 574,
-    //         "fplMeDis": 577,
-    //         "depMeDis": 131,
-    //         "dyn10mMeDis": 133,
-    //         "dyn20mMeDis": 136,
-    //         "flightcount": 46
-    //     },
-    // },
-    // "typeMap": {
-    //     "D": {
-    //         "schAvgHLevel": -13,
-    //         "fplAvgHLevel": 10,
-    //         "depAvgHLevel": -2,
-    //         "dyn10AvgHLevel": -20,
-    //         "dyn20AvgHLevel": -8,
-    //         "schAvgDis": 1446,
-    //         "fplAvgDis": 2084,
-    //         "depAvgDis": 173,
-    //         "dyn10mAvgDis": 246,
-    //         "dyn20mAvgDis": 163,
-    //         "schMeHLevel": -10,
-    //         "fplMeHLevel": 9,
-    //         "depMeHLevel": 0,
-    //         "dyn10MeHLevel": -14,
-    //         "dyn20MeHLevel": -16,
-    //         "schMeDis": 908,
-    //         "fplMeDis": 1344,
-    //         "depMeDis": 120,
-    //         "dyn10mMeDis": 266,
-    //         "dyn20mMeDis": 188,
-    //         "flightcount": 19
-    //     },
-    //
-    // },
-    // "generateTime": "201801051203",
-    // "status": 0
-  }
+  var flyData = {};
+  var terData = {};
   return {
     flyErrorTableDataConfig: flyErrorTableDataConfig,
     terminalPointDataConfigTop: terminalPointDataConfigTop,
@@ -436,7 +320,8 @@ var tableDataConfig = function () {
     resizeToFitContainer: resizeToFitContainer,
     flyDetailDataConfig: flyDetailDataConfig,
     terminalDetailDataConfig: terminalDetailDataConfig,
-    data: data
+    flyData: flyData,
+    terData:terData
   }
 };
 
