@@ -95,7 +95,7 @@ var tableDataConfig = function () {
       name: 'depMeDis',
       index: 'depMeDis'
     }, {
-      name: '',
+      name: 'dyn10mMeDis',
       index: 'dyn10mMeDis'
     }, {
       name: 'dyn20mMeDis',
