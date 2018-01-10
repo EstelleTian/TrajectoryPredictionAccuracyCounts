@@ -63,7 +63,11 @@ var PredictionData = function () {
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //切换模块
-      tabToggle($('.fly_time'),$('.ter_time'))
+      if($('.fly_time').is(":visible")){
+        return
+      }else{
+        tabToggle($('.fly_time'),$('.ter_time'))
+      }
       // clearData(tableObject);
       // hideConditions()
     });
@@ -74,7 +78,12 @@ var PredictionData = function () {
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //模块切换
-      tabToggle($('.ter_time'),$('.fly_time'))
+      if(!$('.fly_time').is(":visible")){
+        return
+      }else{
+        tabToggle($('.ter_time'),$('.fly_time'))
+      }
+
       // clearData(tableObject)
       // hideConditions()
     });

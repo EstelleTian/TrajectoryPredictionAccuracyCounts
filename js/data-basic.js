@@ -2,7 +2,7 @@ var tableDataConfig = function () {
   var flyErrorTableDataConfig = {
     colName: ['起飞机场-航路点-机型', '实际飞行时间平均值(秒)', '实际飞行时间中位数(秒)', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均时间差(秒)', 'FPL平均时间差(秒)', 'DEP平均时间差(秒)', 'DYN10平均时间差(秒)', 'DYN20平均时间差(秒)'],
     colTitle: {
-      flyDepPointType:'航路点',
+      flyDepPointType:'起飞机场-航路点-机型',
       rdepAvgTime:'实际飞行时间平均值(秒)',
       rdepMeTime:'实际飞行时间中位数(秒)',
       schMeDis:'SCH中位数时间差(秒)',
