@@ -29,7 +29,8 @@ var PredictionData = function () {
   // 初始化组件
   var initComponent = function () {
     //初始化日历插件datepicker
-    initDatepicker();
+    initDatepicker('.fly_time ');
+    initDatepicker('.ter_time ');
     // 设置默认时间
     setDefaultDates();
     //绑定Window事件，窗口变化时重新调整表格大小
@@ -77,10 +78,10 @@ var PredictionData = function () {
       // clearData(tableObject)
       // hideConditions()
     });
-    //起飞机场点击事件状态绑定
-    initAirportState($('.dep'),$('.arr'))
-    //降落机场点击事件状态绑定
-    initAirportState($('.arr'),$('.dep'))
+    //航段飞行起飞机场点击事件状态绑定
+    initAirportState($('.fly_time .dep'),$('.fly_time .arr'))
+    //终端区起飞机场点击事件状态绑定
+    initAirportState($('.ter_time .dep'),$('.ter_time .arr'))
   }
   /*
   * tab页状态切换
@@ -136,6 +137,14 @@ var PredictionData = function () {
         $(this).addClass('selected')
         state2.removeClass('selected')
       }
+    })
+      state2.on('click', function () {
+        if ($(this).hasClass('selected')) {
+          state1.removeClass('selected')
+        } else {
+          $(this).addClass('selected')
+          state1.removeClass('selected')
+        }
     })
   }
   /**判断机场状态*/
@@ -248,11 +257,11 @@ var PredictionData = function () {
     /**
      *  设置起止时间输入框日历插件的可选范围及默认选中日期
      * */
-    var setStartdDataRange = function () {
+    var setStartdDataRange = function (fatherDom) {
         // 起始时间值
-        var start = $('.start-date-input').val();
+        var start = $(fatherDom + '.start-date-input').val();
         // 截止时间值
-        var end = $('.flight-end-date').val();
+        var end = $(fatherDom + '.flight-end-date').val();
         // 截止时间前1天
         var preDay = $.addStringTime(end + '0000', 3600 * 1000 * 24 * -1);
         // 截止时间前7天的日期值
@@ -260,19 +269,19 @@ var PredictionData = function () {
         // 求得起止时间相差天数
         var diff = Math.abs($.calculateStringTimeDiff(start + '0000', end + '0000') / (1000 * 60 * 60 * 24));
         // 设置起止日期的可选开始日期
-        $('.start-date-input').datepicker('setStartDate', $.parseFullTime(day7));
+        $(fatherDom + '.start-date-input').datepicker('setStartDate', $.parseFullTime(day7));
         // 设置起止日期的可选结束日期
-        $('.start-date-input').datepicker('setEndDate', $.parseFullTime(end+'0000'));
+        $(fatherDom + '.start-date-input').datepicker('setEndDate', $.parseFullTime(end+'0000'));
         // 若截止日期小于起止日期,设置起止日期的默认选中日期为截止日期的前1天
         if(end*1 < start*1){
             // 设置起止日期的默认选中日期为截止日期的前1天
-            $('.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
+            $(fatherDom + '.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
         }else if (diff > 7) { // 若起止时间相差天数大于7天
             // 设置起止日期的默认选中日期为截止日期的前1天
-            $('.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
+            $(fatherDom + '.start-date-input').datepicker('setDate', $.parseFullTime(preDay));
         }else {
             // 设置起止日期的默认选中日期为当前数值(用于解决输入框数值与日历默认选中日期数值不一致的问题)
-            $('.start-date-input').datepicker('setDate', $.parseFullTime(start+'0000'));
+            $(fatherDom + '.start-date-input').datepicker('setDate', $.parseFullTime(start+'0000'));
         }
     };
 
@@ -680,9 +689,9 @@ var PredictionData = function () {
   /**
    * 初始化日期插件datepicker
    * */
-  var initDatepicker = function () {
+  var initDatepicker = function (fatherDom) {
       // 起始时间输入框
-      $('.start-date-input').datepicker({
+      $(fatherDom + '.start-date-input').datepicker({
           language: "zh-CN",
           autoclose: true, //选择日期后自动关闭面板
           endDate: '0d', //可选日期最后日期
@@ -690,7 +699,7 @@ var PredictionData = function () {
           format: 'yyyymmdd',
       });
       // 截止时间输入框
-      $('.flight-end-date').datepicker({
+      $(fatherDom + '.flight-end-date').datepicker({
           language: "zh-CN",
           autoclose: true, //选择日期后自动关闭面板
           endDate: '0d', //可选日期最后日期
@@ -698,13 +707,13 @@ var PredictionData = function () {
           format: 'yyyymmdd',
       });
       //事件绑定
-      $('.start-date-input').on('changeDate', function () {
+      $(fatherDom + '.start-date-input').on('changeDate', function () {
           // 校验起止日期范围是否有效，无效则弹出警告
           validateDates();
       });
-      $('.flight-end-date').on('changeDate', function () {
+      $(fatherDom + '.flight-end-date').on('changeDate', function () {
           // 设置起止时间输入框日历插件的可选范围及默认选中日期
-          setStartdDataRange();
+          setStartdDataRange(fatherDom);
           // 校验起止日期范围是否有效，无效则弹出警告
           validateDates();
       });
