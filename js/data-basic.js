@@ -1,6 +1,21 @@
 var tableDataConfig = function () {
   var flyErrorTableDataConfig = {
     colName: ['起飞机场-航路点-机型', '实际飞行时间平均值(秒)', '实际飞行时间中位数(秒)', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均时间差(秒)', 'FPL平均时间差(秒)', 'DEP平均时间差(秒)', 'DYN10平均时间差(秒)', 'DYN20平均时间差(秒)'],
+    colTitle: {
+      flyDepPointType:'航路点',
+      rdepAvgTime:'实际飞行时间平均值(秒)',
+      rdepMeTime:'实际飞行时间中位数(秒)',
+      schMeDis:'SCH中位数时间差(秒)',
+      fplMeDis:'FPL中位数时间差(秒)',
+      depMeDis:'DEP中位数时间差(秒)',
+      dyn10mMeDis:'DYN10中位数时间差(秒)',
+      dyn20mMeDis:'DYN20中位数时间差(秒)',
+      schAvgDis:'SCH平均时间差(秒)',
+      fplAvgDis:'FPL平均时间差(秒)',
+      depAvgDis:'DEP平均时间差(秒)',
+      dyn10mAvgDis:'DYN10平均时间差(秒)',
+      dyn20mAvgDis:'DYN20平均时间差(秒)'
+    },
     colModel: [
       {
         name: 'flyDepPointType',
@@ -47,6 +62,20 @@ var tableDataConfig = function () {
   }
   var terminalPointDataConfigTop = {
     colName: ['起飞机场', '终端区航路点', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均数时间差(秒)', 'FPL平均数时间差(秒)', 'DEP平均数时间差(秒)', 'DYN10平均数时间差(秒)', 'DYN20平均数时间差(秒)'],
+    colTitle:{
+      depAirport:'起飞机场',
+      terPoint:'终端区航路点',
+      schMeDis:'SCH中位数时间差(秒)',
+      fplMeDis:'FPL中位数时间差(秒)',
+      depMeDis:'DEP中位数时间差(秒)',
+      dyn10mMeDis:'DYN10中位数时间差(秒)',
+      dyn20mMeDis:'DYN20中位数时间差(秒)',
+      schAvgDis:'SCH平均数时间差(秒)',
+      fplAvgDis:'FPL平均数时间差(秒)',
+      depAvgDis:'DEP平均数时间差(秒)',
+      dyn10mAvgDis:'DYN10平均数时间差(秒)',
+      dyn20mAvgDis:'DYN20平均数时间差(秒)'
+    },
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
@@ -65,7 +94,7 @@ var tableDataConfig = function () {
       name: 'depMeDis',
       index: 'depMeDis'
     }, {
-      name: 'dyn10mMeDis',
+      name: '',
       index: 'dyn10mMeDis'
     }, {
       name: 'dyn20mMeDis',
@@ -90,6 +119,20 @@ var tableDataConfig = function () {
   }
   var terminalPointDataConfigDown = {
     colName: ['起飞机场', '终端区航路点', 'SCH中位数高度差', 'FPL中位数高度差', 'DEP中位数高度差', 'DYN10中位数高度差', 'DYN20中位数高度差', 'SCH平均数高度差', 'FPL平均数高度差', 'DEP平均数高度差', 'DYN10平均数高度差', 'DYN20平均数高度差'],
+    colTitle:{
+      depAirport:'起飞机场',
+      terPoint:'终端区航路点',
+      schMeHLevel:'SCH中位数高度差',
+      fplMeHLevel: 'FPL中位数高度差',
+      depMeHLevel:'DEP中位数高度差',
+      dyn10MeHLevel:'DYN10中位数高度差',
+      dyn20MeHLevel:'DYN20中位数高度差',
+      schAvgHLevel:'SCH平均数高度差',
+      fplAvgHLevel:'FPL平均数高度差',
+      depAvgHLevel:'DEP平均数高度差',
+      dyn10AvgHLevel:'DYN10平均数高度差',
+      dyn20AvgHLevel:'DYN20平均数高度差',
+    },
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
@@ -133,6 +176,17 @@ var tableDataConfig = function () {
   }
   var flyDetailDataConfig = {
     colName: ['ID', '航班号', '机型', '实际飞行时间(秒)', 'SHC飞行时间(秒)', 'FPL飞行时间(秒)', 'DEP飞行时间(秒)', 'DYN10飞行时间(秒)', 'DYN20飞行时间(秒)'],
+    colTitle: {
+      id:'ID',
+      flightID:'航班号',
+      aircraftType:'机型',
+      rPastTime:'实际飞行时间(秒)',
+      schPastTime:'SHC飞行时间(秒)',
+      fplPastTime:'FPL飞行时间(秒)',
+      depPastTime:'DEP飞行时间(秒)',
+      dyn10PastTime:'DYN10飞行时间(秒)',
+      dyn20PastTime:'DYN20飞行时间(秒)',
+    },
     colModel: [
       {
         name: 'id',
@@ -171,6 +225,23 @@ var tableDataConfig = function () {
   }
   var terminalDetailDataConfig = {
     colName: ['ID', '航班号', '机型', '实际过点时间', 'SHC过点时间', 'FPL过点时间', 'DEP过点时间', 'DYN10过点时间', 'DYN20过点时间', '实际过点高度', 'SHC过点高度', 'FPL过点高度', 'DEP过点高度', 'DYN10过点高度', 'DYN20过点高度'],
+    colTitle:{
+      id:'ID',
+      flightID:'航班号',
+      aircraftType:'机型',
+      rPastTime:'实际过点时间',
+      schPastTime:'SHC过点时间',
+      fplPastTime:'FPL过点时间',
+      depPastTime:'DEP过点时间',
+      dyn10PastTime:'DYN10过点时间',
+      dyn20PastTime:'DYN20过点时间',
+      rPasthlevel:'实际过点高度',
+      schhlevel:'SHC过点高度',
+      fplhlevel:'FPL过点高度',
+      dephlevel:'DEP过点高度',
+      dyn10hlevel:'DYN10过点高度',
+      dyn20hlevel:'DYN20过点高度',
+    },
     colModel: [
       {
         name: 'id',

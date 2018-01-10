@@ -343,6 +343,12 @@ var PredictionData = function () {
       // sortname: 'time', // 初始化的时候排序的字段
       // sortorder: 'asc', //排序方式,可选desc,asc
       viewrecords: true,
+      loadComplete: function(xhr){
+        var colTitle = config.colTitle;
+        $.each(colTitle,function (i,e) {
+          $('#'+tableId).jqGrid('setLabel',i,'',[],{title:e});
+        })
+      },
       onCellSelect: function (rowid, index, contents, event) {
         if (index == 1) {
           //模态框设置
@@ -407,6 +413,12 @@ var PredictionData = function () {
       sortname: 'aircraftType', // 初始化的时候排序的字段
       // sortorder: 'asc', //排序方式,可选desc,asc
       viewrecords: true,
+      loadComplete: function(xhr){
+        var colTitle = config.colTitle;
+        $.each(colTitle,function (i,e) {
+          $('#'+tableId).jqGrid('setLabel',i,'',[],{title:e});
+        })
+      },
     })
     $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
     $('#' + tableId).jqGrid('navGrid', '#' + pagerId, {
