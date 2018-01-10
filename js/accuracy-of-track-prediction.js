@@ -58,6 +58,7 @@ var PredictionData = function () {
     });
     //航段飞行时间误差统计导航点击事件
     $('.nav_monitor').on('click', function () {
+      $(".no-datas-tip").hide();
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //切换模块
@@ -67,6 +68,7 @@ var PredictionData = function () {
     });
     // 终端区航路点过点时间统计导航点击事件
     $('.nav-history-data-statistics').on('click', function () {
+      $(".no-datas-tip").hide();
       //修改标题文字
       $('li', nav).removeClass('active');
       $(this).addClass('active');
@@ -582,7 +584,7 @@ var PredictionData = function () {
             tableDataConfigs.terminalDetailDataConfig.data = []
             dataConvert(tableDataConfigs.terData, tableDataConfigs, 'terminalPointDataConfigTop')
             dataConvert(tableDataConfigs.terData, tableDataConfigs, 'terminalPointDataConfigDown')
-            initGridTable(tableDataConfigs.terminalPointDataConfigTop, tableObject.terTableObjTop,'flight-datas-pager')
+            initGridTable(tableDataConfigs.terminalPointDataConfigTop, tableObject.terTableObjTop,'t-datas-pager')
             initGridTable(tableDataConfigs.terminalPointDataConfigDown, tableObject.terTableObjDown,'d-datas-pager')
           }
           // 若数据为空
