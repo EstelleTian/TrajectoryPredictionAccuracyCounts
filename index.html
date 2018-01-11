@@ -60,6 +60,11 @@
                                 <span class="glyphicon glyphicon-stats"></span>
                                 终端区航路点过点时间统计</a>
                         </li>
+                        <li class="precision-data-statistics">
+                            <a href="javascript:;">
+                                <span class="glyphicon glyphicon-stats"></span>
+                                航班航路点预测精度展示</a>
+                        </li>
                     </ul>
                     <p class="data_time"></p>
                 </div>
@@ -114,7 +119,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-6 col-md-2">
-                                <button class="atfm-btn atfm-btn-blue search_data fly-data-btn ladda-button" data-style="zoom-out">查询</button>
+                                <button class="atfm-btn atfm-btn-blue loading-data fly-data-btn ladda-button" data-style="zoom-out">查询</button>
                             </div>
                         </div>
 
@@ -149,7 +154,7 @@
 
             </div>
         </div>
-        <div class="row  ter_time hide" id="">
+        <div class="row  ter_time hide">
             <div class="col-md-12">
                 <div class="box round">
                     <h2 class="history-data-title">
@@ -195,7 +200,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-6 col-md-2">
-                                <button class="atfm-btn atfm-btn-blue search_data ter-data-btn ladda-button" data-style="zoom-out">查询</button>
+                                <button class="atfm-btn atfm-btn-blue loading-data ter-data-btn ladda-button" data-style="zoom-out">查询</button>
                             </div>
                         </div>
 
@@ -227,6 +232,66 @@
                             <div class="down_table h50">
                                 <table id="d_flight_grid_table"></table>
                                 <div id="d-datas-pager"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row  precision_show hide" >
+            <div class="col-md-12">
+                <div class="box round">
+                    <h2 class="history-data-title">
+                        <span class="header_name">航班航路点预测精度展示</span>
+                        <span class="generate-time pull-right">
+                        </span>
+                    </h2>
+                    <div class="form-wrap">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <span class="cy-pad-hor-s">查询日期 : </span>
+                                    </div>
+                                    <div class="input-daterange input-group">
+                                        <input type="text" class="form-control  start-date-input" name="start"  />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <span class="cy-pad-hor-s">航班号：</span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control pre_airport_Name flight_name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-2">
+                                <button class="atfm-btn atfm-btn-blue loading-data pre-data-btn ladda-button" data-style="zoom-out">查询</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="charts-wrap">
+                        <div class="conditions ">
+                            <div class="col-md-12">
+                                <h5 class="conditions-content hidden">
+                                    <span class="conditions-tip">当前统计条件:</span>
+                                    <span class="conditions-start-data">20171222</span>
+                                    <span class="conditions-subtype">subtype</span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class=" alert-row">
+                            <div class="col-md-12 alert-container"></div>
+                        </div>
+                        <h3 class="no-datas-tip">暂无数据</h3>
+                        <div class="echart-row">
+                            <div class="top_table h100">
+                                <table id="precision_flight_grid_table"></table>
+                                <div id="pre-datas-pager"></div>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,9 @@
 var tableDataConfig = function () {
   var flyErrorTableDataConfig = {
-    colName: ['起飞机场-航路点-机型', '实际飞行时间平均值(秒)', '实际飞行时间中位数(秒)', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均时间差(秒)', 'FPL平均时间差(秒)', 'DEP平均时间差(秒)', 'DYN10平均时间差(秒)', 'DYN20平均时间差(秒)'],
+    colName: ['起飞机场','航路点', '平均飞行时间(秒)', '中位飞行时间(秒)', 'SCH中位差(秒)', 'FPL中位差(秒)', 'DEP中位差(秒)', 'DYN10中位差(秒)', 'DYN20中位差(秒)', 'SCH平均差(秒)', 'FPL平均差(秒)', 'DEP平均差(秒)', 'DYN10平均差(秒)', 'DYN20平均差(秒)'],
     colTitle: {
-      flyDepPointType:'起飞机场-航路点-机型',
+      flyDepPointType:'起飞机场',
+      point:'航路点',
       rdepAvgTime:'实际飞行时间平均值(秒)',
       rdepMeTime:'实际飞行时间中位数(秒)',
       schMeDis:'SCH中位数时间差(秒)',
@@ -20,6 +21,10 @@ var tableDataConfig = function () {
       {
         name: 'flyDepPointType',
         index: 'flyDepPointType',
+        frozen:true
+      },{
+        name: 'point',
+        index: 'point',
         frozen:true
       }, {
         name: 'rdepAvgTime',
@@ -61,7 +66,7 @@ var tableDataConfig = function () {
     data: []
   }
   var terminalPointDataConfigTop = {
-    colName: ['起飞机场', '终端区航路点', 'SCH中位数时间差(秒)', 'FPL中位数时间差(秒)', 'DEP中位数时间差(秒)', 'DYN10中位数时间差(秒)', 'DYN20中位数时间差(秒)', 'SCH平均数时间差(秒)', 'FPL平均数时间差(秒)', 'DEP平均数时间差(秒)', 'DYN10平均数时间差(秒)', 'DYN20平均数时间差(秒)'],
+    colName: ['起飞机场', '终端区航路点', 'SCH中位差(秒)', 'FPL中位差(秒)', 'DEP中位差(秒)', 'DYN10中位差(秒)', 'DYN20中位差(秒)', 'SCH平均差(秒)', 'FPL平均差(秒)', 'DEP平均差(秒)', 'DYN10平均(秒)', 'DYN20平均差(秒)'],
     colTitle:{
       depAirport:'起飞机场',
       terPoint:'终端区航路点',
@@ -119,7 +124,7 @@ var tableDataConfig = function () {
     data: []
   }
   var terminalPointDataConfigDown = {
-    colName: ['起飞机场', '终端区航路点', 'SCH中位数高度差', 'FPL中位数高度差', 'DEP中位数高度差', 'DYN10中位数高度差', 'DYN20中位数高度差', 'SCH平均数高度差', 'FPL平均数高度差', 'DEP平均数高度差', 'DYN10平均数高度差', 'DYN20平均数高度差'],
+    colName: ['起飞机场', '终端区航路点', 'SCH中位差', 'FPL中位差', 'DEP中位差', 'DYN10中位差', 'DYN20中位差', 'SCH平均差', 'FPL平均差', 'DEP平均差', 'DYN10平均差', 'DYN20平均差'],
     colTitle:{
       depAirport:'起飞机场',
       terPoint:'终端区航路点',
@@ -342,6 +347,150 @@ var tableDataConfig = function () {
     data: []
   }
 
+  var precisionTableDataConfig = {
+    colName: ['FlightInOId', '航班号','执行时间', '计划起飞机场', '计划降落机场', '计划起飞时间', '计划降落时间', '实际起飞机场', '时机降落机场', '实际起飞时间', '实际降落时间'],
+    colTitle: {
+      flightInOId:'航班在oracle数据库中的id',
+      flightId:'航班号',
+      executeDate:'航班执行日期',
+      sarrap:'时刻表降落机场',
+      sdepap:'时刻表起飞机场',
+      sdeptime:'时刻表起飞时间',
+      sarrtime:'时刻表降落时间',
+      rarrap:'实际降落机场',
+      rdepap:'实际起飞机场',
+      rarrtime:'实际降落时间',
+      rdeptime:'实际飞行时间'
+    },
+    colModel: [
+      {
+        name: 'flightInOId',
+        index: 'flightInOId',
+        frozen:true
+      }, {
+        name: 'flightId',
+        index: 'flightId'
+      }, {
+        name: 'executeDate',
+        index: 'executeDate',
+        formatter: function (cellvalue, options, rowObject) {
+          if ($.isValidVariable(cellvalue)) {
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+          } else {
+            return '';
+          }
+        }
+      }, {
+        name: 'sdepap',
+        index: 'sdepap'
+      }, {
+        name: 'sarrap',
+        index: 'sarrap'
+      }, {
+        name: 'sdeptime',
+        index: 'sdeptime',
+        formatter: function (cellvalue, options, rowObject) {
+          if ($.isValidVariable(cellvalue)) {
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+          } else {
+            return '';
+          }
+        }
+      }, {
+        name: 'sarrtime',
+        index: 'sarrtime',
+        formatter: function (cellvalue, options, rowObject) {
+          if ($.isValidVariable(cellvalue)) {
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+          } else {
+            return '';
+          }
+        }
+      }, {
+        name: 'rdepap',
+        index: 'rdepap'
+      }, {
+        name: 'rarrap',
+        index: 'rarrap'
+      }, {
+        name: 'rdeptime',
+        index: 'rdeptime',
+        formatter: function (cellvalue, options, rowObject) {
+          if ($.isValidVariable(cellvalue)) {
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+          } else {
+            return '';
+          }
+        }
+      },{
+        name: 'rarrtime',
+        index: 'rarrtime',
+        formatter: function (cellvalue, options, rowObject) {
+          if ($.isValidVariable(cellvalue)) {
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+          } else {
+            return '';
+          }
+        }
+      }  ],
+    data: []
+  }
+  var precisionDetailDataConfig = {
+    colName: ['航路点', '实际过点时间', '0-15(分钟)', '15-30(分钟)', '30-60(分钟)', '60-120(分钟)', '120(分钟)以上', 'DEP', 'FPL', 'SCH',],
+    colTitle: {
+      flightRoute:'航路点名称',
+      passTime:'实际过点时间',
+      timeIn0To15:'过点时间和保存时间的差值在15分钟内',
+      timeIn15To30:'过点时间和保存时间的差值在15到30分钟',
+      timeIn30To60:'过点时间和保存时间的差值在30到60分钟',
+      timeIn60To120:'过点时间和保存时间的差值在60到120分钟',
+      timeIn120:'过点时间和保存时间的差值在超过120分钟',
+      timeDEP:'过点时间和DEP状态的时间差值',
+      timeFPL:'过点时间和FPL状态的时间差值',
+      timeSCH:'过点时间和SCH状态的时间差值'
+    },
+    colModel: [
+      {
+        name: 'flightRoute',
+        index: 'flightRoute',
+        frozen:true
+      }, {
+        name: 'passTime',
+        index: 'passTime',
+        formatter: function (cellvalue, options, rowObject) {
+          if ($.isValidVariable(cellvalue)) {
+            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+          } else {
+            return '';
+          }
+        }
+      }, {
+        name: 'timeIn0To15',
+        index: 'timeIn0To15'
+      }, {
+        name: 'timeIn15To30',
+        index: 'timeIn15To30'
+      }, {
+        name: 'timeIn30To60',
+        index: 'timeIn30To60'
+      }, {
+        name: 'timeIn60To120',
+        index: 'timeIn60To120'
+      }, {
+        name: 'timeIn120',
+        index: 'timeIn120'
+      }, {
+        name: 'timeDEP',
+        index: 'timeDEP'
+      }, {
+        name: 'timeFPL',
+        index: 'timeFPL'
+      }, {
+        name: 'timeSCH',
+        index: 'timeSCH'
+      }],
+    data: []
+  }
   /**
    * 调整表格大小以适应所在容器
    *
@@ -374,15 +523,19 @@ var tableDataConfig = function () {
   /*数据样例*/
   var flyData = {};
   var terData = {};
+  var preData = {};
   return {
     flyErrorTableDataConfig: flyErrorTableDataConfig,
     terminalPointDataConfigTop: terminalPointDataConfigTop,
     terminalPointDataConfigDown: terminalPointDataConfigDown,
+    precisionTableDataConfig:precisionTableDataConfig,
     resizeToFitContainer: resizeToFitContainer,
     flyDetailDataConfig: flyDetailDataConfig,
     terminalDetailDataConfig: terminalDetailDataConfig,
+    precisionDetailDataConfig:precisionDetailDataConfig,
     flyData: flyData,
-    terData:terData
+    terData:terData,
+    preData:preData
   }
 };
 

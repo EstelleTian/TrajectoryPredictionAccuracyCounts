@@ -226,6 +226,81 @@
     color: #093857;
 }
 
+.precision_show label.text{
+    font-weight: normal;
+    color: #093857;
+}
+.precision_show .form-wrap{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #dddddd;
+}
+.precision_show .box{
+    margin-bottom: 0;
+    overflow: hidden;
+}
+.precision_show .alert-container{
+    margin-top: 1rem;
+}
+.precision_show .no-datas-tip {
+    position: absolute;
+    width: 100%;
+    color: #8c8c8c;
+    text-align: center;
+    margin-top: 10rem;
+}
+.precision_show .echart-col{
+    height: 95%;
+}
+.precision_show .charts-wrap{
+    position: relative;
+}
+.precision_show .alert-row{
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.precision_show .conditions {
+    min-height: 40px;
+    text-align: center;
+}
+.precision_show .conditions-content {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+.precision_show .conditions-content > span  {
+    display: inline-block;
+    padding: 0 1rem;
+    border-right: 1px solid #cccccc;
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+.precision_show .conditions-content > span.conditions-start-data,
+.precision_show .conditions-content > span.conditions-line{
+    border : none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+.precision_show .conditions-content > span.conditions-end-data{
+    padding-left: 0;
+}
+.precision_show .conditions-content > span.conditions-tip,
+.precision_show .conditions-content > span.conditions-unit {
+    border: none;
+    box-shadow: none;
+}
+.precision_show .form-group{
+    margin-right: 10px;
+}
+.precision_show .cy-pad-hor-s{
+    font-weight: normal;
+    color: #093857;
+}
 
 .pass_point .form-group{
     margin-right: 10px;
