@@ -9,6 +9,7 @@ body{
     background: #2e5e79;
     font-size: 12px;
     font-family: Calibri, 'Microsoft Yahei',"Helvetica Neue",Helvetica,Arial, sans-serif;
+    overflow: hidden;
     /*font-family: Tahoma, Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;*/
 }
 body.hide-modal, body.modal-open {
@@ -24,7 +25,8 @@ body.hide-modal .modal-backdrop {
 }
 .main {
     position: relative;
-    height: 100%
+    height: 100%;
+    overflow: hidden;
 }
 
 
@@ -101,7 +103,7 @@ header{
     position: fixed;
     width: 100%;
     top:90px;
-    height: 30px;
+    height: 47px;
     z-index: 1000;
 }
 #nav{
@@ -123,7 +125,7 @@ header{
 }
 
 .content-container {
-    padding-top: 140px;
+    margin-top: 140px;
 }
 .content-container > .row {
     display: none;
