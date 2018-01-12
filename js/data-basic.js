@@ -21,10 +21,12 @@ var tableDataConfig = function () {
       {
         name: 'flyDepPointType',
         index: 'flyDepPointType',
+        width:120,
         frozen:true
       },{
         name: 'point',
         index: 'point',
+        width:120,
         frozen:true
       }, {
         name: 'rdepAvgTime',

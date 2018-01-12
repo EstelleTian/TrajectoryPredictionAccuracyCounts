@@ -336,9 +336,10 @@ var PredictionData = function () {
           var obj = {}
           //航段飞行时间误差数据转换
           if (option == 'flyErrorTableDataConfig') {
-            obj.flyDepPointType = i;
             var str = i.split('-');
             obj.point = str[1]
+            obj.flyDepPointType = str[0];
+            obj.allName = i;
             $.each(gridParam[option].colModel, function (index, ele) {
               if (ele['index'] != 'flyDepPointType' && ele['index'] != 'point') {
                 obj[ele['index']] = e[ele['index']];
@@ -346,9 +347,10 @@ var PredictionData = function () {
             })
           } else{
             //终端区航路点过点时间统计数据转换
-            obj.depAirport = i;
             var str = i.split('-')
             obj.terPoint = str[1]
+            obj.depAirport = str[0]
+            obj.allName = i;
             $.each(gridParam[option].colModel, function (index, ele) {
               if (ele['index'] != 'depAirport' && ele['index'] != 'terPoint') {
                 obj[ele['index']] = e[ele['index']];
@@ -385,7 +387,7 @@ var PredictionData = function () {
       shrinkToFit: false,
       cmTemplate: {
         align: 'center',
-        width: 120,
+        width: 100,
         resize: false
       },
       pager: pagerId,
@@ -421,11 +423,13 @@ var PredictionData = function () {
           BootstrapDialogFactory.dialog(option);
           //初始化航段飞行时间误差统计详情表格
           if (!$('.ter_time').is(':visible')) {
-            tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.flyData.infoMap[contents];
+            var textParam = table.jqGrid('getGridParam')['data'][rowid-1].allName
+            tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.flyData.infoMap[textParam];
             initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
           } else {
             //初始化终端区航路点过点时间统计详情表格
-            tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.terData.infoMap[contents];
+            var textParam = table.jqGrid('getGridParam')['data'][rowid-1].allName
+            tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.terData.infoMap[textParam];
             initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
           }
         }
@@ -476,7 +480,7 @@ var PredictionData = function () {
       cmTemplate: {
         align: 'center',
         resize: false,
-        width: 120
+        width: 100
       },
       pager: pagerId,
       pgbuttons: false,

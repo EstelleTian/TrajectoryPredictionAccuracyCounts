@@ -172,7 +172,7 @@ header{
 }
 @media (max-width: 922px) {
     .content-container {
-        padding-top: 265px;
+        margin-top: 220px;
     }
 }
 @media (min-width: 1280px){
