@@ -382,7 +382,7 @@ var tableDataConfig = function () {
   }
 
   var precisionTableDataConfig = {
-    colName: [' ID ', '航班号','执行时间', '计划起飞机场', '计划降落机场', '计划起飞时间', '计划降落时间', '实际起飞机场', '时机降落机场', '实际起飞时间', '实际降落时间'],
+    colName: [' ID ', '航班号','执行时间', '计划起飞机场', '计划降落机场', '计划起飞时间', '计划降落时间', '实际起飞机场', '实际降落机场', '实际起飞时间', '实际降落时间'],
     colTitle: {
       flightInOId:'航班在oracle数据库中的id',
       flightId:'航班号',
@@ -403,7 +403,8 @@ var tableDataConfig = function () {
         frozen:true
       }, {
         name: 'flightId',
-        index: 'flightId'
+        index: 'flightId',
+        frozen:true
       }, {
         name: 'executeDate',
         index: 'executeDate',
@@ -448,7 +449,7 @@ var tableDataConfig = function () {
       }, {
         name: 'rdepap',
         index: 'rdepap',
-        width:130,
+        width:130
       }, {
         name: 'rarrap',
         index: 'rarrap',
