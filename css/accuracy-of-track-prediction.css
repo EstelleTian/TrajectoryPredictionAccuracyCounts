@@ -453,6 +453,14 @@
     text-decoration: none;
     color: #000;
 }
+.detail .no-datas-tip {
+    position: absolute;
+    font-size:16px;
+    width: 100%;
+    color: #8c8c8c;
+    text-align: center;
+    margin-top: 10rem;
+}
 .datepicker .table-condensed td {
     padding: 0.45rem 0.9rem;
 }

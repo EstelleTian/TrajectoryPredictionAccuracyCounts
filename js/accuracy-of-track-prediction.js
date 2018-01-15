@@ -858,14 +858,13 @@ var PredictionData = function () {
       success: function (data, status, xhr) {
         if ($.isValidObject(data)) {
           if ($.isValidObject(data.flightRouteResults)) {
-            if(!$.isEmptyObject(data.flightRouteResults)){
               tableDataConfigs.precisionDetailDataConfig.data = [];
               tableDataConfigs.precisionDetailDataConfig.data = data.flightRouteResults
               initGridTableDetail(tableDataConfigs.precisionDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
-            }else{
-              var str = '<div class="alert-container"></div>'
-              showAlear( $('.detail'),"查询数据集合为空");
-            }
+          }else{
+            var str = '<div class="no-datas-tip"></div>'
+            $('.detail').append(str)
+            showTip($('.detail .no-datas-tip'),"查询数据集合为空")
           }
         }
       },
