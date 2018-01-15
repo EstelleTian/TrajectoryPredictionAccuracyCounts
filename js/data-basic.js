@@ -21,13 +21,13 @@ var tableDataConfig = function () {
       {
         name: 'flyDepPointType',
         index: 'flyDepPointType',
-        width:120,
+        width:80,
         frozen:true
       },{
         name: 'point',
         index: 'point',
-        width:120,
-        frozen:true
+        width:80,
+         frozen:true
       }, {
         name: 'rdepAvgTime',
         index: 'rdepAvgTime'
@@ -86,42 +86,49 @@ var tableDataConfig = function () {
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
-      width:80,
-      frozen: true
+         frozen: true
     }, {
       name: 'terPoint',
-      index: 'terPoint'
+      index: 'terPoint',
     }, {
       name: 'schMeDis',
-      index: 'schMeDis'
+      index: 'schMeDis',
     }, {
       name: 'fplMeDis',
-      index: 'fplMeDis'
+      index: 'fplMeDis',
 
     }, {
       name: 'depMeDis',
-      index: 'depMeDis'
+      index: 'depMeDis',
+      width:120,
     }, {
       name: 'dyn10mMeDis',
-      index: 'dyn10mMeDis'
+      index: 'dyn10mMeDis',
+      width:120,
     }, {
       name: 'dyn20mMeDis',
-      index: 'dyn20mMeDis'
+      index: 'dyn20mMeDis',
+      width:120,
     }, {
       name: 'schAvgDis',
-      index: 'schAvgDis'
+      index: 'schAvgDis',
+      width:120,
     }, {
       name: 'fplAvgDis',
-      index: 'fplAvgDis'
+      index: 'fplAvgDis',
+      width:120,
     }, {
       name: 'depAvgDis',
-      index: 'depAvgDis'
+      index: 'depAvgDis',
+      width:120,
     }, {
       name: 'dyn10mAvgDis',
-      index: 'dyn10mAvgDis'
+      index: 'dyn10mAvgDis',
+      width:120,
     }, {
       name: 'dyn20mAvgDis',
-      index: 'dyn20mAvgDis'
+      index: 'dyn20mAvgDis',
+      width:120,
     }],
     data: []
   }
@@ -144,7 +151,6 @@ var tableDataConfig = function () {
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
-      width:80,
       frozen: true
     }, {
       name: 'terPoint',
@@ -157,28 +163,36 @@ var tableDataConfig = function () {
       index: 'fplMeHLevel'
     }, {
       name: 'depMeHLevel',
-      index: 'depMeHLevel'
+      index: 'depMeHLevel',
+      width:120,
     }, {
       name: 'dyn10MeHLevel',
-      index: 'dyn10MeHLevel'
+      index: 'dyn10MeHLevel',
+      width:120,
     }, {
       name: 'dyn20MeHLevel',
-      index: 'dyn20MeHLevel'
+      index: 'dyn20MeHLevel',
+      width:120,
     }, {
       name: 'schAvgHLevel',
-      index: 'schAvgHLevel'
+      index: 'schAvgHLevel',
+      width:120,
     }, {
       name: 'fplAvgHLevel',
-      index: 'fplAvgHLevel'
+      index: 'fplAvgHLevel',
+      width:120,
     }, {
       name: 'depAvgHLevel',
-      index: 'depAvgHLevel'
+      index: 'depAvgHLevel',
+      width:120,
     }, {
       name: 'dyn10AvgHLevel',
-      index: 'dyn10AvgHLevel'
+      index: 'dyn10AvgHLevel',
+      width:120,
     }, {
       name: 'dyn20AvgHLevel',
-      index: 'dyn20AvgHLevel'
+      index: 'dyn20AvgHLevel',
+      width:120,
     }
     ],
     data: []
@@ -200,32 +214,41 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
-        frozen: true
+        frozen: true,
+        width:130,
       }, {
         name: 'flightID',
         index: 'flightID',
-        frozen: true
+        frozen: true,
+        width:130,
       }, {
         name: 'aircraftType',
-        index: 'aircraftType'
+        index: 'aircraftType',
+        width:130,
       }, {
         name: 'rPastTime',
-        index: 'rPastTime'
+        index: 'rPastTime',
+        width:130,
       }, {
         name: 'schPastTime',
-        index: 'schPastTime'
+        index: 'schPastTime',
+        width:130,
       }, {
         name: 'fplPastTime',
-        index: 'fplPastTime'
+        index: 'fplPastTime',
+        width:130,
       }, {
         name: 'depPastTime',
-        index: 'depPastTime'
+        index: 'depPastTime',
+        width:130,
       }, {
         name: 'dyn10PastTime',
-        index: 'dyn10PastTime'
+        index: 'dyn10PastTime',
+        width:130,
       }, {
         name: 'dyn20PastTime',
-        index: 'dyn20PastTime'
+        index: 'dyn20PastTime',
+        width:130,
       }],
     data: []
   }
@@ -252,19 +275,21 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
-        width:100,
-        frozen: true
+        frozen: true,
+        width:80,
       }, {
         name: 'flightID',
         index: 'flightID',
-        frozen: true
+        frozen: true,
+        width:80,
       }, {
         name: 'aircraftType',
         index: 'aircraftType',
-        width:100
+        width:80,
       }, {
         name: 'rPastTime',
         index: 'rPastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -275,7 +300,7 @@ var tableDataConfig = function () {
       }, {
         name: 'schPastTime',
         index: 'schPastTime',
-        width:100,
+        width:80,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -319,6 +344,7 @@ var tableDataConfig = function () {
       }, {
         name: 'dyn20PastTime',
         index: 'dyn20PastTime',
+        width:100,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -328,29 +354,35 @@ var tableDataConfig = function () {
         }
       }, {
         name: 'rPasthlevel',
-        index: 'rPasthlevel'
+        index: 'rPasthlevel',
+        width:100,
       }, {
         name: 'schhlevel',
-        index: 'schhlevel'
+        index: 'schhlevel',
+        width:80,
       }, {
         name: 'fplhlevel',
-        index: 'fplhlevel'
+        index: 'fplhlevel',
+        width:80,
       }, {
         name: 'dephlevel',
-        index: 'dephlevel'
+        index: 'dephlevel',
+        width:80,
       }, {
         name: 'dyn10hlevel',
-        index: 'dyn10hlevel'
+        index: 'dyn10hlevel',
+        width:100,
       }, {
         name: 'dyn20hlevel',
-        index: 'dyn20hlevel'
+        index: 'dyn20hlevel',
+        width:100,
       }
     ],
     data: []
   }
 
   var precisionTableDataConfig = {
-    colName: ['FlightInOId', '航班号','执行时间', '计划起飞机场', '计划降落机场', '计划起飞时间', '计划降落时间', '实际起飞机场', '时机降落机场', '实际起飞时间', '实际降落时间'],
+    colName: [' ID ', '航班号','执行时间', '计划起飞机场', '计划降落机场', '计划起飞时间', '计划降落时间', '实际起飞机场', '时机降落机场', '实际起飞时间', '实际降落时间'],
     colTitle: {
       flightInOId:'航班在oracle数据库中的id',
       flightId:'航班号',
@@ -375,6 +407,7 @@ var tableDataConfig = function () {
       }, {
         name: 'executeDate',
         index: 'executeDate',
+        width:130,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -384,13 +417,16 @@ var tableDataConfig = function () {
         }
       }, {
         name: 'sdepap',
-        index: 'sdepap'
+        index: 'sdepap',
+        width:130,
       }, {
         name: 'sarrap',
-        index: 'sarrap'
+        index: 'sarrap',
+        width:130,
       }, {
         name: 'sdeptime',
         index: 'sdeptime',
+        width:130,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -401,6 +437,7 @@ var tableDataConfig = function () {
       }, {
         name: 'sarrtime',
         index: 'sarrtime',
+        width:130,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -410,13 +447,16 @@ var tableDataConfig = function () {
         }
       }, {
         name: 'rdepap',
-        index: 'rdepap'
+        index: 'rdepap',
+        width:130,
       }, {
         name: 'rarrap',
-        index: 'rarrap'
+        index: 'rarrap',
+        width:130,
       }, {
         name: 'rdeptime',
         index: 'rdeptime',
+        width:130,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
@@ -427,6 +467,7 @@ var tableDataConfig = function () {
       },{
         name: 'rarrtime',
         index: 'rarrtime',
+        width:130,
         formatter: function (cellvalue, options, rowObject) {
           if ($.isValidVariable(cellvalue)) {
             return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';

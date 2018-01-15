@@ -225,7 +225,6 @@
     font-weight: normal;
     color: #093857;
 }
-
 .precision_show label.text{
     font-weight: normal;
     color: #093857;
@@ -406,8 +405,11 @@
     padding: 6px 0px;
     margin: 0px;
 }
-#bootstrap-modal-dialog-body {
-    min-height: 41rem;
+.top_table{
+    width: 100%;
+}
+.down_table{
+    width: 100%;
 }
 .query-type {
     width: 100%;
@@ -428,10 +430,23 @@
 .h100{
     height:100%;
 }
+#precision_flight_grid_table{
+    position: relative;
+}
 .jqgrow td:nth-of-type(2){
     color: #1B548D;
     cursor: pointer;
     text-decoration: underline;
+}
+.precision_show .jqgrow td:nth-of-type(2){
+    color: #000;
+    cursor: default;
+    text-decoration: none;
+}
+.precision_show .jqgrow td:nth-of-type(3){
+    color: #1B548D;
+    cursor: pointer;
+    text-decoration: underline ;
 }
 .detail .jqgrow td:nth-of-type(2){
     cursor: default;
@@ -461,6 +476,7 @@
 .hide{
     display: block;
 }
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 8px;}
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
     border: 1px solid #ddd !important;
 }
