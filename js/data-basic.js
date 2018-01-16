@@ -488,7 +488,7 @@ var tableDataConfig = function () {
   function sortName(a, b, direction) {
     // 若为升序排序，空值转换为最大的值进行比较
     // 保证排序过程中，空值始终在最下方
-    if ($.type(a) === "number" || $.type(b) === "number") {
+    if (a*1 != NaN && b*1 != NaN && a != ''&& b != '' ) {
       // 数字类型
       var maxNum = Number.MAX_VALUE;
       if (!$.isValidVariable(a) || a < 0) {
