@@ -388,43 +388,7 @@ var PredictionData = function () {
       cmTemplate: {
         align: 'center',
         width:115,
-        sortfunc : function(a, b, direction) {
-          // 若为升序排序，空值转换为最大的值进行比较
-          // 保证排序过程中，空值始终在最下方
-          if ($.type(a) === "number" || $.type(b) === "number") {
-            // 数字类型
-            var maxNum = Number.MAX_VALUE;
-            if (!$.isValidVariable(a) || a < 0) {
-              if (direction > 0) {
-                a = maxNum;
-              }
-            }
-            if (!$.isValidVariable(b) || b < 0) {
-              if (direction > 0) {
-                b = maxNum;
-              }
-            }
-            return (a > b ? 1 : -1) * direction;
-          } else {
-            // 字符串类型
-            var maxStr = 'ZZZZZZZZZZZZ';
-            if (!$.isValidVariable(a)) {
-              if (direction > 0) {
-                a = maxStr;
-              } else {
-                a = '';
-              }
-            }
-            if (!$.isValidVariable(b)) {
-              if (direction > 0) {
-                b = maxStr;
-              } else {
-                b = '';
-              }
-            }
-            return a.localeCompare(b) * direction;
-          }
-        }
+        sortfunc : tableDataConfigs.sortName
       },
       pager: pagerId,
       pgbuttons: false,
@@ -527,7 +491,8 @@ var PredictionData = function () {
       height: "auto",
       cmTemplate: {
         align: 'center',
-        width:115
+        width:115,
+        sortfunc : tableDataConfigs.sortName
       },
       pager: pagerId,
       pgbuttons: false,

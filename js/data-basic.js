@@ -290,68 +290,32 @@ var tableDataConfig = function () {
         name: 'rPastTime',
         index: 'rPastTime',
         width:100,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'schPastTime',
         index: 'schPastTime',
         width:80,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'fplPastTime',
         index: 'fplPastTime',
         width:100,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'depPastTime',
         index: 'depPastTime',
         width:100,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'dyn10PastTime',
         index: 'dyn10PastTime',
         width:100,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'dyn20PastTime',
         index: 'dyn20PastTime',
         width:100,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'rPasthlevel',
         index: 'rPasthlevel',
@@ -409,13 +373,7 @@ var tableDataConfig = function () {
         name: 'executeDate',
         index: 'executeDate',
         width:130,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'sdepap',
         index: 'sdepap',
@@ -428,24 +386,12 @@ var tableDataConfig = function () {
         name: 'sdeptime',
         index: 'sdeptime',
         width:130,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'sarrtime',
         index: 'sarrtime',
         width:130,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'rdepap',
         index: 'rdepap',
@@ -458,24 +404,12 @@ var tableDataConfig = function () {
         name: 'rdeptime',
         index: 'rdeptime',
         width:130,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       },{
         name: 'rarrtime',
         index: 'rarrtime',
         width:130,
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }  ],
     data: []
   }
@@ -501,13 +435,7 @@ var tableDataConfig = function () {
       }, {
         name: 'passTime',
         index: 'passTime',
-        formatter: function (cellvalue, options, rowObject) {
-          if ($.isValidVariable(cellvalue)) {
-            return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
-          } else {
-            return '';
-          }
-        }
+        formatter: timeFormatter
       }, {
         name: 'timeIn0To15',
         index: 'timeIn0To15'
@@ -556,10 +484,48 @@ var tableDataConfig = function () {
     $('#' + tableId).jqGrid('setGridHeight', gridTableHeight);
     $('#' + tableId).jqGrid('setGridWidth', (gridTableWidth - 2));
   }
-
-  var timeFormater = function (cellvalue, options, rowObject) {
+  //列排序规则
+  function sortName(a, b, direction) {
+    // 若为升序排序，空值转换为最大的值进行比较
+    // 保证排序过程中，空值始终在最下方
+    if ($.type(a) === "number" || $.type(b) === "number") {
+      // 数字类型
+      var maxNum = Number.MAX_VALUE;
+      if (!$.isValidVariable(a) || a < 0) {
+        if (direction > 0) {
+          a = maxNum;
+        }
+      }
+      if (!$.isValidVariable(b) || b < 0) {
+        if (direction > 0) {
+          b = maxNum;
+        }
+      }
+      return (a > b ? 1 : -1) * direction;
+    } else {
+      // 字符串类型
+      var maxStr = 'ZZZZZZZZZZZZ';
+      if (!$.isValidVariable(a)) {
+        if (direction > 0) {
+          a = maxStr;
+        } else {
+          a = '';
+        }
+      }
+      if (!$.isValidVariable(b)) {
+        if (direction > 0) {
+          b = maxStr;
+        } else {
+          b = '';
+        }
+      }
+      return a.localeCompare(b) * direction;
+    }
+  }
+  //时间格式化规则
+  function timeFormatter(cellvalue, options, rowObject) {
     if ($.isValidVariable(cellvalue)) {
-      return cellvalue + '(秒)';
+      return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
     } else {
       return '';
     }
@@ -579,7 +545,8 @@ var tableDataConfig = function () {
     precisionDetailDataConfig:precisionDetailDataConfig,
     flyData: flyData,
     terData:terData,
-    preData:preData
+    preData:preData,
+    sortName:sortName
   }
 };
 
