@@ -351,14 +351,14 @@ var tableDataConfig = function () {
       flightInOId:'航班在oracle数据库中的id',
       flightId:'航班号',
       executeDate:'航班执行日期',
-      sarrap:'时刻表降落机场',
-      sdepap:'时刻表起飞机场',
-      sdeptime:'时刻表起飞时间',
-      sarrtime:'时刻表降落时间',
-      rarrap:'实际降落机场',
-      rdepap:'实际起飞机场',
-      rarrtime:'实际降落时间',
-      rdeptime:'实际飞行时间'
+      sArrap:'时刻表降落机场',
+      sDepap:'时刻表起飞机场',
+      sDeptime:'时刻表起飞时间',
+      sArrtime:'时刻表降落时间',
+      rArrap:'实际降落机场',
+      rDepap:'实际起飞机场',
+      rArrtime:'实际降落时间',
+      rDeptime:'实际飞行时间'
     },
     colModel: [
       {
@@ -375,39 +375,39 @@ var tableDataConfig = function () {
         width:130,
         formatter: timeFormatter
       }, {
-        name: 'sdepap',
-        index: 'sdepap',
+        name: 'sDepap',
+        index: 'sDepap',
         width:130,
       }, {
-        name: 'sarrap',
-        index: 'sarrap',
+        name: 'sArrap',
+        index: 'sArrap',
         width:130,
       }, {
-        name: 'sdeptime',
-        index: 'sdeptime',
-        width:130,
-        formatter: timeFormatter
-      }, {
-        name: 'sarrtime',
-        index: 'sarrtime',
+        name: 'sDeptime',
+        index: 'sDeptime',
         width:130,
         formatter: timeFormatter
       }, {
-        name: 'rdepap',
-        index: 'rdepap',
+        name: 'sArrtime',
+        index: 'sArrtime',
+        width:130,
+        formatter: timeFormatter
+      }, {
+        name: 'rDepap',
+        index: 'rDepap',
         width:130
       }, {
-        name: 'rarrap',
-        index: 'rarrap',
+        name: 'rArrap',
+        index: 'rArrap',
         width:130,
       }, {
-        name: 'rdeptime',
-        index: 'rdeptime',
+        name: 'rDeptime',
+        index: 'rDeptime',
         width:130,
         formatter: timeFormatter
       },{
-        name: 'rarrtime',
-        index: 'rarrtime',
+        name: 'rArrtime',
+        index: 'rArrtime',
         width:130,
         formatter: timeFormatter
       }  ],

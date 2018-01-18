@@ -436,11 +436,7 @@ var PredictionData = function () {
         }
         if (colName == 'flightId'&&stateArr[stateIndex] == 'pre') {
           var flightInOid = table.jqGrid('getGridParam')['data']
-          $.each(flightInOid,function (i,e) {
-            if(e.id == rowid){
-              flightInOid = flightInOid[i].flightInOId
-            }
-          })
+              flightInOid = flightInOid[rowid-1].flightInOId
           var option = {
             title: contents + '航班详情',
             content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>',
