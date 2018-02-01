@@ -1,9 +1,10 @@
 var tableDataConfig = function () {
   var flyErrorTableDataConfig = {
-    colName: ['起飞机场','航路点', '平均飞行时间(秒)', '中位飞行时间(秒)', 'SCH中位差(秒)', 'FPL中位差(秒)', 'DEP中位差(秒)', 'DYN10中位差(秒)', 'DYN20中位差(秒)', 'SCH平均差(秒)', 'FPL平均差(秒)', 'DEP平均差(秒)', 'DYN10平均差(秒)', 'DYN20平均差(秒)'],
+    colName: ['起飞机场','航路点', '样本数','平均飞行时间(秒)', '中位飞行时间(秒)', 'SCH中位差(秒)', 'FPL中位差(秒)', 'DEP中位差(秒)', 'DYN10中位差(秒)', 'DYN20中位差(秒)', 'SCH平均差(秒)', 'FPL平均差(秒)', 'DEP平均差(秒)', 'DYN10平均差(秒)', 'DYN20平均差(秒)'],
     colTitle: {
       flyDepPointType:'起飞机场',
       point:'航路点',
+      flightcount:'样本数',
       rdepAvgTime:'实际飞行时间平均值(秒)',
       rdepMeTime:'实际飞行时间中位数(秒)',
       schMeDis:'SCH中位数时间差(秒)',
@@ -28,6 +29,9 @@ var tableDataConfig = function () {
         index: 'point',
         width:80,
          frozen:true
+      },{
+        name: 'flightcount',
+        index: 'flightcount',
       }, {
         name: 'rdepAvgTime',
         index: 'rdepAvgTime'
@@ -68,10 +72,11 @@ var tableDataConfig = function () {
     data: []
   }
   var terminalPointDataConfigTop = {
-    colName: ['起飞机场', '终端区航路点', 'SCH中位差(秒)', 'FPL中位差(秒)', 'DEP中位差(秒)', 'DYN10中位差(秒)', 'DYN20中位差(秒)', 'SCH平均差(秒)', 'FPL平均差(秒)', 'DEP平均差(秒)', 'DYN10平均(秒)', 'DYN20平均差(秒)'],
+    colName: ['起飞机场', '终端区航路点','样本数', 'SCH中位差(秒)', 'FPL中位差(秒)', 'DEP中位差(秒)', 'DYN10中位差(秒)', 'DYN20中位差(秒)', 'SCH平均差(秒)', 'FPL平均差(秒)', 'DEP平均差(秒)', 'DYN10平均(秒)', 'DYN20平均差(秒)'],
     colTitle:{
       depAirport:'起飞机场',
       terPoint:'终端区航路点',
+      flightcount:'样本数',
       schMeDis:'SCH中位数时间差(秒)',
       fplMeDis:'FPL中位数时间差(秒)',
       depMeDis:'DEP中位数时间差(秒)',
@@ -91,6 +96,9 @@ var tableDataConfig = function () {
       name: 'terPoint',
       index: 'terPoint',
     }, {
+      name:'flightcount',
+      index:'flightcount'
+    },{
       name: 'schMeDis',
       index: 'schMeDis',
     }, {
@@ -133,10 +141,11 @@ var tableDataConfig = function () {
     data: []
   }
   var terminalPointDataConfigDown = {
-    colName: ['起飞机场', '终端区航路点', 'SCH中位差', 'FPL中位差', 'DEP中位差', 'DYN10中位差', 'DYN20中位差', 'SCH平均差', 'FPL平均差', 'DEP平均差', 'DYN10平均差', 'DYN20平均差'],
+    colName: ['起飞机场', '终端区航路点','样本数', 'SCH中位差', 'FPL中位差', 'DEP中位差', 'DYN10中位差', 'DYN20中位差', 'SCH平均差', 'FPL平均差', 'DEP平均差', 'DYN10平均差', 'DYN20平均差'],
     colTitle:{
       depAirport:'起飞机场',
       terPoint:'终端区航路点',
+      flightcount:'样本数',
       schMeHLevel:'SCH中位数高度差',
       fplMeHLevel: 'FPL中位数高度差',
       depMeHLevel:'DEP中位数高度差',
@@ -156,6 +165,9 @@ var tableDataConfig = function () {
       name: 'terPoint',
       index: 'terPoint'
     }, {
+      name:'flightcount',
+      index:'flightcount'
+    },{
       name: 'schMeHLevel',
       index: 'schMeHLevel'
     }, {
