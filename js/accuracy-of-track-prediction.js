@@ -478,7 +478,7 @@ var PredictionData = function () {
     if(stateArr[stateIndex] == 'fly'|| stateArr[stateIndex] =='ter'){
        sortName = 'aircraftType'
     }else if(stateArr[stateIndex] == 'pre'){
-       sortName = 'passTime'
+       sortName = 'routeseq'
     }
     var table = $('#' + tableId).jqGrid({
       styleUI: 'Bootstrap',
@@ -488,7 +488,10 @@ var PredictionData = function () {
       cmTemplate: {
         align: 'center',
         width:115,
-        sortfunc : tableDataConfigs.sortName
+        sortfunc : function (a,b,direction) {
+          a = a*1; b=b*1;
+          return (a > b ? 1 : -1) * direction;
+        }
       },
       pager: pagerId,
       pgbuttons: false,

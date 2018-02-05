@@ -426,9 +426,10 @@ var tableDataConfig = function () {
     data: []
   }
   var precisionDetailDataConfig = {
-    colName: ['航路点', '实际过点时间', '0-15(分钟)', '15-30(分钟)', '30-60(分钟)', '60-120(分钟)', '120(分钟)以上', 'DEP', 'FPL', 'SCH',],
+    colName: ['航路点', '航路顺序','实际过点时间', '0-15(分钟)', '15-30(分钟)', '30-60(分钟)', '60-120(分钟)', '120(分钟)以上', 'DEP', 'FPL', 'SCH',],
     colTitle: {
       flightRoute:'航路点名称',
+      routeseq:'航路顺序',
       passTime:'实际过点时间',
       timeIn0To15:'过点时间和保存时间的差值在15分钟内',
       timeIn15To30:'过点时间和保存时间的差值在15到30分钟',
@@ -444,6 +445,9 @@ var tableDataConfig = function () {
         name: 'flightRoute',
         index: 'flightRoute',
         frozen:true
+      }, {
+        name:'routeseq',
+        index:'routeseq',
       }, {
         name: 'passTime',
         index: 'passTime',
