@@ -23,12 +23,12 @@ var tableDataConfig = function () {
         name: 'flyDepPointType',
         index: 'flyDepPointType',
         width:80,
-        frozen:true
+        // frozen:true
       },{
         name: 'point',
         index: 'point',
         width:80,
-         frozen:true
+         // frozen:true
       },{
         name: 'flightcount',
         index: 'flightcount',
@@ -91,7 +91,7 @@ var tableDataConfig = function () {
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
-         frozen: true
+         // frozen: true
     }, {
       name: 'terPoint',
       index: 'terPoint',
@@ -160,7 +160,7 @@ var tableDataConfig = function () {
     colModel: [{
       name: 'depAirport',
       index: 'depAirport',
-      frozen: true
+      // frozen: true
     }, {
       name: 'terPoint',
       index: 'terPoint'
@@ -226,12 +226,12 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
-        frozen: true,
+        // frozen: true,
         width:130,
       }, {
         name: 'flightID',
         index: 'flightID',
-        frozen: true,
+        // frozen: true,
         width:130,
       }, {
         name: 'aircraftType',
@@ -287,12 +287,12 @@ var tableDataConfig = function () {
       {
         name: 'id',
         index: 'id',
-        frozen: true,
+        // frozen: true,
         width:80,
       }, {
         name: 'flightID',
         index: 'flightID',
-        frozen: true,
+        // frozen: true,
         width:80,
       }, {
         name: 'aircraftType',
@@ -376,16 +376,16 @@ var tableDataConfig = function () {
       {
         name: 'flightInOId',
         index: 'flightInOId',
-        frozen:true
+        // frozen:true
       }, {
         name: 'flightId',
         index: 'flightId',
-        frozen:true
+        // frozen:true
       }, {
         name: 'executeDate',
         index: 'executeDate',
         width:130,
-        formatter: timeFormatter
+        // formatter: eightTimeFormatter
       }, {
         name: 'sDepap',
         index: 'sDepap',
@@ -444,7 +444,7 @@ var tableDataConfig = function () {
       {
         name: 'flightRoute',
         index: 'flightRoute',
-        frozen:true
+        // frozen:true
       }, {
         name:'routeseq',
         index:'routeseq',
@@ -541,7 +541,7 @@ var tableDataConfig = function () {
   //时间格式化规则
   function timeFormatter(cellvalue, options, rowObject) {
     if ($.isValidVariable(cellvalue)) {
-      return '<span title="'+cellvalue+'">'+cellvalue.substring(8, 12)+'</span>';
+      return '<span title="'+cellvalue+'">'+cellvalue.substring(6, 8)+'/'+cellvalue.substring(8, 10)+':'+cellvalue.substring(10, 12)+'</span>';
     } else {
       return '';
     }

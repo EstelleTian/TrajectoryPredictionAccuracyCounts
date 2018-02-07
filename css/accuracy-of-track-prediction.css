@@ -305,10 +305,25 @@
     margin-right: 10px;
 }
 .detail{
-    height: 550px;
-    width: 1260px;
+    height: 600px;
+    width: 1630px;
 }
-
+.ui-jqgrid .ui-jqgrid-caption{
+    text-align: center !important;
+}
+.ui-jqgrid .ui-jqgrid-caption .ui-jqgrid-title{
+    font-size: 1.8rem;
+    font-weight: bold;
+    height: 27px;
+    color: #555;
+    line-height: 27px;
+}
+.HeaderButton{
+    display: none;
+}
+.ui-jqgrid-view{
+    border: 1px solid #ddd;
+}
 .airport_status{
     height: 56px;
 }
@@ -433,12 +448,12 @@
 #precision_flight_grid_table{
     position: relative;
 }
-.jqgrow td:nth-of-type(2){
+.jqgrow td:nth-of-type(4){
     color: #1B548D;
     cursor: pointer;
     text-decoration: underline;
 }
-.precision_show .jqgrow td:nth-of-type(2){
+.precision_show .jqgrow td:nth-of-type(4){
     color: #000;
     cursor: default;
     text-decoration: none;
@@ -448,7 +463,7 @@
     cursor: pointer;
     text-decoration: underline ;
 }
-.detail .jqgrow td:nth-of-type(2){
+.detail .jqgrow td:nth-of-type(4){
     cursor: default;
     text-decoration: none;
     color: #000;

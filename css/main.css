@@ -123,15 +123,26 @@ header{
 #nav li.active, #nav a.active {
     background: #103d5f;
 }
-
+.header-container{
+    margin-left:2%;
+}
+.nav-container{
+    margin: 5px 20px;
+}
 .content-container {
-    margin-top: 140px;
+    margin: 140px 30px 0;
 }
 .content-container > .row {
     display: none;
 }
 .content-container .row.active {
     display: block;
+}
+.content-container .ui-jqgrid-bdiv{
+    overflow-x: hidden;
+}
+.detail .ui-jqgrid-bdiv{
+    overflow-x: hidden;
 }
 
 
@@ -175,23 +186,23 @@ header{
         margin-top: 220px;
     }
 }
-@media (min-width: 1280px){
-    .container {
-         width: 1220px;
-    }
-}
-@media (min-width: 1380px){
-    .container {
-        width: 1320px;
-    }
-}
-@media (min-width: 1500px){
-    .container {
-        width: 1420px;
-    }
-}
-@media (min-width: 1600px){
-    .container {
-        width: 1520px;
-    }
-}
+/*@media (min-width: 1280px){*/
+    /*.container {*/
+         /*width: 1220px;*/
+    /*}*/
+/*}*/
+/*@media (min-width: 1380px){*/
+    /*.container {*/
+        /*width: 1320px;*/
+    /*}*/
+/*}*/
+/*@media (min-width: 1500px){*/
+    /*.container {*/
+        /*width: 1420px;*/
+    /*}*/
+/*}*/
+/*@media (min-width: 1600px){*/
+    /*.container {*/
+        /*width: 1520px;*/
+    /*}*/
+/*}*/

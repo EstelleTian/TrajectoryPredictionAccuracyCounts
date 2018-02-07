@@ -11,6 +11,7 @@ var PredictionData = function () {
   }
   //根据索引获取当前页面状态数组
   var stateArr = ['fly','ter','pre']
+  var searchState = '';
   /*
    * 表单查询对象
    * */
@@ -218,6 +219,7 @@ var PredictionData = function () {
    * */
   var initSubmitEvent = function () {
     $('.fly-data-btn').on('click', function () {
+      searchState = 'fly'
        $(".fly_time .no-datas-tip").hide();
       alertClearData(tableObject)
       //获取 表单数据
@@ -226,6 +228,7 @@ var PredictionData = function () {
       handleSubmitForm(DataForm, 'fly_time');
     });
     $('.ter-data-btn').on('click', function () {
+      searchState = 'ter'
       $(".ter_time .no-datas-tip").hide();
       alertClearData(tableObject)
       //获取 表单数据
@@ -235,6 +238,7 @@ var PredictionData = function () {
 
     });
     $('.pre-data-btn').on('click', function () {
+      searchState = 'pre'
       $(".precision_show .no-datas-tip").hide();
       alertClearData(tableObject)
       //获取 表单数据
@@ -374,17 +378,25 @@ var PredictionData = function () {
    */
   var initGridTable = function (config, tableId, pagerId) {
     var sortName = '';
+    var captionName = '';
     if(stateArr[stateIndex] == 'fly'|| stateArr[stateIndex] =='ter'){
       sortName = ''
     }else if(stateArr[stateIndex] == 'pre'){
       sortName = 'rdeptime'
+    }
+    if(pagerId == 't-datas-pager'){
+      captionName = '过点时间统计'
+    }
+    if(pagerId == 'd-datas-pager'){
+      captionName = '过点高度统计'
     }
     var table = $('#' + tableId).jqGrid({
       styleUI: 'Bootstrap',
       datatype: 'local',
       rownumbers: true,
       height: "auto",
-      shrinkToFit: false,
+      caption:captionName,
+      shrinkToFit: true,
       cmTemplate: {
         align: 'center',
         width:115,
@@ -409,19 +421,20 @@ var PredictionData = function () {
       onCellSelect: function (rowid, index, contents, event) {
         var colModel = table.jqGrid('getGridParam')['colModel'];
         var colName = colModel[index].name;
-        if (colName == 'flyDepPointType' || colName == 'depAirport') {
+        if (colName == 'flightcount') {
           //模态框设置
           var option = {
             title: contents + '航班详情',
             content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>',
-            width: 1280,
-            height: 960,
+            width: $('.main').width()-100,
+            height: $('.main').width()-50,
             isIcon: false,
             showCancelBtn: false,
-            mtop: 180
+            mtop: 100
           }
           //初始化模态框
           BootstrapDialogFactory.dialog(option);
+          $('.detail').width($('.main').width()-130)
           //初始化航段飞行时间误差统计详情表格
           if (!$('.ter_time').is(':visible')) {
             var textParam = table.jqGrid('getGridParam')['data'][rowid-1].allName
@@ -439,15 +452,16 @@ var PredictionData = function () {
               flightInOid = flightInOid[rowid-1].flightInOId
           var option = {
             title: contents + '航班详情',
-            content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>',
-            width: 1280,
-            height: 960,
+            content: '<div class="detail"><table id="' + rowid + 'table" class="detail_table bordered"></table><div id="' + rowid + 'detail_pager"></div></div>',
+            width: $('.main').width()-100,
+            height: $('.main').width()-50,
             isIcon: false,
             showCancelBtn: false,
-            mtop: 180
+            mtop: 100
           }
           //初始化模态框
           BootstrapDialogFactory.dialog(option);
+          $('.detail').width($('.main').width()-130)
           flightDetailSearch(flightInOid, rowid);
         }
       }
@@ -487,18 +501,18 @@ var PredictionData = function () {
       height: "auto",
       cmTemplate: {
         align: 'center',
-        width:115,
+        // width:115,
         sortfunc : function (a,b,direction) {
           a = a*1; b=b*1;
           return (a > b ? 1 : -1) * direction;
         }
       },
+      shrinkToFit: true,
       pager: pagerId,
       pgbuttons: false,
       pginput: false,
       colNames: config.colName,
       colModel: config.colModel,
-      shrinkToFit:false,
       rowNum: 999999, // 一页显示多少条
       sortname: sortName, // 初始化的时候排序的字段
       // sortorder: 'asc', //排序方式,可选desc,asc
@@ -520,8 +534,6 @@ var PredictionData = function () {
       refresh: false
     });
     tableDataConfigs.resizeToFitContainer(tableId)
-    $('#' + tableId).jqGrid('setFrozenColumns')
-    $('.modal-content .frozen-bdiv').css('top', '35px');
   };
   /**
    * @method handleSubmitForm 处理表单数据
@@ -701,7 +713,7 @@ var PredictionData = function () {
         if ($.isValidObject(data)) {
           //提取数据
           var time = data.generateTime;
-          if (stateArr[stateIndex] == 'fly') {
+          if (stateArr[stateIndex] == 'fly'&&searchState == 'fly') {
             // 若数据为空
             if ($.isEmptyObject(data.map) && stateIndex != 2) {
               alertClearData(tableObject)
@@ -738,7 +750,7 @@ var PredictionData = function () {
                 updateGeneratetime('fly_time',time);
               }
             }
-          } else if (stateArr[stateIndex] == 'ter') {
+          } else if (stateArr[stateIndex] == 'ter'&& searchState =='ter') {
             // 若数据为空
             if ($.isEmptyObject(data.map) && stateIndex != 2) {
               alertClearData(tableObject)
@@ -777,7 +789,7 @@ var PredictionData = function () {
                 updateGeneratetime('ter_time',time);
               }
             }
-          } else if (stateArr[stateIndex] == 'pre') {
+          } else if (stateArr[stateIndex] == 'pre'&& searchState == 'pre') {
             // 若数据为空
             if ($.isEmptyObject(data.flights) && stateArr[stateIndex] == 'pre') {
               alertClearData(tableObject)
