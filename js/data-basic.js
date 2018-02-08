@@ -538,6 +538,12 @@ var tableDataConfig = function () {
       return a.localeCompare(b) * direction;
     }
   }
+  //
+  function sortNum(a,b,direction) {
+    a = a * 1;
+    b = b * 1;
+    return (a > b ? 1 : -1) * direction;
+  }
   //时间格式化规则
   function timeFormatter(cellvalue, options, rowObject) {
     if ($.isValidVariable(cellvalue)) {
@@ -562,7 +568,8 @@ var tableDataConfig = function () {
     flyData: flyData,
     terData:terData,
     preData:preData,
-    sortName:sortName
+    sortName:sortName,
+    sortNum:sortNum
   }
 };
 

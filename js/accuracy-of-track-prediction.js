@@ -429,7 +429,12 @@ var PredictionData = function () {
       cmTemplate: {
         align: 'center',
         width: 115,
-        sortfunc: tableDataConfigs.sortName
+        sortfunc: tableDataConfigs.sortName,
+        align : 'center',
+        sortable : true,
+        search : true,
+        searchoptions : {
+          sopt : ['cn','nc','eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en'],}
       },
       pager: pagerId,
       pgbuttons: false,
@@ -483,9 +488,9 @@ var PredictionData = function () {
       edit: false,
       view: false,
       del: false,
-      search: true,
+      search: false,
       refresh: false,
-      searchtext: '高级查询',
+      // searchtext: '高级查询',
     });
     $('#' + tableId).jqGrid('filterToolbar', {
       // 是否开启Enter后查询
@@ -494,6 +499,13 @@ var PredictionData = function () {
       searchOperators: false,
     });
     $('#' + tableId)[0].toggleToolbar();
+    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
+      caption:"高级查询",
+      buttonicon:"glyphicon glyphicon-search",
+      onClickButton: function(){
+        showAdvanceFliter($('#' + tableId))
+      },
+    });
     $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
       caption:"快速过滤",
       buttonicon:"glyphicon glyphicon-zoom-in",
@@ -514,10 +526,14 @@ var PredictionData = function () {
    * */
   var initGridTableDetail = function (config, tableId, pagerId) {
     var sortName = '';
+    var sortFun = '';
     if (stateArr[stateIndex] == 'fly' || stateArr[stateIndex] == 'ter') {
       sortName = 'aircraftType'
+      sortFun = tableDataConfigs.sortName
+
     } else if (stateArr[stateIndex] == 'pre') {
-      sortName = 'routeseq'
+      sortName = 'routeseq';
+      sortFun = tableDataConfigs.sortNum
     }
     var table = $('#' + tableId).jqGrid({
       styleUI: 'Bootstrap',
@@ -527,11 +543,11 @@ var PredictionData = function () {
       cmTemplate: {
         align: 'center',
         // width:115,
-        sortfunc: function (a, b, direction) {
-          a = a * 1;
-          b = b * 1;
-          return (a > b ? 1 : -1) * direction;
-        }
+        sortfunc: sortFun,
+        sortable : true,
+        search : true,
+        searchoptions : {
+          sopt : ['cn','nc','eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en'],}
       },
       shrinkToFit: true,
       pager: pagerId,
@@ -556,9 +572,8 @@ var PredictionData = function () {
       edit: false,
       view: false,
       del: false,
-      search:true,
+      search:false,
       refresh: false,
-      searchtext: '高级查询'
     });
     $('#' + tableId).jqGrid('filterToolbar', {
       // 是否开启Enter后查询
@@ -574,6 +589,13 @@ var PredictionData = function () {
         showQuickFilter($('#' + tableId),tableId)
       },
     });
+    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
+      caption:"高级查询",
+      buttonicon:"glyphicon glyphicon-search",
+      onClickButton: function(){
+        showAdvanceFliter($('#' + tableId))
+      },
+    });
     tableDataConfigs.resizeToFitContainer(tableId)
   };
   /**
@@ -587,10 +609,24 @@ var PredictionData = function () {
     // 切换显示
     tableObj[0].toggleToolbar();
     // 隐藏清空条件的x
-    tableObj.find('.ui-search-clear').hide();
+    tableObj.parents().find('.ui-search-clear').hide();
     // 自适应
     tableDataConfigs.resizeToFitContainer(tableId)
   };
+  
+  var showAdvanceFliter = function (tableObj) {
+    tableObj.jqGrid("searchGrid", {
+      sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
+      caption: "高级查询",
+      multipleSearch: true,
+      multipleGroup: true,
+      searchOnEnter: true,
+      closeOnEscape: true,
+      resize: false,
+      zIndex: 1004,
+      width: 600
+    });
+  }
 
   /**
    * 打开详情窗口
