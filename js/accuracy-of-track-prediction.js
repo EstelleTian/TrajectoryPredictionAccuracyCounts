@@ -422,6 +422,7 @@ var PredictionData = function () {
         var colModel = table.jqGrid('getGridParam')['colModel'];
         var colName = colModel[index].name;
         if (colName == 'flightcount') {
+          var contents = table.jqGrid('getGridParam')['data'][rowid-1].allName;
           //模态框设置
           var option = {
             title: contents + '航班详情',
@@ -448,6 +449,7 @@ var PredictionData = function () {
           }
         }
         if (colName == 'flightId'&&stateArr[stateIndex] == 'pre') {
+          var contents = table.jqGrid('getGridParam')['data'][rowid-1].flightId;
           var flightInOid = table.jqGrid('getGridParam')['data']
               flightInOid = flightInOid[rowid-1].flightInOId
           var option = {

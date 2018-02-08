@@ -311,12 +311,20 @@
 .ui-jqgrid .ui-jqgrid-caption{
     text-align: center !important;
 }
+.ui-jqgrid .ui-jqgrid-titlebar {
+    font-weight: normal;
+    min-height: 28px;
+    padding: 4px 8px;
+    position: relative;
+    margin-right: 2px;
+    border-bottom: 1px solid #ddd;
+}
 .ui-jqgrid .ui-jqgrid-caption .ui-jqgrid-title{
-    font-size: 1.8rem;
+    font-size: 16px;
     font-weight: bold;
-    height: 27px;
+    height: 28px;
     color: #555;
-    line-height: 27px;
+    line-height: 28px;
 }
 .HeaderButton{
     display: none;
@@ -502,6 +510,12 @@
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 8px;}
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
     border: 1px solid #ddd !important;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding: 2px;
+}
+.ui-jqgrid .ui-jqgrid-bdiv table {
+    font-size: 16px;
 }
 @media (max-width: 992px) {
     .operating-data-query .data-query-summary .summary {
