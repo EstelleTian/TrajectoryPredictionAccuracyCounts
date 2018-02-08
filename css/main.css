@@ -7,7 +7,7 @@ html,body {
 
 body{
     background: #2e5e79;
-    font-size: 12px;
+    font-size: 14px;
     font-family: Calibri, 'Microsoft Yahei',"Helvetica Neue",Helvetica,Arial, sans-serif;
     overflow: hidden;
     /*font-family: Tahoma, Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;*/
@@ -29,7 +29,6 @@ body.hide-modal .modal-backdrop {
     overflow: hidden;
 }
 
-
 header{
     margin-bottom: 1rem;
 }
@@ -37,11 +36,10 @@ header{
     background: #204562;
     border-bottom: 1px solid #406079;
     padding-top: 1rem;
-    padding-bottom: 1rem;
-    height: 90px;
+    height: 70px;
     position: fixed;
     width: 100%;
-    z-index: 1000;
+    z-index: 10;
 }
 .headbar .pull-right{
     margin-left: 10px;
@@ -90,9 +88,9 @@ header{
     color: #C2C2C2;
 }
 .headbar .navbar-brand {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #fff;
+    color: #dddddd;
+    font-size: 3.1rem;
+    font-weight: 500;
     padding-left: 1rem;
 }
 .headbar .navbar-brand:hover, .headbar .navbar-brand:active, .headbar .navbar-brand:focus{
@@ -102,9 +100,9 @@ header{
 .nav-menu {
     position: fixed;
     width: 100%;
-    top:90px;
+    top:70px;
     height: 47px;
-    z-index: 1000;
+    z-index: 10;
 }
 #nav{
     background: url(../img/nav-repeat2.jpg) repeat-x #305b7b !important;
@@ -130,7 +128,7 @@ header{
     margin: 5px 20px;
 }
 .content-container {
-    margin: 140px 30px 0;
+    margin: 120px 30px 0;
 }
 .content-container > .row {
     display: none;
@@ -183,7 +181,7 @@ header{
 }
 @media (max-width: 922px) {
     .content-container {
-        margin-top: 220px;
+        margin-top: 120px;
     }
 }
 /*@media (min-width: 1280px){*/

@@ -23,6 +23,15 @@
 .history-data-statistics .echart-row {
     height:100%;
     position: relative;
+    color: #555;
+    margin-top: 0px;
+    /*margin-bottom: 25px;*/
+    padding: 0px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
 }
 .history-data-statistics .echart-col{
     height: 95%;
@@ -305,8 +314,8 @@
     margin-right: 10px;
 }
 .detail{
-    height: 600px;
-    width: 1630px;
+    height: 100%;
+    width: 100%;
 }
 .ui-jqgrid .ui-jqgrid-caption{
     text-align: center !important;
@@ -400,7 +409,6 @@
 .operating-data-query .ui-jqgrid .ui-jqgrid-pager .table>tbody>tr>td{
     border: none;
 }
-
 .modal-header {
     padding-left: 3rem;
     padding-right: 3rem;
