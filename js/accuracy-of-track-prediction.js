@@ -513,8 +513,6 @@ var PredictionData = function () {
         showQuickFilter($('#' + tableId),tableId)
       },
     });
-
-    $('#' + tableId).jqGrid('setFrozenColumns')
     //尺寸计算表格适配内容大小
     tableDataConfigs.resizeToFitContainer(tableId)
   };
@@ -583,17 +581,17 @@ var PredictionData = function () {
     });
     $('#' + tableId)[0].toggleToolbar();
     $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
-      caption:"快速过滤",
-      buttonicon:"glyphicon glyphicon-zoom-in",
-      onClickButton: function(){
-        showQuickFilter($('#' + tableId),tableId)
-      },
-    });
-    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
       caption:"高级查询",
       buttonicon:"glyphicon glyphicon-search",
       onClickButton: function(){
         showAdvanceFliter($('#' + tableId))
+      },
+    });
+    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
+      caption:"快速过滤",
+      buttonicon:"glyphicon glyphicon-zoom-in",
+      onClickButton: function(){
+        showQuickFilter($('#' + tableId),tableId)
       },
     });
     tableDataConfigs.resizeToFitContainer(tableId)
