@@ -426,11 +426,12 @@ var tableDataConfig = function () {
     data: []
   }
   var precisionDetailDataConfig = {
-    colName: ['航路点', '航路顺序','实际过点时间', '0-15(分钟)', '15-30(分钟)', '30-60(分钟)', '60-120(分钟)', '120(分钟)以上', 'DEP', 'FPL', 'SCH',],
+    colName: ['航路点', '航路顺序','实际过点时间','飞行高度', '0-15(分钟)', '15-30(分钟)', '30-60(分钟)', '60-120(分钟)', '120(分钟)以上', 'DEP', 'FPL', 'SCH',],
     colTitle: {
       flightRoute:'航路点名称',
       routeseq:'航路顺序',
       passTime:'实际过点时间',
+      hlevel:'飞行高度',
       timeIn0To15:'过点时间和保存时间的差值在15分钟内',
       timeIn15To30:'过点时间和保存时间的差值在15到30分钟',
       timeIn30To60:'过点时间和保存时间的差值在30到60分钟',
@@ -444,38 +445,52 @@ var tableDataConfig = function () {
       {
         name: 'flightRoute',
         index: 'flightRoute',
+        width:100
         // frozen:true
       }, {
         name:'routeseq',
         index:'routeseq',
+        width:100
       }, {
         name: 'passTime',
         index: 'passTime',
         formatter: timeFormatter
+      },{
+        name: 'hlevel',
+        index: 'hlevel',
+        width:100
       }, {
         name: 'timeIn0To15',
-        index: 'timeIn0To15'
+        index: 'timeIn0To15',
+        width:240,
       }, {
         name: 'timeIn15To30',
-        index: 'timeIn15To30'
+        index: 'timeIn15To30',
+        width:240,
       }, {
         name: 'timeIn30To60',
-        index: 'timeIn30To60'
+        index: 'timeIn30To60',
+        width:240,
       }, {
         name: 'timeIn60To120',
-        index: 'timeIn60To120'
+        index: 'timeIn60To120',
+        width:240,
       }, {
         name: 'timeIn120',
-        index: 'timeIn120'
+        index: 'timeIn120',
+        width:240,
       }, {
         name: 'timeDEP',
-        index: 'timeDEP'
+        index: 'timeDEP',
+        width:100
       }, {
         name: 'timeFPL',
-        index: 'timeFPL'
+        index: 'timeFPL',
+        width:100
       }, {
         name: 'timeSCH',
-        index: 'timeSCH'
+        index: 'timeSCH',
+        width:100
       }],
     data: []
   }

@@ -996,7 +996,9 @@ var PredictionData = function () {
         if ($.isValidObject(data)) {
           if ($.isValidObject(data.flightRouteResults)) {
             tableDataConfigs.precisionDetailDataConfig.data = [];
-            tableDataConfigs.precisionDetailDataConfig.data = data.flightRouteResults
+
+            tableDataConfigs.precisionDetailDataConfig.data = accurancyFlightConvert(data.flightRouteResults)
+
             initGridTableDetail(tableDataConfigs.precisionDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
           } else {
             var str = '<div class="no-datas-tip"></div>'
@@ -1013,6 +1015,56 @@ var PredictionData = function () {
         showAlear($('.detail'), "查询失败");
       }
     })
+  }
+  var accurancyFlightConvert = function (originData) {
+    var resultArr = [];
+      $.map(originData,function (n,i) {
+        var obj = {};
+      obj['flightRoute'] = n.flightRoute;
+      obj['routeseq'] = n.routeseq;
+      obj['passTime'] = n.passTime;
+      obj['hlevel'] = n.hlevel;
+      obj['timeIn0To15'] = valueComapre(n.timeIn0To15,n.passTimeIn0To15,n.hlevelIn0To15,n.passHlevelIn0To15);
+      obj['timeIn15To30'] = valueComapre(n.timeIn15To30,n.passTimeIn15To30,n.hlevelIn15To30,n.passHlevelIn15To30);
+      obj['timeIn30To60'] = valueComapre(n.timeIn30To60,n.passTimeIn30To60,n.hlevelIn30To60,n.passHlevelIn30To60);
+      obj['timeIn60To120'] = valueComapre(n.timeIn60To120,n.passTimeIn60To120,n.hlevelIn60To120,n.passHlevelIn60To120);
+      obj['timeIn120'] = valueComapre(n.timeIn120,n.passTimeIn120,n.hlevelIn120,n.passHlevelIn120);
+      obj['timeDEP'] = n.timeDEP;
+      obj['timeFPL'] = n.timeFPL;
+      obj['timeSCH'] = n.timeSCH;
+        resultArr.push(obj);
+    })
+    return resultArr;
+  }
+  /**
+   * 航班航路点预测精度航班详情叶数据格式化
+   * @param timeIn
+   * @param passTimeIn
+   * @param hlevelIn
+   * @param passHlevelIn
+   * @returns {string}
+   */
+  var valueComapre = function (timeIn,passTimeIn,hlevelIn,passHlevelIn) {
+    if(passTimeIn == null){
+      passTimeIn = '';
+    }else {
+      var title  = passTimeIn;
+      passTimeIn = title.substring(6, 8) + '/' + title.substring(8, 10) + ":" + title.substring(10, 12)+ title.substring(12, 14)
+    }
+    if(hlevelIn == null){
+      hlevelIn = '';
+    }
+    if(passHlevelIn == null){
+      passHlevelIn = '';
+    }
+    if(timeIn == null){
+      timeIn = '';
+      var parma = timeIn + passTimeIn + hlevelIn + passHlevelIn;
+      return parma
+    }else{
+      var parma = timeIn + '('+passTimeIn+')'+'/'+hlevelIn+'('+passHlevelIn+')';
+      return parma
+    }
   }
   /**
    * @method updateGeneratetime 更新当前数据刷新时间
