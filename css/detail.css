@@ -1,0 +1,39 @@
+html,body{
+    width: 100%;
+    height: 100%;
+}
+.container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.now_time{
+    height: 70px;
+    line-height: 70px;
+    margin-bottom: 10px;
+    text-align: center;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+}
+.now_time .win_head{
+    font-size: 24px;
+    font-weight: bold;
+}
+.flight-table{
+    flex: 1;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+.flight-table
+element.style {
+    height: 570px;
+    width: 1446px;
+}
+.ui-jqgrid .ui-jqgrid-bdiv{
+    overflow-x: hidden;
+}
+.flight-table .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 3px;}

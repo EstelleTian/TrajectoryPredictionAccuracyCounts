@@ -1,0 +1,67 @@
+.box .charts-wrap {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+.table-row {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.fly_table {
+    border: 1px solid #dddddd;
+}
+
+.fly_table .jqgrow td:nth-of-type(3) {
+    cursor: pointer;
+    color: #337ab7;
+}
+
+.conditions {
+    height: 40px;
+    text-align: center;
+    /*flex-wrap: wrap;*/
+    /*display: flex;*/
+    /*flex: 1 1 auto;*/
+}
+
+.conditions-content {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: none;
+}
+
+.conditions-content > span {
+    display: inline-block;
+    padding: 0 1rem;
+    border-right: 1px solid #cccccc;
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.1);
+}
+
+.conditions-content > span.conditions-start-data,
+.conditions-content > span.conditions-line {
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+}
+
+.conditions-content > span.conditions-end-data {
+    padding-left: 0;
+}
+
+.conditions-content > span.conditions-tip,
+.conditions-content > span.conditions-unit {
+    border: none;
+    box-shadow: none;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 3px;
+}

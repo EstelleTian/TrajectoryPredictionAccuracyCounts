@@ -35,7 +35,7 @@ var GridTableUtil = {
             var container = gridTableGBox.parent();
 
             // 计算表格高度
-            var gridTableHeight = gridTableBDiv.outerHeight() - (gridTableGBox.outerHeight() - container.height());
+            var gridTableHeight = gridTableBDiv.outerHeight() - (gridTableGBox.outerHeight() - container.height()+2);
             var gridTableWidth = container.width();
 
             // 调用表格修改高度宽度方法

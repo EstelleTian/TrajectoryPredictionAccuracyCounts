@@ -20,7 +20,7 @@ var DhxIframeDialog = {
     /**
      *
      */
-    create: function (title, url, params) {
+    create: function (title, url, params,urls) {
         if ($.isValidVariable(this.dhxWinsFactory.window(params['id']))) {
             return;
         }
@@ -31,12 +31,12 @@ var DhxIframeDialog = {
             win.progressOff();
         });
         w1.attachHTMLString(url)
-        // w1.attachURL(url);
-        // w1.addUserButton("open", 4, "Open in new tab");
-        // w1.button("open").attachEvent("onClick", function (win) {
-        //     win.close();
-        //     window.open(url);
-        // });
+        w1.attachURL(url);
+        w1.addUserButton("open", 4, "Open in new tab");
+        w1.button("open").attachEvent("onClick", function (win) {
+            win.close();
+            window.open(url);
+        });
         w1.adjustPosition();
         if ($.isValidVariable(params['buttons'])) {
             var buttons = params['buttons'];

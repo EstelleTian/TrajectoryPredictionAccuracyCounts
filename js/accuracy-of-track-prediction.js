@@ -10,8 +10,49 @@ var PredictionData = function () {
     pre: ipHost + 'flight/'
   }
   //根据索引获取当前页面状态数组
-  var stateArr = ['fly', 'ter', 'pre']
+  var stateArr = ['fly', 'ter', 'pre','uncor']
+  //搜索状态
   var searchState = '';
+  //表格对应id集合
+  var idsObj = {
+    fly:{
+      canvasId:'fly-canvas',
+      tableId:'fly-grid-table',
+      pagerId:'fly-grid-pager',
+    },
+    ter:{
+      top:{
+        canvasId:'ter-canvas',
+        tableId:'ter-top-grid-table',
+        pagerId:'ter-top-table-pager',
+      },
+      down:{
+        canvasId:'ter-canvas',
+        tableId:'ter-down-grid-table',
+        pagerId:'ter-down-table-pager',
+      }
+    },
+    pre:{
+      canvasId:'pre-canvas',
+      tableId:'pre-grid-table',
+      pagerId:'pre-table-pager',
+    },
+    uncor:{
+      canvasId:'un-canvas',
+      tableId:'un-grid-table',
+      pagerId:'un-table-pager',
+    }
+  }
+  //表格对象集合
+  var tableObject = {
+    fly:'',
+    ter:{
+      top:'',
+      down:''
+    },
+    pre:'',
+    uncor:''
+  }
   /*
    * 表单查询对象
    * */
@@ -22,19 +63,6 @@ var PredictionData = function () {
     currentStatus: '',
     airportName: ''
   }
-  /*
-   * 数据对象
-   * */
-  var tableDataConfigs = tableDataConfig();
-  /*
-   * 表格对象
-   * */
-  var tableObject = {
-    flyTableObj: 'flight_grid_table',
-    terTableObjTop: 't_flight_grid_table',
-    terTableObjDown: 'd_flight_grid_table',
-    preTableObj: 'precision_flight_grid_table'
-  }
   // 初始化组件
   var initComponent = function () {
     //初始化日历插件datepicker
@@ -43,8 +71,6 @@ var PredictionData = function () {
     initPreDatapicker();
     // 设置默认时间
     setDefaultDates();
-    //绑定Window事件，窗口变化时重新调整表格大小
-    initDocumentResize();
 
   };
   // 初始化事件绑定
@@ -61,7 +87,7 @@ var PredictionData = function () {
 
   var initNavTabEvent = function () {
     //导航栏
-    var tabPage = [$('.fly_time'), $('.ter_time'), $('.precision_show')]
+    var tabPage = [$('.fly_time'), $('.ter_time'), $('.precision_show'),$('.uncorrect_flight')]
     var nav = $('#nav');
     $('.nav li', nav).on('click', function () {
       // 更新当前nav索引
@@ -75,7 +101,6 @@ var PredictionData = function () {
       $(this).addClass('active');
       //切换模块
       tabToggle(stateIndex, tabPage)
-      tableDataConfigs.resizeToFitContainer(tableObject.flyTableObj)
     });
     // 终端区航路点过点时间统计导航点击事件
     $('.nav-history-data-statistics').on('click', function () {
@@ -85,8 +110,6 @@ var PredictionData = function () {
       $(this).addClass('active');
       //模块切换
       tabToggle(stateIndex, tabPage)
-      tableDataConfigs.resizeToFitContainer(tableObject.terTableObjTop)
-      tableDataConfigs.resizeToFitContainer(tableObject.terTableObjDown)
     });
     //航班航路点预测精度展示
     $('.precision-data-statistics').on('click', function () {
@@ -96,7 +119,14 @@ var PredictionData = function () {
       $(this).addClass('active');
       //模块切换
       tabToggle(stateIndex, tabPage)
-      tableDataConfigs.resizeToFitContainer(tableObject.preTableObj)
+    })
+    $('.uncorrect-flight').on('click',function () {
+      // 清空警告
+      clearAlert();
+      $('li', nav).removeClass('active');
+      $(this).addClass('active');
+      //模块切换
+      tabToggle(stateIndex, tabPage)
     })
     //航段飞行起飞机场点击事件状态绑定
     initAirportState($('.fly_time .dep'), $('.fly_time .arr'))
@@ -109,42 +139,26 @@ var PredictionData = function () {
   var tabToggle = function (tabIndex, tabPage) {
     $.each(tabPage, function (i, e) {
       if (i == tabIndex) {
-        e.removeClass('hide')
-        e.addClass('show');
+        e.removeClass('module-hide')
+        e.addClass('module-show active');
       } else {
-        e.removeClass('show')
-        e.addClass('hide');
+        e.removeClass('module-show')
+        e.addClass('module-hide active');
       }
     })
-  }
-  /*
-   * 清空页面数据
-   * */
-  var clearData = function (table) {
-    $('.start-date-input').val('');
-    $('.flight-end-date').val('');
-    $('.flight_name').val('')
-    if (stateArr[stateIndex] == 'fly') {
-      $.jgrid.gridUnload(table.flyTableObj);
-    } else if (stateArr[stateIndex] == 'ter') {
-      $.jgrid.gridUnload(table.terTableObjTop);
-      $.jgrid.gridUnload(table.terTableObjDown);
-    } else if (stateArr[stateIndex] == 'pre') {
-      $.jgrid.gridUnload(table.preTableObj);
-    }
   }
   /*
    * 提示前清空数据
    * */
   var alertClearData = function (table) {
     if ($.isValidObject(table)) {
-      if (stateArr[stateIndex] == 'fly') {
-        $.jgrid.gridUnload(table.flyTableObj);
-      } else if (stateArr[stateIndex] == 'ter') {
-        $.jgrid.gridUnload(table.terTableObjTop);
-        $.jgrid.gridUnload(table.terTableObjDown);
-      } else if (stateArr[stateIndex] == 'pre') {
-        $.jgrid.gridUnload(table.preTableObj);
+      if (stateArr[stateIndex] == 'fly'&&$.isValidObject(table.fly)) {
+        $.jgrid.gridUnload(table.fly);
+      } else if (stateArr[stateIndex] == 'ter'&&$.isValidObject(table.ter.top)) {
+        $.jgrid.gridUnload(table.ter.top);
+        $.jgrid.gridUnload(table.ter.down);
+      } else if (stateArr[stateIndex] == 'pre'&&$.isValidObject(table.pre)) {
+        $.jgrid.gridUnload(table.pre);
       }
     }
   }
@@ -356,168 +370,172 @@ var PredictionData = function () {
    * @param gridParam 表格参数配置
    * @param option 表格参数具体配置字符串
    * */
-  var dataConvert = function (data, gridParam, option) {
+  var dataConvert = function (data,option) {
     if ($.isValidObject(data)) {
       if ($.isValidObject(data.map)) {
         $.each(data.map, function (i, e) {
           var obj = {}
           //航段飞行时间误差数据转换
-          if (option == 'flyErrorTableDataConfig') {
+          if (option == 'fly') {
             var str = i.split('-');
-            obj.point = str[1]
-            obj.flyDepPointType = str[0];
-            obj.allName = i;
-            $.each(gridParam[option].colModel, function (index, ele) {
-              if (ele['index'] != 'flyDepPointType' && ele['index'] != 'point') {
-                obj[ele['index']] = e[ele['index']];
-              }
-            })
+            e.point = str[1]
+            e.flyDepPointType = str[0];
           } else {
             //终端区航路点过点时间统计数据转换
             var str = i.split('-')
-            obj.terPoint = str[1]
-            obj.depAirport = str[0]
-            obj.allName = i;
-            $.each(gridParam[option].colModel, function (index, ele) {
-              if (ele['index'] != 'depAirport' && ele['index'] != 'terPoint') {
-                obj[ele['index']] = e[ele['index']];
-              }
-            })
+            e.terPoint = str[1]
+            e.depAirport = str[0]
           }
-          gridParam[option].data.push(obj)
         })
+        return data.map
       }
       //航班航路点预测精度显示数据转换
-      if ($.isValidObject(data.flights)) {
-        var obj = {};
-        $.each(data.flights, function (i, e) {
-          $.each(gridParam[option].colModel, function (j, el) {
-            obj[el.index] = e[el.index];
-          })
-          gridParam[option].data.push(obj)
-        })
-      }
+      // if ($.isValidObject(data.flights)) {
+      //   var obj = {};
+      //   $.each(data.flights, function (i, e) {
+      //     $.each(gridParam[option].colModel, function (j, el) {
+      //       obj[el.index] = e[el.index];
+      //     })
+      //     gridParam[option].data.push(obj)
+      //   })
+      // }
     }
   }
   /**
-   *@method initGridTable 初始化页面主表
-   * @param config 对应表格配置
-   * @param tableId 表格的tableId
-   * @param pagerId 表格统计条数的pagerId
+   * 初始化表格方法
+   * @param config 表格参数配置
+   * @param ids 表格内涉及id集合
+   * @returns {FlightGridTable} 表格对象
    */
-  var initGridTable = function (config, tableId, pagerId) {
+  var initGridTable = function (config, ids) {
+    var pagerId = ids.pagerId;
+    var tableId = ids.tableId;
+    var canvasId = ids.canvasId;
+    //判断默认排序字段
     var sortName = '';
-    var captionName = '';
     if (stateArr[stateIndex] == 'fly' || stateArr[stateIndex] == 'ter') {
       sortName = ''
     } else if (stateArr[stateIndex] == 'pre') {
       sortName = 'rdeptime'
     }
-    if (pagerId == 't-datas-pager') {
-      captionName = '过点时间统计'
-    }
-    if (pagerId == 'd-datas-pager') {
-      captionName = '过点高度统计'
-    }
-    var table = $('#' + tableId).jqGrid({
-      styleUI: 'Bootstrap',
-      datatype: 'local',
-      rownumbers: true,
-      height: "auto",
-      caption: captionName,
-      shrinkToFit: true,
-      cmTemplate: {
-        align: 'center',
-        width: 115,
-        sortfunc: tableDataConfigs.sortName,
-        align : 'center',
-        sortable : true,
-        search : true,
-        searchoptions : {
-          sopt : ['cn','nc','eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en'],}
-      },
-      pager: pagerId,
-      pgbuttons: false,
-      pginput: false,
+    var table = new FlightGridTable({
+      canvasId:canvasId,
+      tableId: tableId,
+      pagerId: pagerId,
       colNames: config.colName,
       colModel: config.colModel,
-      autowidth: true,
-      rowNum: 999999, // 一页显示多少条
-      sortname: sortName, // 初始化的时候排序的字段
-      sortorder: 'asc', //排序方式,可选desc,asc
-      viewrecords: true,
-      loadComplete: function (xhr) {
-        var colTitle = config.colTitle;
-        $.each(colTitle, function (i, e) {
-          $('#' + tableId).jqGrid('setLabel', i, '', [], {title: e});
-        })
-      },
-      onCellSelect: function (rowid, index, contents, event) {
-        var colModel = table.jqGrid('getGridParam')['colModel'];
-        var colName = colModel[index].name;
-        if (colName == 'flightcount') {
-          var title = table.jqGrid('getGridParam')['data'][rowid - 1].allName;
-          var content = '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>';
-          openDetailManageDialog(title, content, rowid)
-          //初始化航段飞行时间误差统计详情表格
-          if (!$('.ter_time').is(':visible')) {
-            var textParam = table.jqGrid('getGridParam')['data'][rowid - 1].allName
-            tableDataConfigs.flyDetailDataConfig.data = tableDataConfigs.flyData.infoMap[textParam];
-            initGridTableDetail(tableDataConfigs.flyDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
-          } else {
-            //初始化终端区航路点过点时间统计详情表格
-            var textParam = table.jqGrid('getGridParam')['data'][rowid - 1].allName
-            tableDataConfigs.terminalDetailDataConfig.data = tableDataConfigs.terData.infoMap[textParam];
-            initGridTableDetail(tableDataConfigs.terminalDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
+      cmTemplate: config.cmTemplate,
+      colDisplay: config.colDisplay,
+      colTitle: config.colTitle,
+      colStyle: {},
+      colEdit: {},
+      search: false,
+      params: {
+        shrinkToFit: true,
+        rowNum: 999999,
+        sortname: sortName,
+        sortorder: 'asc',
+        // sortname: 'SEQ',//排序列
+        // 是否显示行号
+        rownumbers: true,
+        //是否显示快速过滤
+        showQuickFilter: false,
+        // scroll : true, //创建动态滚动表格。当设为启用时，pager被禁用，可使用垂直滚动条来装入数据。
+        afterSearchCallBack: function () {
+
+        },
+        onCellSelect: function (rowid, index, contents, event) {
+          var colModel = table.jqGrid('getGridParam')['colModel'];
+          var colName = colModel[index].name;
+          if (colName == 'flightcount') {
+            var title = table.jqGrid('getGridParam')['data'][rowid - 1].allName;
+            openDetailManageDialog(title, rowid)
+            //初始化航段飞行时间误差统计详情表格
+            if (!$('.ter_time').is(':visible')) {
+              var textParam = table.jqGrid('getGridParam')['data'][rowid - 1].allName
+              tableDataConfig.flyDetailDataConfig.data = tableDataConfig.flyData.infoMap[textParam];
+              initGridTableDetail(tableDataConfig.flyDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
+            } else {
+              //初始化终端区航路点过点时间统计详情表格
+              var textParam = table.jqGrid('getGridParam')['data'][rowid - 1].allName
+              tableDataConfig.terminalDetailDataConfig.data = tableDataConfig.terData.infoMap[textParam];
+              initGridTableDetail(tableDataConfig.terminalDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
+            }
+          }
+          if (colName == 'flightId' && stateArr[stateIndex] == 'pre') {
+            var title = table.jqGrid('getGridParam')['data'][rowid - 1].flightId;
+            var flightInOid = table.jqGrid('getGridParam')['data']
+            flightInOid = flightInOid[rowid - 1].flightInOId
+            openDetailManageDialog(title,rowid)
+            flightDetailSearch(flightInOid, rowid);
           }
         }
-        if (colName == 'flightId' && stateArr[stateIndex] == 'pre') {
-          var title = table.jqGrid('getGridParam')['data'][rowid - 1].flightId;
-          var content = '<div class="detail"><table id="' + rowid + 'table" class="detail_table"></table><div id="' + rowid + 'detail_pager"></div></div>';
-          var flightInOid = table.jqGrid('getGridParam')['data']
-          flightInOid = flightInOid[rowid - 1].flightInOId
-          openDetailManageDialog(title, content, rowid)
-          flightDetailSearch(flightInOid, rowid);
-        }
       }
-    })
-    //数据填充
-    $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
-    $('#' + tableId).jqGrid('navGrid', '#' + pagerId, {
-      add: false,
-      edit: false,
-      view: false,
-      del: false,
-      search: false,
-      refresh: false,
-      // searchtext: '高级查询',
     });
-    $('#' + tableId).jqGrid('filterToolbar', {
-      // 是否开启Enter后查询
-      searchOnEnter: false,
-      // 是否开启查询逻辑选择
-      searchOperators: false,
-    });
-    $('#' + tableId)[0].toggleToolbar();
-    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
-      caption:"高级查询",
-      buttonicon:"glyphicon glyphicon-search",
-      onClickButton: function(){
-        showAdvanceFliter($('#' + tableId))
-      },
-    });
-    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
-      caption:"快速过滤",
-      buttonicon:"glyphicon glyphicon-zoom-in",
-      onClickButton: function(){
-        showQuickFilter($('#' + tableId),tableId)
-      },
-    });
-    //尺寸计算表格适配内容大小
-    tableDataConfigs.resizeToFitContainer(tableId)
+    table.initGridTableObject();
+    table.gridTableObject
+      .navButtonAdd('#' + pagerId, {
+        caption: "高级查询",
+        title: "高级查询",
+        buttonicon: "glyphicon-search",
+        onClickButton: function () {
+          table.showAdvanceFilter();
+        },
+        position: "first"
+      })
+      .navButtonAdd('#' + pagerId, {
+        caption: "快速过滤",
+        title: "快速过滤",
+        buttonicon: "glyphicon-filter",
+        onClickButton: function () {
+          //清理协调窗口
+          table.clearCollaborateContainer();
+          table.showQuickFilter();
+          table.quickFilterFlag = !table.quickFilterFlag;
+          table.addMultiSelectToHeader();
+          table.checkedMultiOperate();
+        },
+        position: "first"
+      })
+      .navButtonAdd('#' + pagerId, {
+        caption: "导出",
+        title: "导出Excel",
+        buttonicon: "glyphicon-export",
+        onClickButton: function () {
+          table.export('文件');
+        },
+        position: "first"
+      });
+    // 显示pager
+    $('#'+ pagerId).show();
+    table.resizeToFitContainer();
+    return table;
   };
+  /**
+   * 数据刷新方法
+   * @param data
+   * @param table
+   */
+  var fireTableDataChange = function (data,table) {
+    table.tableDataMap = {};
+    table.tableData = {};
+    table.data = data;
+    var tableData = [];
+    var tableMap = {};
+    var result = data;
+    for (var index in result) {
+      var d = result[index];
+      //将id赋予表格的rowid
+      // d['id'] = d.flightInOId;
+      tableData.push(d);
+      // tableMap[result[index].flightInOId] = d;
+    }
+    table.tableDataMap = tableMap;
+    table.tableData = tableData;
+    table.drawGridTableData();
+  }
   /*
-   * @method initGridTable 初始化页面主表点击后出现的详情表格
+   * @method 初始化航段飞行时间和终端区主表点击后出现的详情表格
    * @param config 对应表格配置
    * @param tableId 表格的tableId
    * @param pagerId 表格统计条数的pagerId
@@ -527,11 +545,8 @@ var PredictionData = function () {
     var sortFun = '';
     if (stateArr[stateIndex] == 'fly' || stateArr[stateIndex] == 'ter') {
       sortName = 'aircraftType'
-      sortFun = tableDataConfigs.sortName
+      sortFun = tableDataConfig.sortName
 
-    } else if (stateArr[stateIndex] == 'pre') {
-      sortName = 'routeseq';
-      sortFun = tableDataConfigs.sortNum
     }
     var table = $('#' + tableId).jqGrid({
       styleUI: 'Bootstrap',
@@ -594,8 +609,117 @@ var PredictionData = function () {
         showQuickFilter($('#' + tableId),tableId)
       },
     });
-    tableDataConfigs.resizeToFitContainer(tableId)
+    tableDataConfig.resizeToFitContainer(tableId)
   };
+  /**
+   * 初始化预测精度主表点击后出现详情表格
+   * @param config
+   * @param tableId
+   */
+  var initPreGridTableDetail = function (config, tableId, pagerId) {
+    var table = $('#' + tableId).jqGrid({
+      styleUI: 'Bootstrap',
+      datatype: 'local',
+      headertitles:true,
+      rownumbers: true,
+      height: "auto",
+      cmTemplate: {
+        align: 'center',
+        width:140,
+        sortfunc: tableDataConfig.sortNum,
+        sortable : true,
+        search : true,
+        searchoptions : {
+          sopt : ['cn','nc','eq','ne','lt','le','gt','ge','bw','bn','in','ni','ew','en'],}
+      },
+      shrinkToFit: false,
+      pager: pagerId,
+      pgbuttons: false,
+      pginput: false,
+      colNames: config.colName,
+      colModel: config.colModel,
+      rowNum: 999999, // 一页显示多少条
+      sortname: 'routeseq', // 初始化的时候排序的字段
+      // sortorder: 'asc', //排序方式,可选desc,asc
+      viewrecords: true,
+      loadComplete: function (xhr) {
+        var colTitle = config.colTitle;
+        $.each(colTitle, function (i, e) {
+          $('#' + tableId).jqGrid('setLabel', i, '', [], {title: e});
+        })
+      },
+    })
+    table.jqGrid('setGroupHeaders',{
+      useColSpanStyle : true ,//没有表头的列是否与表头所在行的空单元格合并
+      groupHeaders : [
+        {
+          startColumnName : "timeIn0To15",//合并列的起始位置 colModel中的name
+          numberOfColumns : 2, //合并列数 包含起始列
+          titleText : "<div title='过点时间和保存时间的差值在15分钟内'>0-15分钟</div>"//表头
+        },{
+          startColumnName : "timeIn15To30",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和保存时间的差值在15到30分钟'>15-30分钟</div>"
+        },{
+          startColumnName : "timeIn30To60",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和保存时间的差值在30-60分钟'>30-60分钟</div>"
+        },{
+          startColumnName : "timeIn60To120",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和保存时间的差值在60-120分钟'>60-120分钟</div>"
+        },{
+          startColumnName : "timeIn120",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和保存时间的差值在120分钟以上'>120分钟以上</div>"
+        },{
+          startColumnName : "timeDEP",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和DEP状态的时间差值'>DEP</div>"
+        },{
+          startColumnName : "timeFPL",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和FPL状态的时间差值'>FPL</div>"
+        },{
+          startColumnName : "timeSCH",
+          numberOfColumns : 2,
+          titleText : "<div title='过点时间和SCH状态的时间差值'>SCH</div>"
+        }
+      ]
+    })
+    $('#' + tableId).jqGrid('setGridParam', {datatype: 'local', data: config.data}).trigger('reloadGrid')
+    $('#' + tableId).jqGrid('navGrid', '#' + pagerId, {
+      add: false,
+      edit: false,
+      view: false,
+      del: false,
+      search:false,
+      refresh: false,
+    });
+    $('#' + tableId).jqGrid('filterToolbar', {
+      // 是否开启Enter后查询
+      searchOnEnter: false,
+      // 是否开启查询逻辑选择
+      searchOperators: false,
+    });
+    $('#' + tableId)[0].toggleToolbar();
+    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
+      caption:"高级查询",
+      buttonicon:"glyphicon glyphicon-search",
+      onClickButton: function(){
+        showAdvanceFliter($('#' + tableId))
+      },
+    });
+    $('#' + tableId).jqGrid('navButtonAdd', '#' + pagerId, {
+      caption:"快速过滤",
+      buttonicon:"glyphicon glyphicon-zoom-in",
+      onClickButton: function(){
+        showQuickFilter($('#' + tableId),tableId)
+      },
+    });
+    tableDataConfig.resizeToFitContainer(tableId)
+  }
+
   /**
    * 切换快速过滤显隐
    * @param tableObj
@@ -609,7 +733,7 @@ var PredictionData = function () {
     // 隐藏清空条件的x
     tableObj.parents().find('.ui-search-clear').hide();
     // 自适应
-    tableDataConfigs.resizeToFitContainer(tableId)
+    tableDataConfig.resizeToFitContainer(tableId)
   };
   
   var showAdvanceFliter = function (tableObj) {
@@ -632,14 +756,14 @@ var PredictionData = function () {
    * @param contents
    * @param rowid
    */
-  function openDetailManageDialog(title, contents, rowid) {
+  function openDetailManageDialog(title,rowid) {
     var winTitle = title + '航班详情';
     var dialogId = 'grid_flight_talbe_data_' + new Date().getTime();
-    var winUrl = contents;
+    var winUrl = 'detail.html';
     var winParams = {
       id: dialogId,
-      width: 1680,
-      height: 800,
+      width: $(window).width()-50,
+      height: $(window).height()-100,
       center: true,
       move: true
     };
@@ -647,15 +771,15 @@ var PredictionData = function () {
     //绑定尺寸适配方法
       winObj.attachEvent("onResizeFinish", function () {
       $("#" + rowid + 'table').height($("#" + rowid + 'table').parent().height() - $("#" + rowid + 'table').parent().find(".now_time").height() - 10);
-      tableDataConfigs.resizeToFitContainer(rowid + 'table')
+      tableDataConfig.resizeToFitContainer(rowid + 'table')
     })
     winObj.attachEvent("onMaximize", function () {
       $("#" + rowid + 'table').height($("#" + rowid + 'table').parent().height() - $("#" + rowid + 'table').parent().find(".now_time").height() - 10);
-      tableDataConfigs.resizeToFitContainer(rowid + 'table')
+      tableDataConfig.resizeToFitContainer(rowid + 'table')
     })
     winObj.attachEvent("onMinimize", function () {
       $("#" + rowid + 'table').height($("#" + rowid + 'table').parent().height() - $("#" + rowid + 'table').parent().find(".now_time").height() - 10);
-      tableDataConfigs.resizeToFitContainer(rowid + 'table')
+      tableDataConfig.resizeToFitContainer(rowid + 'table')
     })
   }
 
@@ -837,8 +961,20 @@ var PredictionData = function () {
         if ($.isValidObject(data)) {
           //提取数据
           var time = data.generateTime;
+          //处理表头
+          if ($.isValidVariable(formData.currentStatus)) {
+            if (formData.currentStatus == 'D') {
+              tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '起飞机场'
+              tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '起飞机场'
+              tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '起飞机场'
+            } else if (formData.currentStatus == 'A') {
+              tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '降落机场'
+              tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '降落机场'
+              tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '降落机场'
+            }
+          }
           if (stateArr[stateIndex] == 'fly' && searchState == 'fly') {
-            // 若数据为空
+            // 判断数据是否为空
             if ($.isEmptyObject(data.map) && stateIndex != 2) {
               alertClearData(tableObject)
               //显示提示
@@ -847,27 +983,11 @@ var PredictionData = function () {
               $('.form-wrap').removeClass('no-event');
               return;
             } else {
-              //处理表头
-              if ($.isValidVariable(formData.currentStatus)) {
-                if (formData.currentStatus == 'D') {
-                  tableDataConfigs.flyErrorTableDataConfig.colName[0] = '起飞机场'
-                  tableDataConfigs.terminalPointDataConfigTop.colName[0] = '起飞机场'
-                  tableDataConfigs.terminalPointDataConfigDown.colName[0] = '起飞机场'
-                } else if (formData.currentStatus == 'A') {
-                  tableDataConfigs.flyErrorTableDataConfig.colName[0] = '降落机场'
-                  tableDataConfigs.terminalPointDataConfigTop.colName[0] = '降落机场'
-                  tableDataConfigs.terminalPointDataConfigDown.colName[0] = '降落机场'
-                }
-              }
-              //清空数据集合
-              tableDataConfigs.flyErrorTableDataConfig.data = []
-              tableDataConfigs.flyDetailDataConfig.data = []
-              //复制数据集合
-              $.extend(tableDataConfigs.flyData, data)
-              //数据转换
-              dataConvert(tableDataConfigs.flyData, tableDataConfigs, 'flyErrorTableDataConfig')
-              //初始化表格
-              initGridTable(tableDataConfigs.flyErrorTableDataConfig, 'flight_grid_table', 'flight-datas-pager')
+              //初始化航段飞行时间统计表格
+              tableDataConfig.inittableParams(tableDataConfig.flyErrorTableDataConfig);
+              tableObject.fly = initGridTable(tableDataConfig.flyErrorTableDataConfig,idsObj.fly);
+              var convertedData = dataConvert(data,'fly');
+              fireTableDataChange(convertedData,tableObject.fly);
               // 更新数据时间
               if ($.isValidVariable(time)) {
                 // 更新数据时间
@@ -875,7 +995,7 @@ var PredictionData = function () {
               }
             }
           } else if (stateArr[stateIndex] == 'ter' && searchState == 'ter') {
-            // 若数据为空
+            // 判断数据是否为空
             if ($.isEmptyObject(data.map) && stateIndex != 2) {
               alertClearData(tableObject)
               //显示提示
@@ -884,29 +1004,14 @@ var PredictionData = function () {
               $('.form-wrap').removeClass('no-event');
               return;
             } else {
-              if ($.isValidVariable(formData.currentStatus)) {
-                if (formData.currentStatus == 'D') {
-                  tableDataConfigs.flyErrorTableDataConfig.colName[0] = '起飞机场'
-                  tableDataConfigs.terminalPointDataConfigTop.colName[0] = '起飞机场'
-                  tableDataConfigs.terminalPointDataConfigDown.colName[0] = '起飞机场'
-                } else if (formData.currentStatus == 'A') {
-                  tableDataConfigs.flyErrorTableDataConfig.colName[0] = '降落机场'
-                  tableDataConfigs.terminalPointDataConfigTop.colName[0] = '降落机场'
-                  tableDataConfigs.terminalPointDataConfigDown.colName[0] = '降落机场'
-                }
-              }
-              //清空数据集合
-              tableDataConfigs.terminalPointDataConfigTop.data = []
-              tableDataConfigs.terminalPointDataConfigDown.data = []
-              tableDataConfigs.terminalDetailDataConfig.data = []
-              //复制数据集
-              $.extend(tableDataConfigs.terData, data)
-              // 数据转换
-              dataConvert(tableDataConfigs.terData, tableDataConfigs, 'terminalPointDataConfigTop')
-              dataConvert(tableDataConfigs.terData, tableDataConfigs, 'terminalPointDataConfigDown')
-              //初始化 表格
-              initGridTable(tableDataConfigs.terminalPointDataConfigTop, tableObject.terTableObjTop, 't-datas-pager')
-              initGridTable(tableDataConfigs.terminalPointDataConfigDown, tableObject.terTableObjDown, 'd-datas-pager')
+              //初始化终端区航路点表格
+              tableDataConfig.inittableParams(tableDataConfig.terminalPointDataConfigTop);
+              tableObject.ter.top = initGridTable(tableDataConfig.terminalPointDataConfigTop, idsObj.ter.top)
+              var convertedData = dataConvert(data,'ter');
+              fireTableDataChange(convertedData,tableObject.ter.top);
+              tableDataConfig.inittableParams(tableDataConfig.terminalPointDataConfigDown);
+              tableObject.ter.down = initGridTable(tableDataConfig.terminalPointDataConfigDown, idsObj.ter.down)
+              fireTableDataChange(convertedData,tableObject.ter.down);
               // 更新数据时间
               if ($.isValidVariable(time)) {
                 // 更新数据时间
@@ -914,7 +1019,7 @@ var PredictionData = function () {
               }
             }
           } else if (stateArr[stateIndex] == 'pre' && searchState == 'pre') {
-            // 若数据为空
+            // 判断数据是否为空
             if ($.isEmptyObject(data.flights) && stateArr[stateIndex] == 'pre') {
               alertClearData(tableObject)
               //显示提示
@@ -923,15 +1028,10 @@ var PredictionData = function () {
               $('.form-wrap').removeClass('no-event');
               return;
             } else {
-              //清空数据集合
-              tableDataConfigs.precisionTableDataConfig.data = [];
-              tableDataConfigs.precisionDetailDataConfig.data = [];
-              //复制数据集
-              $.extend(tableDataConfigs.preData, data)
-              //数据转换
-              tableDataConfigs.precisionTableDataConfig.data = tableDataConfigs.preData.flights;
-              //初始化表格
-              initGridTable(tableDataConfigs.precisionTableDataConfig, tableObject.preTableObj, 'pre-datas-pager')
+              //航班航路点预测精度
+              tableDataConfig.inittableParams(tableDataConfig.precisionTableDataConfig);
+              tableObject.pre = initGridTable(tableDataConfig.precisionTableDataConfig, idsObj.pre)
+              fireTableDataChange(data.flights,tableObject.pre)
               // 更新数据时间
               if ($.isValidVariable(time)) {
                 // 更新数据时间
@@ -941,7 +1041,6 @@ var PredictionData = function () {
           }
           loading.stop();
           $('.form-wrap').removeClass('no-event');
-
         } else if ($.isValidObject(data) && $.isValidVariable(data.status) && '500' == data.status) {
           if (stateArr[stateIndex] == 'fly') {
             var err = "查询失败:" + data.error;
@@ -995,11 +1094,11 @@ var PredictionData = function () {
       success: function (data, status, xhr) {
         if ($.isValidObject(data)) {
           if ($.isValidObject(data.flightRouteResults)) {
-            tableDataConfigs.precisionDetailDataConfig.data = [];
+            tableDataConfig.precisionDetailDataConfig.data = [];
 
-            tableDataConfigs.precisionDetailDataConfig.data = accurancyFlightConvert(data.flightRouteResults)
+            tableDataConfig.precisionDetailDataConfig.data = accurancyFlightConvert(data.flightRouteResults)
 
-            initGridTableDetail(tableDataConfigs.precisionDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
+            initPreGridTableDetail(tableDataConfig.precisionDetailDataConfig, rowid + 'table', rowid + 'detail_pager')
           } else {
             var str = '<div class="no-datas-tip"></div>'
             $('.detail').append(str)
@@ -1024,14 +1123,22 @@ var PredictionData = function () {
       obj['routeseq'] = n.routeseq;
       obj['passTime'] = n.passTime;
       obj['hlevel'] = n.hlevel;
-      obj['timeIn0To15'] = valueComapre(n.timeIn0To15,n.passTimeIn0To15,n.hlevelIn0To15,n.passHlevelIn0To15);
-      obj['timeIn15To30'] = valueComapre(n.timeIn15To30,n.passTimeIn15To30,n.hlevelIn15To30,n.passHlevelIn15To30);
-      obj['timeIn30To60'] = valueComapre(n.timeIn30To60,n.passTimeIn30To60,n.hlevelIn30To60,n.passHlevelIn30To60);
-      obj['timeIn60To120'] = valueComapre(n.timeIn60To120,n.passTimeIn60To120,n.hlevelIn60To120,n.passHlevelIn60To120);
-      obj['timeIn120'] = valueComapre(n.timeIn120,n.passTimeIn120,n.hlevelIn120,n.passHlevelIn120);
-      obj['timeDEP'] = n.timeDEP;
-      obj['timeFPL'] = n.timeFPL;
-      obj['timeSCH'] = n.timeSCH;
+      obj['timeIn0To15'] = valueComapre(n.timeIn0To15,n.passTimeIn0To15);
+      obj['timeIn0To15_sub'] = valueComapreSub(n.hlevelIn0To15,n.passHlevelIn0To15);
+      obj['timeIn15To30'] = valueComapre(n.timeIn15To30,n.passTimeIn15To30);
+      obj['timeIn15To30_sub'] = valueComapreSub(n.hlevelIn15To30,n.passHlevelIn15To30);
+      obj['timeIn30To60'] = valueComapre(n.timeIn30To60,n.passTimeIn30To60);
+      obj['timeIn30To60_sub'] = valueComapreSub(n.hlevelIn30To60,n.passHlevelIn30To60);
+      obj['timeIn60To120'] = valueComapre(n.timeIn60To120,n.passTimeIn60To120);
+      obj['timeIn60To120_sub'] = valueComapreSub(n.hlevelIn60To120,n.passHlevelIn60To120);
+      obj['timeIn120'] = valueComapre(n.timeIn120,n.passTimeIn120);
+      obj['timeIn120_sub'] = valueComapreSub(n.hlevelIn120,n.passHlevelIn120);
+      obj['timeDEP'] = valueComapre(n.timeDEP,n.passTimeDEP);
+      obj['timeDEP_sub'] = valueComapreSub(n.hlevelDEP,n.passHlevelDEP);
+      obj['timeFPL'] = valueComapre(n.timeFPL,n.passTimeFPL);
+      obj['timeFPL_sub'] = valueComapreSub(n.hlevelFPL,n.passHlevelFPL);
+      obj['timeSCH'] = valueComapre(n.timeSCH,n.passTimeSCH);
+      obj['timeSCH_sub'] = valueComapreSub(n.hlevelSCH,n.passHlevelSCH);
         resultArr.push(obj);
     })
     return resultArr;
@@ -1040,31 +1147,39 @@ var PredictionData = function () {
    * 航班航路点预测精度航班详情叶数据格式化
    * @param timeIn
    * @param passTimeIn
-   * @param hlevelIn
-   * @param passHlevelIn
    * @returns {string}
    */
-  var valueComapre = function (timeIn,passTimeIn,hlevelIn,passHlevelIn) {
-    if(passTimeIn == null){
-      passTimeIn = '';
-    }else {
-      var title  = passTimeIn;
-      passTimeIn = title.substring(6, 8) + '/' + title.substring(8, 10) + ":" + title.substring(10, 12)+ title.substring(12, 14)
+  var valueComapre = function (timeIn,passTimeIn) {
+      if(passTimeIn == null){
+        passTimeIn = '';
+      }else {
+        var title  = passTimeIn;
+        passTimeIn = title.substring(6, 8) + '/' + title.substring(8, 10) + ":" + title.substring(10, 12)+":"+ title.substring(12, 14)
+      }
+      if(timeIn == null){
+        timeIn = '';
+        var parma = timeIn + passTimeIn
+        return parma
+      }else{
+        var parma = timeIn + '('+passTimeIn+')';
+        return parma
+      }
     }
+  /**
+   * 航班航路点预测精度航班详情叶数据格式化
+   * @param timeIn
+   * @param passTimeIn
+   * @returns {string}
+   */
+  var valueComapreSub = function (hlevelIn,passHlevelIn) {
     if(hlevelIn == null){
       hlevelIn = '';
+      return '';
     }
     if(passHlevelIn == null){
       passHlevelIn = '';
     }
-    if(timeIn == null){
-      timeIn = '';
-      var parma = timeIn + passTimeIn + hlevelIn + passHlevelIn;
-      return parma
-    }else{
-      var parma = timeIn + '('+passTimeIn+')'+'/'+hlevelIn+'('+passHlevelIn+')';
-      return parma
-    }
+    return hlevelIn+'('+passHlevelIn+')';
   }
   /**
    * @method updateGeneratetime 更新当前数据刷新时间
@@ -1072,7 +1187,7 @@ var PredictionData = function () {
    * @param time 刷新时间
    */
   var updateGeneratetime = function (fatherDom, time) {
-    var timeFormatter = formateTime(time);
+    var timeFormatter = $.formateTime(time);
     $('.' + fatherDom + ' .generate-time').text('数据生成时间: ' + timeFormatter);
   };
 
@@ -1081,56 +1196,6 @@ var PredictionData = function () {
    * */
   var clearGeneratetime = function () {
     $('.history-data-statistics .generate-time').empty();
-  };
-
-  /**
-   * @method formatter 数据格式转换
-   * @param time 时间
-   * @returns {string}
-   */
-  var formateTime = function (time) {
-    var year = time.substring(0, 4);
-    var mon = time.substring(4, 6);
-    var date = time.substring(6, 8);
-    var hour = time.substring(8, 10);
-    var min = time.substring(10, 12);
-    var str = year + '-' + mon + '-' + date + ' ' + hour + ":" + min;
-    return str;
-  };
-
-  /**
-   * 绑定Window事件，窗口变化时重新调整表格大小
-   * */
-  var initDocumentResize = function () {
-    resizeToFitContainer();
-    $(window).resize(function () {
-      resizeToFitContainer();
-      if ($.isValidObject(tableObject)) {
-        if (stateArr[stateIndex] == 'fly') {
-          tableDataConfigs.resizeToFitContainer(tableObject.flyTableObj)
-        } else if (stateArr[stateIndex] == 'ter') {
-          tableDataConfigs.resizeToFitContainer(tableObject.terTableObjTop)
-          tableDataConfigs.resizeToFitContainer(tableObject.terTableObjDown)
-        } else if (stateArr[stateIndex] == 'pre') {
-          tableDataConfigs.resizeToFitContainer(tableObject.preTableObj)
-        }
-      }
-    });
-  };
-
-  /**
-   *  计算table初始化前父容器的高度
-   * */
-  var resizeToFitContainer = function () {
-    var body = $('.main').height();
-    var head = $('.headbar').outerHeight() + parseInt($('.headbar').css('marginBottom'));
-    var nav = $('.nav-menu').outerHeight() + parseInt($('.nav-menu').css('marginBottom'));
-    var innerNav = $($('.history-data-title')[stateIndex]).outerHeight() + parseInt($($('.history-data-title')[stateIndex]).css('marginBottom'));
-    var form = $($('.form-wrap')[stateIndex]).outerHeight() + parseInt($($('.form-wrap')[stateIndex]).css('marginBottom'));
-    var wrapHeight = body - head - nav - innerNav - form;
-    var chartHeight = wrapHeight - $($('.conditions')[stateIndex]).outerHeight() - $($('.alert-row')[stateIndex]).outerHeight();
-    $('.charts-wrap').height(wrapHeight);
-    $('.echart-row').height(chartHeight);
   };
   /**
    * @method initDatepicker 初始化日期选择器

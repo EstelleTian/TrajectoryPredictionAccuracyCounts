@@ -235,6 +235,20 @@ jQuery.extend({
         } else {
             return '';
         }
+    },
+    /**
+     * @method 12位时间数据格式转换
+     * @param time 时间
+     * @returns {string}
+     */
+    formateTime:function (time) {
+        var year = time.substring(0, 4);
+        var mon = time.substring(4, 6);
+        var date = time.substring(6, 8);
+        var hour = time.substring(8, 10);
+        var min = time.substring(10, 12);
+        var str = year + '-' + mon + '-' + date + ' ' + hour + ":" + min;
+        return str;
     }
 
 });
