@@ -76,6 +76,12 @@
 .ui-jqgrid-view{
     overflow: hidden;
 }
+.pre_detail .ui-jqgrid-bdiv{
+    overflow: auto;
+}
+.ui-jqgrid-sortable{
+    margin-top: 5px !important;
+}
 .history-data-statistics .conditions-content > span.conditions-tip,
 .history-data-statistics .conditions-content > span.conditions-unit {
     border: none;
@@ -464,7 +470,7 @@
 #precision_flight_grid_table{
     position: relative;
 }
-.jqgrow td:nth-of-type(4){
+.fly_table .jqgrow td:nth-of-type(4),.ter_time .jqgrow td:nth-of-type(4){
     color: #1B548D;
     cursor: pointer;
     text-decoration: underline;
@@ -520,7 +526,7 @@
     padding: 2px;
 }
 .ui-jqgrid .ui-jqgrid-hdiv table {
-    font-size: 12px;
+    font-size: 13px;
     color: #555;
 }
 .ui-jqgrid .ui-jqgrid-hdiv table td{
