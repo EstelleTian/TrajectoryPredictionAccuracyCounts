@@ -1,13 +1,11 @@
 var PredictionData = function () {
-  //Ip地址
-  var ipHost = 'http://192.168.208.21:8080/module-trajectoryCorrect-service/trajectory/';
   // 当前nav索引
   var stateIndex = 0;
   //状态与地址对应关系
   var searchUrl = {
-    fly: ipHost + 'correct/',
-    ter: ipHost + 'correct/point/',
-    pre: ipHost + 'flight/'
+    fly: ipHost + 'module-trajectoryCorrect-service/trajectory/correct/',
+    ter: ipHost + 'module-trajectoryCorrect-service/trajectory/correct/point/',
+    pre: ipHost + 'module-trajectoryCorrect-service/trajectory/flight/'
   }
   //根据索引获取当前页面状态数组
   var stateArr = ['fly', 'ter', 'pre','uncor']
@@ -532,6 +530,12 @@ var PredictionData = function () {
     var result = data;
     for (var index in result) {
       var d = result[index];
+      //用于解决导出是0为数值型时导出值为空
+      $.each(d,function (i,e) {
+        if(e == 0){
+          d[i] = '0';
+        }
+      })
       //将id赋予表格的rowid
       // d['id'] = d.flightInOId;
       tableData.push(d);
@@ -859,6 +863,7 @@ var PredictionData = function () {
         console.error('Search data failed');
         console.error(error);
         loading.stop();
+        hideConditions();
         if (stateArr[stateIndex] == 'fly') {
           showAlear($(' .fly_time .alert-container'), "查询失败");
         }

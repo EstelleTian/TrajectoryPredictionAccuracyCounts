@@ -2,7 +2,6 @@
  * Created by caowei on 2018/3/6.
  */
 var UncorrectFlight = function () {
-  var ipHost = 'http://192.168.208.21:8080/';
   var tableObj = '';
   var dataForm = {
     day:'',
@@ -196,6 +195,7 @@ var UncorrectFlight = function () {
         console.error('Search data failed');
         console.error(error);
         loading.stop();
+        showAlear($('.alert-container'), '查询失败');
         $('.form-wrap').removeClass('no-event');
       }
     });
@@ -218,9 +218,8 @@ var UncorrectFlight = function () {
       params: {
         shrinkToFit: true,
         rowNum: 999999,
-        sortname: 'EOBT',
         // sortorder: 'asc',
-        // sortname: 'SEQ',//排序列
+        sortname: tableDataConfig.unCorrectFlight.defaultSort,//排序列
         // 是否显示行号
         rownumbers: true,
         //是否显示快速过滤
@@ -288,6 +287,12 @@ var UncorrectFlight = function () {
     var result = data.flights;
     for (var index in result) {
       var d = result[index];
+      //用于解决导出是0为数值型时导出值为空
+      $.each(d,function (i,e) {
+        if(e == 0){
+          d[i] = '0';
+        }
+      })
       //将id赋予表格的rowid
       d['id'] = d.flightInOId;
       tableData.push(d);

@@ -1166,6 +1166,7 @@ var tableDataConfig = function () {
 
     },
     isShrinkToFit:true,
+    defaultSort:'rDeptime'
   };
   //未修正详情表格配置
   var flightDetail = {
@@ -1311,7 +1312,7 @@ var tableDataConfig = function () {
 
     },
     isShrinkToFit:true,
-    defaultSort:''
+    defaultSort:'rDeptime'
   };
 
   //列排序规则(中文)

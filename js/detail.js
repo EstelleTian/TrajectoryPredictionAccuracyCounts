@@ -2,7 +2,6 @@
  * Created by caowei on 2018/3/7.
  */
 var DetailFlightTable = function () {
-  var ipHost = 'http://192.168.208.21:8080/';
   var tableObj = '';
   var flightid = flightId.split("&")[0].replace('?','');
   var flightName = '';
@@ -94,6 +93,12 @@ var DetailFlightTable = function () {
     }
     for (var index in result) {
       var d = result[index];
+      //用于解决导出是0为数值型时导出值为空
+      $.each(d,function (i,e) {
+        if(e == 0&&typeof (e) == 'number'){
+          d[i] = '0';
+        }
+      })
       //将id赋予表格的rowid
       if($.isValidVariable(d.flightInOId)){
         d['id'] = d.flightInOId;
