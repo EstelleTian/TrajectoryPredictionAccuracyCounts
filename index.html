@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="plugins/bootstrap/dist/css/normalize.css">
     <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="plugins/dialog-factory/css/bootstrap-dialog-factory.css">
-    <link rel="stylesheet" href="plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="plugins/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="plugins/jqgrid/css/ui.jqgrid-bootstrap.css">
@@ -94,7 +93,7 @@
                     </h2>
                     <div class="form-wrap">
                         <div class="row">
-                            <div class="col-xs-6 col-md-3">
+                            <div class="col-xs-3 col-md-3">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">起止时间 : </span>
@@ -106,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                             <div class="form-inline">
                                 <div class="form-group">
                                     <span class="cy-pad-hor-s">机场状态 : </span>
@@ -119,7 +118,7 @@
                                 </div>
                             </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">机场名称：</span>
@@ -129,7 +128,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <button class="atfm-btn atfm-btn-blue loading-data fly-data-btn ladda-button" data-style="zoom-out">查询</button>
                             </div>
                         </div>
@@ -153,7 +152,7 @@
 
                             </div>
                         </div>
-                        <h3 class="no-datas-tip">暂无数据</h3>
+                        <h3 class="no-datas-tip"> </h3>
                         <div class="echart-row" id="fly-canvas">
                                 <table  id="fly-grid-table"></table>
                                 <div id="fly-grid-pager"></div>
@@ -171,7 +170,7 @@
                     </h2>
                     <div class="form-wrap">
                         <div class="row">
-                            <div class="col-xs-6 col-md-3">
+                            <div class="col-xs-3 col-md-3">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">起止时间 : </span>
@@ -183,7 +182,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">机场状态 : </span>
@@ -196,7 +195,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">机场名称：</span>
@@ -206,7 +205,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <button class="atfm-btn atfm-btn-blue loading-data ter-data-btn ladda-button" data-style="zoom-out">查询</button>
                             </div>
                         </div>
@@ -230,13 +229,14 @@
 
                             </div>
                         </div>
-                        <h3 class="no-datas-tip">暂无数据</h3>
+                        <h3 class="no-datas-tip"> </h3>
                         <div class="echart-row" id="ter-canvas">
-                            <div class="top_table h50" >
-                                <table id="ter-top-grid-table"></table>
+                            <div class="top_table h50" id="ter-top-canvas" >
+                                <table id="ter-top-grid-table">
+                                </table>
                                 <div id="ter-top-table-pager"></div>
                             </div>
-                            <div class="down_table h50">
+                            <div class="down_table h50" id="ter-down-canvas" >
                                 <table id="ter-down-grid-table"></table>
                                 <div id="ter-down-table-pager"></div>
                             </div>
@@ -254,17 +254,18 @@
                     </h2>
                     <div class="form-wrap">
                         <div class="row">
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">查询日期 : </span>
                                     </div>
                                     <div class="input-daterange input-group">
-                                        <input type="text" class="form-control  start-date-input" name="start"  />
+                                        <input type="text" class="form-control  pre-start-date-input" name="start"  />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <div class="form-inline">
                                     <div class="form-group">
                                         <span class="cy-pad-hor-s">航班号：</span>
@@ -274,7 +275,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-md-2">
+                            <div class="col-xs-2 col-md-2">
                                 <button class="atfm-btn atfm-btn-blue loading-data pre-data-btn ladda-button" data-style="zoom-out">查询</button>
                             </div>
                         </div>
@@ -292,7 +293,7 @@
                         <div class=" alert-row">
                             <div class="col-md-12 alert-container"></div>
                         </div>
-                        <h3 class="no-datas-tip">暂无数据</h3>
+                        <h3 class="no-datas-tip"> </h3>
                         <div class="echart-row" id="pre-canvas">
                                 <table id="pre-grid-table"></table>
                                 <div id="pre-table-pager"></div>
@@ -311,7 +312,7 @@
                         <div class="charts-wrap">
                             <div class="form-wrap">
                                 <div class="row">
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-xs-2 col-md-2">
                                         <div class="form-inline">
                                             <label class="control-label">日期 : </label>
                                             <div class="input-group date" id="un-datepicker">
@@ -320,7 +321,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-md-3">
+                                    <div class="col-xs-3 col-md-3">
                                         <div class="form-inline">
                                             <label class="cy-pad-hor-s">时间 : </label>
                                             <div class="input-group date" id="startTime">
@@ -330,7 +331,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-xs-2 col-md-2">
                                         <div class="form-inline">
                                             <div class="form-group">
                                                 <span class="cy-pad-hor-s">信号情况：</span>
@@ -344,7 +345,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6 col-md-2">
+                                    <div class="col-xs-2 col-md-2">
                                         <button class="atfm-btn atfm-btn-blue loading-data search-data-btn ladda-button" data-style="zoom-out">查询</button>
                                     </div>
                                 </div>
@@ -352,7 +353,7 @@
                             </div>
                             <div class="conditions ">
                                 <div class="col-md-12">
-                                    <h5 class="conditions-content">
+                                    <h5 class="conditions-content hidden">
                                         <span class="conditions-tip">当前统计条件:</span>
                                         <span class="conditions-start-data">20171222</span>
                                         <span class="conditions-line">-</span>
@@ -367,7 +368,7 @@
 
                                 </div>
                             </div>
-                            <h3 class="hidden">暂无数据</h3>
+                            <h3 class="no-datas-tip"></h3>
                             <div class="table-row">
                                 <div class="fly_table h100" id="un-canvas">
                                     <table  id="un-grid-table"></table>
@@ -384,8 +385,6 @@
 <script src="plugins/jquery/js/jquery-custom-util.js"></script>
 <script src="plugins/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="plugins/dialog-factory/bootstrap-dialog-factory.js" type="text/javascript"></script>
-<script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-<script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
 <script src="plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" type="text/javascript"></script>
 <script src="plugins/bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
@@ -401,8 +400,8 @@
 <script src="plugins/ladda/js/ladda.js" type="text/javascript" ></script>
 <script src="js/flight-grid-table.js"></script>
 <script src="js/data-basic.js"></script>
-<script src="js/accuracy-of-track-prediction.js"></script>
 <script src="js/uncorrect-flight.js"></script>
+<script src="js/accuracy-of-track-prediction.js"></script>
 
 </body>
 

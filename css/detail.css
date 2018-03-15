@@ -1,12 +1,19 @@
 html,body{
+    margin: 0;
+    padding: 0;
     width: 100%;
     height: 100%;
-}
-.container{
-    height: 100%;
-    width: 100%;
+    overflow: hidden;
+    position: relative;
+ }
+.containers{
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 .now_time{
     height: 70px;
@@ -21,19 +28,17 @@ html,body{
     font-weight: bold;
 }
 .flight-table{
-    flex: 1;
-    border: solid 1px #ddd;
-    border-radius: 5px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative;
-}
-.flight-table
-element.style {
-    height: 570px;
-    width: 1446px;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #ddd;
 }
 .ui-jqgrid .ui-jqgrid-bdiv{
     overflow-x: hidden;
+}
+.no-fit{
+    overflow-x: auto !important;
 }
 .flight-table .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 3px;}

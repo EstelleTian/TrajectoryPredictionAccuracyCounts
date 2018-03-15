@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="css/detail.css">
 </head>
 <body>
-<div class="container">
+<div class="containers">
         <div class='now_time'>
-            <h4 class='win_head'>未修正航班统计详情</h4>
+            <h4 class='win_head'></h4>
             <h5 class='generate_time'></h5>
         </div>
         <div class="flight-table" id="flight-table">
@@ -23,7 +23,32 @@
 </div>
 </body>
 <script>
-    var flightId = window.location.search
+    var parma = window.location.search.split('/')
+    //航段飞行时间
+    if(parma[1] == 'fly'){
+        var flightId = parma[2];
+        var dataTime = parma[3];
+        var legTimeData = JSON.parse(sessionStorage.getItem('flyDetailObj'))[flightId];
+        var fly = true;
+    }
+    //终端区航路点
+    if(parma[1] == 'ter'){
+        var flightId = parma[2];
+        var dataTime = parma[3];
+        var legTimeData = JSON.parse(sessionStorage.getItem('terDetailObj'))[flightId];
+        var ter = true
+    }
+    //未修正航班统计
+    if(parma[1] =='uncor'){
+        var flightId = parma[2];
+        var uncor = true
+    }
+    //航班航路点
+    if(parma[1] == 'pre'){
+        var flightId = parma[2];
+        var preFlightName = parma[4];
+        var pre = true
+    }
 </script>
 <script src="plugins/jquery/js/jquery.min.js"></script>
 <script src="plugins/jquery/js/jquery-custom-util.js"></script>

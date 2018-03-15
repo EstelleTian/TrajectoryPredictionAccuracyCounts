@@ -26,7 +26,7 @@ var DhxIframeDialog = {
         }
         var w1 = this.dhxWinsFactory.createWindow(params);
         w1.setText(title);
-        // w1.progressOn();
+        w1.progressOn();
         w1.attachEvent("onContentLoaded", function (win) {
             win.progressOff();
         });

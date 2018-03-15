@@ -7,23 +7,26 @@
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .fly_table {
-    border: 1px solid #dddddd;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
-
+.uncorrect_flight .form-control {
+    text-align: center;
+}
 .fly_table .jqgrow td:nth-of-type(3) {
+    color: #1B548D;
     cursor: pointer;
-    color: #337ab7;
+    text-decoration: underline;
 }
 
 .conditions {
     height: 40px;
     text-align: center;
-    /*flex-wrap: wrap;*/
-    /*display: flex;*/
-    /*flex: 1 1 auto;*/
 }
 
 .conditions-content {
@@ -34,7 +37,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
-    display: none;
 }
 
 .conditions-content > span {

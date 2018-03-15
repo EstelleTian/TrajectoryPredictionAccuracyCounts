@@ -250,5 +250,6 @@ jQuery.extend({
         var str = year + '-' + mon + '-' + date + ' ' + hour + ":" + min;
         return str;
     }
+    
 
 });

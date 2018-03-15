@@ -30,14 +30,12 @@ var GridTableUtil = {
             var gridTableGBox = $('#gbox_' + tableId);
             var gridTableGView = $('#gview_' + tableId);
             var gridTableBDiv = gridTableGView.find('.ui-jqgrid-bdiv');
-
             // 获取容器高度
             var container = gridTableGBox.parent();
 
             // 计算表格高度
             var gridTableHeight = gridTableBDiv.outerHeight() - (gridTableGBox.outerHeight() - container.height()+2);
             var gridTableWidth = container.width();
-
             // 调用表格修改高度宽度方法
             $('#' + tableId).jqGrid('setGridHeight', gridTableHeight);
             $('#' + tableId).jqGrid('setGridWidth', (gridTableWidth - 2));

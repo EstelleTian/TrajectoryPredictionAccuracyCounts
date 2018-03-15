@@ -57,9 +57,6 @@ var UncorrectFlight = function () {
           $('.un-start-date-input').datetimepicker('setEndDate',$.parseFullTime(startLimit))
         }
       })
-
-
-
     //点击获取结束时间限制
     $('.un-end-date-input').on('click',function () {
       if(isToday()){
@@ -99,9 +96,13 @@ var UncorrectFlight = function () {
       var todayVal = $.getFullTime(new Date())
         if (!isToday()) {
           $('.un-start-date-input').datetimepicker('setStartDate',$.parseFullTime(selectVal))
+          $('.un-start-date-input').datetimepicker('setDate',$.parseFullTime(selectVal))
           $('.un-start-date-input').datetimepicker('setEndDate',$.parseFullTime($(".day-value").val().replace(/-/g,'')+'2359'))
           $('.un-end-date-input').datetimepicker('setStartDate',$.parseFullTime(selectVal))
           $('.un-end-date-input').datetimepicker('setEndDate',$.parseFullTime($(".day-value").val().replace(/-/g,'')+'2359'))
+          $('.un-end-date-input').datetimepicker('setDate',$.parseFullTime($(".day-value").val().replace(/-/g,'')+'2359'))
+        }else{
+          setDefaultDates()
         }
     })
     setDefaultDates()
@@ -129,28 +130,34 @@ var UncorrectFlight = function () {
     var now = $.getFullTime(new Date()).substring(0, 8);
     //设置默认时间
     $("#un-datepicker").datetimepicker('setDate', $.parseFullTime(now + '0000'));
+    $('.un-start-date-input').datetimepicker('setDate', $.parseFullTime(now + '0000'));
+    $('.un-end-date-input').datetimepicker('setDate', new Date());
   };
   //数据查询
   var searchData = function () {
-    $('.search-data-btn').on('click',function () {
-      var dataForm = getFormData();
-      var validate = validateForm(dataForm);
-      if(!validate.valid){
-        // 清空数据时间
-        clearGeneratetime();
-        //隐藏当前统计条件
-        hideConditions();
-        // 显示警告信息内容
-        showAlear($('.alert-container'), validate);
-        if($.isValidObject(tableObj)){
-          tableObj.clearGridData()
-        }
-      }else{
-        clearAlert()
+    if($.isValidObject(tableObj)){
+      tableObj.unloadGrid();
+    }
+    var dataForm = getFormData();
+    var validate = validateForm(dataForm);
+    if(!validate.valid){
+      // 清空数据时间
+      clearGeneratetime();
+      //隐藏当前统计条件
+      hideConditions();
+      // 显示警告信息内容
+      showAlear($('.alert-container'), validate);
+      return;
+    }else{
+      clearAlert()
       getTableData(dataForm);
-      }
+    }
+  }
+  //查询点击事件
+  var bindClickSearch = function (){
+    $('.search-data-btn').on('click',function () {
+        searchData()
     })
-
   }
   //获取表单数据
   var getFormData = function () {
@@ -173,13 +180,16 @@ var UncorrectFlight = function () {
         loading.stop();
         showConditions(dataForm);
         var generateTime = data.generateTime
-        $('.uncorrect_flight  .generate-time').text('数据生成时间: ' + $.formateTime(generateTime));
-        if($.isValidObject(tableObj)){
-          tableObj.clearGridData()
-          fireTableDataChange(data,tableObj)
-        }else{
+        if(!$.isEmptyObject(data.flights)){
+          $('.uncorrect_flight .charts-wrap .no-datas-tip').hide();
+          $('.uncorrect_flight  .generate-time').text('数据生成时间: ' + $.formateTime(generateTime));
+          tableDataConfig.inittableParams(tableDataConfig.unCorrectFlight);
           tableObj = initGridTable()
-          fireTableDataChange(data,tableObj)
+          fireTableDataChange(singleConverToCn(data),tableObj)
+        }else{
+          //显示提示
+          showTip($('.uncorrect_flight .charts-wrap .no-datas-tip'), '本次统计数据结果为空');
+          $('.form-wrap').removeClass('no-event');
         }
       },
       error: function (xhr, status, error) {
@@ -193,7 +203,6 @@ var UncorrectFlight = function () {
   //初始化表格
   var initGridTable = function () {
     var pagerId = 'un-table-pager';
-    tableDataConfig.inittableParams(tableDataConfig.unCorrectFlight);
     var table = new FlightGridTable({
       canvasId: 'un-canvas',
       tableId: 'un-grid-table',
@@ -224,7 +233,7 @@ var UncorrectFlight = function () {
           var colName = table.gridTableObject.jqGrid('getGridParam')['colNames'][iCol];
           var flightId= table.tableDataMap[rowid].flightId;
           if(colName == '航班号'){
-            openDetailManageDialog(rowid,flightId)
+            openDetailManageDialog(rowid,flightId,'uncor')
           }
         }
       }
@@ -287,6 +296,20 @@ var UncorrectFlight = function () {
     table.tableDataMap = tableMap;
     table.tableData = tableData;
     table.drawGridTableData();
+  }
+  //信号状态enToCn
+  var singleConverToCn = function (data) {
+    var CnData = data;
+    $.each(CnData.flights,function (i,e) {
+      if(e.radarState == 'NSI'){
+        CnData.flights[i].radarState = '无信号'
+      }else if(e.radarState == 'ISI'){
+        CnData.flights[i].radarState = '信号中断'
+      }else{
+        CnData.flights[i].radarState = '有信号'
+      }
+    })
+    return CnData
   }
   /**
    * 清空警告
@@ -388,7 +411,7 @@ var UncorrectFlight = function () {
    * 隐藏当前统计条件
    * */
   var hideConditions = function () {
-    $('.conditions-content').hide();
+    $('.uncorrect_flight .conditions-content').addClass('hidden');;
   };
   /**
    * @method showAlear 显示警告内容
@@ -401,8 +424,6 @@ var UncorrectFlight = function () {
     } else if ($.isValidVariable(validate)) {
       mess = validate;
     }
-    // var $dom = $('.alert-container');
-
     var str = '<div class="alert alert-danger alert-dismissible fade in" role="alert">' +
       '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
       '<p id="alert-mess">' + mess + ' </p>' +
@@ -415,10 +436,10 @@ var UncorrectFlight = function () {
    * @param rowId
    * @param flightId
    */
-  function openDetailManageDialog(rowId,flightId) {
+  function openDetailManageDialog(rowId,flightId,type) {
     var winTitle = flightId + '未修正航班详情';
     var dialogId = 'grid_flight_talbe_data_' + new Date().getTime();
-    var winUrl = 'detail.html?'+rowId;
+    var winUrl = 'detail.html?/'+type+'/'+rowId + '/';
     var winParams = {
       id: dialogId,
       width: $(window).width()-50,
@@ -429,22 +450,39 @@ var UncorrectFlight = function () {
     DhxIframeDialog.create(winTitle, winUrl, winParams)
   }
 
+  var showTip = function (domObj, mess) {
+    mess = mess || '';
+    domObj.text(mess).show();
+    // $('.charts-wrap .no-datas-tip').text(mess).show();
+  };
+
   /**
    * 展示当前统计情况
    * @param dataform
    */
   var showConditions = function (dataform) {
-    $('.conditions-start-data').text(dataform.day+' '+dataform.startTime);
-    $('.conditions-end-data').text(dataform.day+' '+dataform.endTime);
-    $('.conditions-subtype').text(dataform.singleStatus);
-    $('.conditions-content').show();
+    var statusZh = {
+      NSI:'无信号',
+      ISI:'信号中断',
+      ASI:'有信号'
+    }
+    $('.uncorrect_flight .conditions-start-data').text(dataform.day+' '+dataform.startTime);
+    $('.uncorrect_flight .conditions-end-data').text(dataform.day+' '+dataform.endTime);
+    var type = '';
+    $.each(dataform.singleStatus,function (i,e) {
+      type = type + ' ' +statusZh[e]
+    })
+    $('.uncorrect_flight .conditions-subtype').text(type);
+    $('.uncorrect_flight .conditions-content').removeClass('hidden');
   }
 
   return{
     init:function () {
       initDataTime()
-      searchData()
-    }
+      bindClickSearch()
+    },
+    setDefaultDates:setDefaultDates,
+    searchData:searchData
   }
 }();
 $(document).ready(function () {

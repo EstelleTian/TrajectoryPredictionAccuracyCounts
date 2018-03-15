@@ -1,65 +1,66 @@
 var tableDataConfig = function () {
+  //航段飞行时间表格配置
   var flyErrorTableDataConfig = {
     colName: {
       flyDepPointType:{
-        en: '起飞机场',
+        en: 'flyDepPointType',
         cn: '起飞机场',
       },
       point:{
-        en:'航路点',
+        en:'point',
         cn:'航路点'
       },
       flightcount:{
-        en:'样本数',
+        en:'flightcount',
         cn:'样本数'
       },
       rdepAvgTime:{
-        en:'平均飞行时间(秒)',
+        en:'rdepAvgTime',
         cn:'平均飞行时间(秒)'
       },
       rdepMeTime:{
-        en:'实际飞行时间中位数(秒)',
-        cn:'实际飞行时间中位数(秒)'
+        en:'rdepMeTime',
+        cn:'中位飞行时间(秒)'
       },
       schMeDis:{
-        en:'SCH中位数时间差(秒)',
-        cn:'SCH中位数时间差(秒)'
+        en:'schMeDis',
+        cn:'SCH中位差(秒)'
       },
       fplMeDis:{
-        en:'FPL中位数时间差(秒)',
-        cn:'FPL中位数时间差(秒)',
+        en:'fplMeDis',
+        cn:'FPL中位差(秒)',
       },
       depMeDis:{
-        en:'DEP中位数时间差(秒)',
-        cn:'DEP中位数时间差(秒)',
+        en:'depMeDis',
+        cn:'DEP中位差(秒)',
       },
       dyn10mMeDis:{
-        en:'DYN10中位数时间差(秒)',
-        cn:'DYN10中位数时间差(秒)',
+        en:'dyn10mMeDis',
+        cn:'DYN10中位差(秒)',
       },
       dyn20mMeDis:{
-        en:'DYN20中位数时间差(秒)',
-        cn:'DYN20中位数时间差(秒)',
+        en:'dyn20mMeDis',
+        cn:'DYN20中位差(秒)',
       },
       schAvgDis:{
-        en:'SCH平均时间差(秒)',
-        cn:'SCH平均时间差(秒)',
+        en:'schAvgDis',
+        cn:'SCH平均差(秒)',
       },
       fplAvgDis:{
-        en:'FPL平均时间差(秒)',
-        cn:'FPL平均时间差(秒)',
+        en:'fplAvgDis',
+        cn:'FPL平均差(秒)',
       },
       depAvgDis:{
-        en:'DEP平均时间差(秒)',
-        cn:'DEP平均时间差(秒)',
+        en:'depAvgDis',
+        cn:'DEP平均差(秒)',
       },
       dyn10mAvgDis:{
-        en:'DYN10平均时间差(秒)',
-        cn:'DYN10平均时间差(秒)',
+        en:'dyn10mAvgDis',
+        cn:'DYN10平均差(秒)',
       },
       dyn20mAvgDis:{
-        en:'DYN20平均时间差(秒)',
-        cn:'DYN20平均时间差(秒)'
+        en:'dyn20mAvgDis',
+        cn:'DYN20平均差(秒)'
       }
     },
     colTitle: {
@@ -82,7 +83,7 @@ var tableDataConfig = function () {
     colModel: {},
     colDisplay: {},
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -152,295 +153,9 @@ var tableDataConfig = function () {
       }
 
     },
+    isShrinkToFit:true,
   }
-  var terminalPointDataConfigTop = {
-    colName: {
-      depAirport:{
-        en:'起飞机场',
-        cn:'起飞机场'
-      },
-      terPoint:{
-        en:'终端区航路点',
-        cn:'终端区航路点'
-      },
-      flightcount:{
-        en:'样本数',
-        cn:'样本数'
-      },
-      schMeDis:{
-        en:'SCH中位数时间差(秒)',
-        cn:'SCH中位数时间差(秒)',
-      },
-      fplMeDis:{
-        en:'FPL中位数时间差(秒)',
-        cn:'FPL中位数时间差(秒)',
-      },
-      depMeDis:{
-        en:'DEP中位数时间差(秒)',
-        cn:'DEP中位数时间差(秒)',
-      },
-      dyn10mMeDis:{
-        en:'DYN10中位数时间差(秒)',
-        cn:'DYN10中位数时间差(秒)',
-      },
-      dyn20mMeDis:{
-        en:'DYN20中位数时间差(秒',
-        cn:'DYN20中位数时间差(秒)',
-      },
-      schAvgDis:{
-        en:'SCH平均数时间差(秒)',
-        cn:'SCH平均数时间差(秒)',
-      },
-      fplAvgDis:{
-        en:'FPL平均数时间差(秒)',
-        cn:'FPL平均数时间差(秒)',
-      },
-      depAvgDis:{
-        en:'DEP平均数时间差(秒)',
-        cn:'DEP平均数时间差(秒)',
-      },
-      dyn10mAvgDis:{
-        en:'DYN10平均数时间差(秒)',
-        cn:'DYN10平均数时间差(秒)',
-      },
-      dyn20mAvgDis:{
-        en:'DYN20平均数时间差(秒)',
-        cn:'DYN20平均数时间差(秒)'
-      }
-    },
-    colTitle:{
-      depAirport:'起飞机场',
-      terPoint:'终端区航路点',
-      flightcount:'样本数',
-      schMeDis:'SCH中位数时间差(秒)',
-      fplMeDis:'FPL中位数时间差(秒)',
-      depMeDis:'DEP中位数时间差(秒)',
-      dyn10mMeDis:'DYN10中位数时间差(秒)',
-      dyn20mMeDis:'DYN20中位数时间差(秒)',
-      schAvgDis:'SCH平均数时间差(秒)',
-      fplAvgDis:'FPL平均数时间差(秒)',
-      depAvgDis:'DEP平均数时间差(秒)',
-      dyn10mAvgDis:'DYN10平均数时间差(秒)',
-      dyn20mAvgDis:'DYN20平均数时间差(秒)'
-    },
-    colModel: {},
-    colDisplay: {},
-    cmTemplate: {
-      width: 85,
-      align: 'center',
-      sortable: true,
-      // search: true,
-      searchoptions: {
-        sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
-      },
-      cellattr: function (rowId, value, rowObject, colModel, arrData) {
-        // 需要赋予表格的属性
-        var attrs = '';
-        // 无效数值不做处理
-        if (!$.isValidVariable(value)) {
-          return attrs;
-        }
-
-        var title = rowObject[colModel.name];
-        if (!$.isValidVariable(title)) {
-          title = '';
-        }
-        var len = title.length;
-        //时间格式化 YYYYMMDD HH:MM
-        var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
-        //12位有效时间
-        if (regexp.test(title) && len == 12) {
-          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12);
-        } else if (regexp.test(title) && len == 14) { //14位有效时间
-          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
-        }
-        attrs = ' title="' + title + '"';
-        return attrs;
-      },
-      sortfunc : function(a, b, direction) {
-        // 若为升序排序，空值转换为最大的值进行比较
-        // 保证排序过程中，空值始终在最下方
-        if ($.type(a) === "number" || $.type(b) === "number") {
-          // 数字类型
-          var maxNum = Number.MAX_VALUE;
-          if (!$.isValidVariable(a) || a < 0) {
-            if (direction > 0) {
-              a = maxNum;
-            }
-          }
-          if (!$.isValidVariable(b) || b < 0) {
-            if (direction > 0) {
-              b = maxNum;
-            }
-          }
-          return (a > b ? 1 : -1) * direction;
-        } else {
-          // 字符串类型
-          var maxStr = 'ZZZZZZZZZZZZ';
-          if (!$.isValidVariable(a)) {
-            if (direction > 0) {
-              a = maxStr;
-            } else {
-              a = '';
-            }
-          }
-          if (!$.isValidVariable(b)) {
-            if (direction > 0) {
-              b = maxStr;
-            } else {
-              b = '';
-            }
-          }
-          return a.localeCompare(b) * direction;
-        }
-      }
-
-    }
-  }
-  var terminalPointDataConfigDown = {
-    colName:{
-      depAirport:{
-        en:'起飞机场',
-        cn:'起飞机场'
-      },
-      terPoint:{
-        en:'终端区航路点',
-        cn:'终端区航路点'
-      },
-      flightcount:{
-        en:'样本数',
-        cn:'样本数'
-      },
-      schMeDis:{
-        en:'SCH中位数高度差',
-        cn:'SCH中位数高度差',
-      },
-      fplMeDis:{
-        en:'FPL中位数高度差',
-        cn:'FPL中位数高度差',
-      },
-      depMeDis:{
-        en:'DEP中位数高度差',
-        cn:'DEP中位数高度差',
-      },
-      dyn10mMeDis:{
-        en:'DYN10中位数高度差',
-        cn:'DYN10中位数高度差',
-      },
-      dyn20mMeDis:{
-        en:'DYN20中位数高度差',
-        cn:'DYN20中位数高度差',
-      },
-      schAvgDis:{
-        en:'SCH平均数高度差',
-        cn:'SCH平均数高度差',
-      },
-      fplAvgDis:{
-        en:'FPL平均数高度差',
-        cn:'FPL平均数高度差',
-      },
-      depAvgDis:{
-        en:'DEP平均数高度差',
-        cn:'DEP平均数高度差',
-      },
-      dyn10mAvgDis:{
-        en:'DYN10平均数高度差',
-        cn:'DYN10平均数高度差',
-      },
-      dyn20mAvgDis:{
-        en:'DYN20平均数高度差',
-        cn:'DYN20平均数高度差'
-      }
-    } ,
-    colTitle:{
-      depAirport:'起飞机场',
-      terPoint:'终端区航路点',
-      flightcount:'样本数',
-      schMeHLevel:'SCH中位数高度差',
-      fplMeHLevel: 'FPL中位数高度差',
-      depMeHLevel:'DEP中位数高度差',
-      dyn10MeHLevel:'DYN10中位数高度差',
-      dyn20MeHLevel:'DYN20中位数高度差',
-      schAvgHLevel:'SCH平均数高度差',
-      fplAvgHLevel:'FPL平均数高度差',
-      depAvgHLevel:'DEP平均数高度差',
-      dyn10AvgHLevel:'DYN10平均数高度差',
-      dyn20AvgHLevel:'DYN20平均数高度差',
-    },
-    colModel: {},
-    colDisplay: {},
-    cmTemplate: {
-      width: 85,
-      align: 'center',
-      sortable: true,
-      // search: true,
-      searchoptions: {
-        sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
-      },
-      cellattr: function (rowId, value, rowObject, colModel, arrData) {
-        // 需要赋予表格的属性
-        var attrs = '';
-        // 无效数值不做处理
-        if (!$.isValidVariable(value)) {
-          return attrs;
-        }
-
-        var title = rowObject[colModel.name];
-        if (!$.isValidVariable(title)) {
-          title = '';
-        }
-        var len = title.length;
-        //时间格式化 YYYYMMDD HH:MM
-        var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
-        //12位有效时间
-        if (regexp.test(title) && len == 12) {
-          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12);
-        } else if (regexp.test(title) && len == 14) { //14位有效时间
-          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
-        }
-        attrs = ' title="' + title + '"';
-        return attrs;
-      },
-      sortfunc : function(a, b, direction) {
-        // 若为升序排序，空值转换为最大的值进行比较
-        // 保证排序过程中，空值始终在最下方
-        if ($.type(a) === "number" || $.type(b) === "number") {
-          // 数字类型
-          var maxNum = Number.MAX_VALUE;
-          if (!$.isValidVariable(a) || a < 0) {
-            if (direction > 0) {
-              a = maxNum;
-            }
-          }
-          if (!$.isValidVariable(b) || b < 0) {
-            if (direction > 0) {
-              b = maxNum;
-            }
-          }
-          return (a > b ? 1 : -1) * direction;
-        } else {
-          // 字符串类型
-          var maxStr = 'ZZZZZZZZZZZZ';
-          if (!$.isValidVariable(a)) {
-            if (direction > 0) {
-              a = maxStr;
-            } else {
-              a = '';
-            }
-          }
-          if (!$.isValidVariable(b)) {
-            if (direction > 0) {
-              b = maxStr;
-            } else {
-              b = '';
-            }
-          }
-          return a.localeCompare(b) * direction;
-        }
-      }
-
-    }
-  }
+  //航段飞行时间详情表格配置
   var flyDetailDataConfig = {
     colName: {
       id:{
@@ -494,7 +209,7 @@ var tableDataConfig = function () {
     colModel: {},
     colDisplay: {},
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -563,13 +278,308 @@ var tableDataConfig = function () {
         }
       }
 
-    }
+    },
+    isShrinkToFit:true,
+    defaultSort:'aircraftType'
   }
+
+  //终端区航路点表格配置
+  var terminalPointDataConfigTop = {
+    colName: {
+      depAirport:{
+        en:'depAirport',
+        cn:'起飞机场'
+      },
+      terPoint:{
+        en:'terPoint',
+        cn:'终端区航路点'
+      },
+      flightcount:{
+        en:'flightcount',
+        cn:'样本数'
+      },
+      schMeDis:{
+        en:'schMeDis',
+        cn:'SCH中位差(秒)',
+      },
+      fplMeDis:{
+        en:'fplMeDis',
+        cn:'FPL中位差(秒)',
+      },
+      depMeDis:{
+        en:'depMeDis',
+        cn:'DEP中位差(秒)',
+      },
+      dyn10mMeDis:{
+        en:'dyn10mMeDis',
+        cn:'DYN10中位差(秒)',
+      },
+      dyn20mMeDis:{
+        en:'dyn20mMeDis',
+        cn:'DYN20中位差(秒)',
+      },
+      schAvgDis:{
+        en:'schAvgDis',
+        cn:'SCH平均差(秒)',
+      },
+      fplAvgDis:{
+        en:'fplAvgDis',
+        cn:'FPL平均差(秒)',
+      },
+      depAvgDis:{
+        en:'depAvgDis',
+        cn:'DEP平均差(秒)',
+      },
+      dyn10mAvgDis:{
+        en:'dyn10mAvgDis',
+        cn:'DYN10平均差(秒)',
+      },
+      dyn20mAvgDis:{
+        en:'dyn20mAvgDis',
+        cn:'DYN20平均差(秒)'
+      }
+    },
+    colTitle:{
+      depAirport:'起飞机场',
+      terPoint:'终端区航路点',
+      flightcount:'样本数',
+      schMeDis:'SCH中位数时间差(秒)',
+      fplMeDis:'FPL中位数时间差(秒)',
+      depMeDis:'DEP中位数时间差(秒)',
+      dyn10mMeDis:'DYN10中位数时间差(秒)',
+      dyn20mMeDis:'DYN20中位数时间差(秒)',
+      schAvgDis:'SCH平均数时间差(秒)',
+      fplAvgDis:'FPL平均数时间差(秒)',
+      depAvgDis:'DEP平均数时间差(秒)',
+      dyn10mAvgDis:'DYN10平均数时间差(秒)',
+      dyn20mAvgDis:'DYN20平均数时间差(秒)'
+    },
+    colModel: {},
+    colDisplay: {},
+    cmTemplate: {
+      // width: 85,
+      align: 'center',
+      sortable: true,
+      // search: true,
+      searchoptions: {
+        sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
+      },
+      cellattr: function (rowId, value, rowObject, colModel, arrData) {
+        // 需要赋予表格的属性
+        var attrs = '';
+        // 无效数值不做处理
+        if (!$.isValidVariable(value)) {
+          return attrs;
+        }
+
+        var title = rowObject[colModel.name];
+        if (!$.isValidVariable(title)) {
+          title = '';
+        }
+        var len = title.length;
+        //时间格式化 YYYYMMDD HH:MM
+        var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
+        //12位有效时间
+        if (regexp.test(title) && len == 12) {
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12);
+        } else if (regexp.test(title) && len == 14) { //14位有效时间
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
+        }
+        attrs = ' title="' + title + '"';
+        return attrs;
+      },
+      sortfunc : function(a, b, direction) {
+        // 若为升序排序，空值转换为最大的值进行比较
+        // 保证排序过程中，空值始终在最下方
+        if ($.type(a) === "number" || $.type(b) === "number") {
+          // 数字类型
+          var maxNum = Number.MAX_VALUE;
+          if (!$.isValidVariable(a) || a < 0) {
+            if (direction > 0) {
+              a = maxNum;
+            }
+          }
+          if (!$.isValidVariable(b) || b < 0) {
+            if (direction > 0) {
+              b = maxNum;
+            }
+          }
+          return (a > b ? 1 : -1) * direction;
+        } else {
+          // 字符串类型
+          var maxStr = 'ZZZZZZZZZZZZ';
+          if (!$.isValidVariable(a)) {
+            if (direction > 0) {
+              a = maxStr;
+            } else {
+              a = '';
+            }
+          }
+          if (!$.isValidVariable(b)) {
+            if (direction > 0) {
+              b = maxStr;
+            } else {
+              b = '';
+            }
+          }
+          return a.localeCompare(b) * direction;
+        }
+      }
+
+    },
+    isShrinkToFit:true,
+  }
+  var terminalPointDataConfigDown = {
+    colName:{
+      depAirport:{
+        en:'起飞机场',
+        cn:'起飞机场'
+      },
+      terPoint:{
+        en:'终端区航路点',
+        cn:'终端区航路点'
+      },
+      flightcount:{
+        en:'样本数',
+        cn:'样本数'
+      },
+      schMeDis:{
+        en:'schMeDis',
+        cn:'SCH中位差',
+      },
+      fplMeDis:{
+        en:'fplMeDis',
+        cn:'FPL中位差',
+      },
+      depMeDis:{
+        en:'depMeDis',
+        cn:'DEP中位差',
+      },
+      dyn10mMeDis:{
+        en:'dyn10mMeDis',
+        cn:'DYN10中位差',
+      },
+      dyn20mMeDis:{
+        en:'dyn20mMeDis',
+        cn:'DYN20中位差',
+      },
+      schAvgDis:{
+        en:'schAvgDis',
+        cn:'SCH平均差',
+      },
+      fplAvgDis:{
+        en:'fplAvgDis',
+        cn:'FPL平均差',
+      },
+      depAvgDis:{
+        en:'depAvgDis',
+        cn:'DEP平均差',
+      },
+      dyn10mAvgDis:{
+        en:'dyn10mAvgDis',
+        cn:'DYN10平均差',
+      },
+      dyn20mAvgDis:{
+        en:'dyn20mAvgDis',
+        cn:'DYN20平均差'
+      }
+    } ,
+    colTitle:{
+      depAirport:'起飞机场',
+      terPoint:'终端区航路点',
+      flightcount:'样本数',
+      schMeHLevel:'SCH中位数高度差',
+      fplMeHLevel: 'FPL中位数高度差',
+      depMeHLevel:'DEP中位数高度差',
+      dyn10MeHLevel:'DYN10中位数高度差',
+      dyn20MeHLevel:'DYN20中位数高度差',
+      schAvgHLevel:'SCH平均数高度差',
+      fplAvgHLevel:'FPL平均数高度差',
+      depAvgHLevel:'DEP平均数高度差',
+      dyn10AvgHLevel:'DYN10平均数高度差',
+      dyn20AvgHLevel:'DYN20平均数高度差',
+    },
+    colModel: {},
+    colDisplay: {},
+    cmTemplate: {
+      // width: 85,
+      align: 'center',
+      sortable: true,
+      // search: true,
+      searchoptions: {
+        sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
+      },
+      cellattr: function (rowId, value, rowObject, colModel, arrData) {
+        // 需要赋予表格的属性
+        var attrs = '';
+        // 无效数值不做处理
+        if (!$.isValidVariable(value)) {
+          return attrs;
+        }
+
+        var title = rowObject[colModel.name];
+        if (!$.isValidVariable(title)) {
+          title = '';
+        }
+        var len = title.length;
+        //时间格式化 YYYYMMDD HH:MM
+        var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
+        //12位有效时间
+        if (regexp.test(title) && len == 12) {
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12);
+        } else if (regexp.test(title) && len == 14) { //14位有效时间
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
+        }
+        attrs = ' title="' + title + '"';
+        return attrs;
+      },
+      sortfunc : function(a, b, direction) {
+        // 若为升序排序，空值转换为最大的值进行比较
+        // 保证排序过程中，空值始终在最下方
+        if ($.type(a) === "number" || $.type(b) === "number") {
+          // 数字类型
+          var maxNum = Number.MAX_VALUE;
+          if (!$.isValidVariable(a) || a < 0) {
+            if (direction > 0) {
+              a = maxNum;
+            }
+          }
+          if (!$.isValidVariable(b) || b < 0) {
+            if (direction > 0) {
+              b = maxNum;
+            }
+          }
+          return (a > b ? 1 : -1) * direction;
+        } else {
+          // 字符串类型
+          var maxStr = 'ZZZZZZZZZZZZ';
+          if (!$.isValidVariable(a)) {
+            if (direction > 0) {
+              a = maxStr;
+            } else {
+              a = '';
+            }
+          }
+          if (!$.isValidVariable(b)) {
+            if (direction > 0) {
+              b = maxStr;
+            } else {
+              b = '';
+            }
+          }
+          return a.localeCompare(b) * direction;
+        }
+      }
+
+    },
+    isShrinkToFit:true,
+  }
+  // 终端区航路点详情表格配置
   var terminalDetailDataConfig = {
     colName: {
       id:{
         cn:'ID',
-        en:'ID',
+        en:'id',
       },
       flightID:{
         cn:'航班号',
@@ -582,26 +592,33 @@ var tableDataConfig = function () {
       rPastTime:{
         cn:'实际过点时间',
         en:'实际过点时间',
+        formatter:unTimeFormater
       },
       schPastTime:{
         cn:'SHC过点时间',
         en:'SHC过点时间',
+        formatter:unTimeFormater
       },
       fplPastTime:{
         cn:'FPL过点时间',
         en:'FPL过点时间',
+        formatter:unTimeFormater
       },
       depPastTime:{
         cn:'DEP过点时间',
         en:'DEP过点时间',
+        formatter:unTimeFormater
       },
       dyn10PastTime:{
         cn:'DYN10过点时间',
         en:'DYN10过点时间',
+        formatter:unTimeFormater
       },
       dyn20PastTime:{
         cn:'DYN20过点时间',
         en:'DYN20过点时间',
+        formatter:unTimeFormater
+
       },
       rPasthlevel:{
         cn:'实际过点高度',
@@ -648,7 +665,7 @@ var tableDataConfig = function () {
     colModel: {},
     colDisplay: {},
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -717,8 +734,12 @@ var tableDataConfig = function () {
         }
       }
 
-    }
+    },
+    isShrinkToFit:true,
+    defaultSort:'aircraftType'
   }
+
+  // 航班航路点表格配置
   var precisionTableDataConfig = {
     colName:{
       flightInOId:{
@@ -744,10 +765,12 @@ var tableDataConfig = function () {
       sDeptime:{
         en:'sDeptime',
         cn:'计划起飞时间',
+        formatter:unTimeFormater
       },
       sArrtime:{
         en:'sArrtime',
         cn:'计划降落时间',
+        formatter:unTimeFormater
       },
       rArrap:{
         en:'rArrap',
@@ -760,10 +783,12 @@ var tableDataConfig = function () {
       rArrtime:{
         en:'rArrtime',
         cn:'实际降落时间',
+        formatter:unTimeFormater
       },
       rDeptime:{
         en:'rDeptime',
-        cn:'实际飞行时间'
+        cn:'实际飞行时间',
+        formatter:unTimeFormater
       }
     } ,
     colTitle: {
@@ -782,7 +807,7 @@ var tableDataConfig = function () {
     colModel: {},
     colDisplay: {},
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -851,94 +876,178 @@ var tableDataConfig = function () {
         }
       }
 
-    }
+    },
+    isShrinkToFit:true,
   }
+  //航班航路点详情表格配置
   var precisionDetailDataConfig = {
-    colName: ['航路点', '航路顺序','实际过点时间','飞行高度', '时间差(预测值)','高度差(预测值)',  '时间差(预测值)','高度差(预测值)', '时间差(预测值)','高度差(预测值)', '时间差(预测值)','高度差(预测值)','时间差(预测值)','高度差(预测值)','时间差(预测值)','高度差(预测值)', '时间差(预测值)','高度差(预测值)', '时间差(预测值)','高度差(预测值)'],
+    colName: {
+      flightRoute:{
+        en:'flightRoute',
+        cn:'航路点名称',
+        frozen:true
+      },
+      routeseq:{
+        en:'routeseq',
+        cn:'航路顺序',
+      },
+      passTime:{
+        en:'passTime',
+        cn:'实际过点时间',
+        formatter:timeFormater
+      },
+      hlevel:{
+        en:'hlevel',
+        cn:'飞行高度',
+      },
+      timeIn0To15:{
+        en:'timeIn0To15',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeIn0To15_sub:{
+        en:'timeIn0To15_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeIn15To30:{
+        en:'timeIn15To30',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeIn15To30_sub:{
+        en:'timeIn15To30_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeIn30To60:{
+        en:'timeIn30To60',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeIn30To60_sub:{
+        en:'timeIn30To60_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeIn60To120:{
+        en:'timeIn60To120',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeIn60To120_sub:{
+        en:'timeIn60To120_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeIn120:{
+        en:'timeIn120',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeIn120_sub:{
+        en:'timeIn120_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeDEP:{
+        en:'timeDEP',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeDEP_sub:{
+        en:'timeDEP_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeFPL:{
+        en:'timeFPL',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeFPL_sub:{
+        en:'timeFPL_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+      timeSCH:{
+        en:'timeSCH',
+        cn:'时间差(预测值)',
+        width:150,
+      },
+      timeSCH_sub:{
+        en:'timeSCH_sub',
+        cn:'高度差(预测值)',
+        width:150,
+      },
+    },
     colTitle: {
       flightRoute:'航路点名称',
       routeseq:'航路顺序',
       passTime:'实际过点时间',
       hlevel:'飞行高度',
-      // timeDEP:'过点时间和DEP状态的时间差值',
-      // timeFPL:'过点时间和FPL状态的时间差值',
-      // timeSCH:'过点时间和SCH状态的时间差值'
+      timeIn0To15:'时间差(预测值)',
+      timeIn0To15_sub:'高度差(预测值)',
+      timeIn15To30:'时间差(预测值)',
+      timeIn15To30_sub:'高度差(预测值)',
+      timeIn30To60:'时间差(预测值)',
+      timeIn30To60_sub:'高度差(预测值)',
+      timeIn60To120:'时间差(预测值)',
+      timeIn60To120_sub:'高度差(预测值)',
+      timeIn120:'时间差(预测值)',
+      timeIn120_sub:'高度差(预测值)',
+      timeDEP:'时间差(预测值)',
+      timeDEP_sub:'高度差(预测值)',
+      timeFPL:'时间差(预测值)',
+      timeFPL_sub:'高度差(预测值)',
+      timeSCH:'时间差(预测值)',
+      timeSCH_sub:'高度差(预测值)',
     },
-    colModel: [
-      {
-        name: 'flightRoute',
-        index: 'flightRoute',
-        width:100,
-        // frozen:true
-      }, {
-        name:'routeseq',
-        index:'routeseq',
-        width:100,
-      }, {
-        name: 'passTime',
-        index: 'passTime',
-        width:100,
-        formatter: timeFormater
-      },{
-        name: 'hlevel',
-        index: 'hlevel',
-        width:100,
-      }, {
-        name: 'timeIn0To15',
-        index: 'timeIn0To15',
-      },{
-        name: 'timeIn0To15_sub',
-        index: 'timeIn0To15_sub',
-      }, {
-        name: 'timeIn15To30',
-        index: 'timeIn15To30',
-      },{
-        name: 'timeIn15To30_sub',
-        index: 'timeIn15To30_sub',
-      }, {
-        name: 'timeIn30To60',
-        index: 'timeIn30To60',
-      }, {
-        name: 'timeIn30To60_sub',
-        index: 'timeIn30To60_sub',
-      }, {
-        name: 'timeIn60To120',
-        index: 'timeIn60To120',
-      },{
-        name: 'timeIn60To120_sub',
-        index: 'timeIn60To120_sub',
-      }, {
-        name: 'timeIn120',
-        index: 'timeIn120',
-      },{
-        name: 'timeIn120_sub',
-        index: 'timeIn120_sub',
-      }, {
-        name: 'timeDEP',
-        index: 'timeDEP',
-      }, {
-        name: 'timeDEP_sub',
-        index: 'timeDEP_sub',
-      }, {
-        name: 'timeFPL',
-        index: 'timeFPL',
-      }, {
-        name: 'timeFPL_sub',
-        index: 'timeFPL_sub',
-      }, {
-        name: 'timeSCH',
-        index: 'timeSCH',
-      }, {
-        name: 'timeSCH_sub',
-        index: 'timeSCH_sub',
-      }],
-    data: []
+    colModel: {},
+    colDisplay: {},
+    cmTemplate: {
+      width: 95,
+      align: 'center',
+      sortable: true,
+      // search: true,
+      searchoptions: {
+        sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
+      },
+      cellattr: function (rowId, value, rowObject, colModel, arrData) {
+        // 需要赋予表格的属性
+        var attrs = '';
+        // 无效数值不做处理
+        if (!$.isValidVariable(value)) {
+          return attrs;
+        }
+
+        var title = rowObject[colModel.name];
+        if (!$.isValidVariable(title)) {
+          title = '';
+        }
+        var len = title.length;
+        //时间格式化 YYYYMMDD HH:MM
+        var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
+        //12位有效时间
+        if (regexp.test(title) && len == 12) {
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12);
+        } else if (regexp.test(title) && len == 14) { //14位有效时间
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
+        }
+        attrs = ' title="' + title + '"';
+        return attrs;
+      },
+      sortfunc : sortNum
+    },
+    isShrinkToFit:false,
+    defaultSort:'routeseq'
   }
+  //未修正表格配置
   var unCorrectFlight = {
     colName: {
       flightInOId:{
         en: 'flightInOId',
-        cn: '航班id',
+        cn: '航班ID',
       },
       flightId: {
         en: 'flightId',
@@ -954,11 +1063,13 @@ var tableDataConfig = function () {
         en: 'executeDate',
         cn: '执行日期',
         // formatter: timeFormater,
-      }, rArrtime: {
-        en: 'rArrtime',
-        cn: '实际降落时间',
-        formatter: unTimeFormater,
-      }, rDeptime: {
+      },
+      // rArrtime: {
+      //   en: 'rArrtime',
+      //   cn: '实际降落时间',
+      //   formatter: unTimeFormater,
+      // },
+      rDeptime: {
         en: 'rDeptime',
         cn: '实际起飞时间',
         formatter: unTimeFormater,
@@ -978,7 +1089,7 @@ var tableDataConfig = function () {
       saveTime: '保存时间',
       radarState: '信号状态',
       executeDate: '执行日期',
-      rArrtime: '实际降落时间',
+      // rArrtime: '实际降落时间',
       rDeptime: '实际起飞时间',
       pDepap: '起飞机场',
       pArrap:'降落机场',
@@ -1054,7 +1165,9 @@ var tableDataConfig = function () {
       }
 
     },
+    isShrinkToFit:true,
   };
+  //未修正详情表格配置
   var flightDetail = {
     colName: {
       flightInOId:{
@@ -1100,11 +1213,11 @@ var tableDataConfig = function () {
         cn: '实际起飞时间',
         formatter: unTimeFormater,
       },
-      rArrtime: {
-        en: 'rArrtime',
-        cn: '实际降落时间',
-        formatter: unTimeFormater,
-      },
+      // rArrtime: {
+      //   en: 'rArrtime',
+      //   cn: '实际降落时间',
+      //   formatter: unTimeFormater,
+      // },
       radarState: {
         en: 'radarState',
         cn: '信号状态',
@@ -1123,7 +1236,7 @@ var tableDataConfig = function () {
       rDepap: '实际起飞机场',
       rArrap: '实际降落机场',
       rDeptime: '实际起飞时间',
-      rArrtime: '实际降落时间',
+      // rArrtime: '实际降落时间',
       radarState: '信号状态',
     },
     cmTemplate: {
@@ -1197,29 +1310,11 @@ var tableDataConfig = function () {
       }
 
     },
+    isShrinkToFit:true,
+    defaultSort:''
   };
-  /**
-   * 调整表格大小以适应所在容器
-   *
-   * */
-  function resizeToFitContainer(tableId) {
-    // 获取表格结构下元素
-    var gridTableGBox = $('#gbox_' + tableId);
-    var gridTableGView = $('#gview_' + tableId);
-    var gridTableBDiv = gridTableGView.find('.ui-jqgrid-bdiv');
 
-    // 获取容器高度
-    var container = gridTableGBox.parent();
-
-    // 计算表格高度
-    var gridTableHeight = gridTableBDiv.outerHeight() - (gridTableGBox.outerHeight() - container.height()+20);
-    var gridTableWidth = container.width();
-
-    // 调用表格修改高度宽度方法
-    $('#' + tableId).jqGrid('setGridHeight', gridTableHeight);
-    $('#' + tableId).jqGrid('setGridWidth', (gridTableWidth - 2));
-  }
-  //列排序规则
+  //列排序规则(中文)
   function sortName(a, b, direction) {
     // 若为升序排序，空值转换为最大的值进行比较
     // 保证排序过程中，空值始终在最下方
@@ -1257,7 +1352,7 @@ var tableDataConfig = function () {
       return a.localeCompare(b) * direction;
     }
   }
-  //
+  //列排序(纯数字)
   function sortNum(a,b,direction) {
     a = a * 1;
     b = b * 1;
@@ -1278,6 +1373,17 @@ var tableDataConfig = function () {
       if ($.isValidVariable(val.formatter)) {
         obj.colModel[i]['formatter'] = val.formatter;
       }
+      if($.isValidVariable(val.width)){
+        obj.colModel[i]['width'] =  val.width;
+      }
+      // 设置冻结列frozen: true,
+      if($.isValidVariable(val.frozen)){
+        obj.colModel[i]['frozen'] = val.frozen;
+      }
+      // 设置特殊单元格class
+      if(val.classes){
+        obj.colModel[i]['classes'] = val.classes
+      }
       obj.colDisplay[i] = {display: 1};
       //若colName的hidden为true,则设置display为0
       if (val.hidden) {
@@ -1289,7 +1395,7 @@ var tableDataConfig = function () {
   //时间格式化规则
   function timeFormater(cellvalue, options, rowObject) {
     if ($.isValidVariable(cellvalue)) {
-      return '<span title="'+cellvalue+'">'+cellvalue.substring(6, 8)+'/'+cellvalue.substring(8, 10)+':'+cellvalue.substring(10, 12)+':'+cellvalue.substring(12,14)+'</span>';
+      return cellvalue.substring(6, 8)+'/'+cellvalue.substring(8, 10)+':'+cellvalue.substring(10, 12)
     } else {
       return '';
     }
@@ -1308,10 +1414,6 @@ var tableDataConfig = function () {
       return '';
     }
   };
-  /*数据样例*/
-  var flyData = {};
-  var terData = {};
-  var preData = {};
   return {
     flyErrorTableDataConfig: flyErrorTableDataConfig,
     terminalPointDataConfigTop: terminalPointDataConfigTop,
@@ -1319,13 +1421,9 @@ var tableDataConfig = function () {
     precisionTableDataConfig:precisionTableDataConfig,
     unCorrectFlight:unCorrectFlight,
     flightDetail:flightDetail,
-    resizeToFitContainer: resizeToFitContainer,
     flyDetailDataConfig: flyDetailDataConfig,
     terminalDetailDataConfig: terminalDetailDataConfig,
     precisionDetailDataConfig:precisionDetailDataConfig,
-    flyData: flyData,
-    terData:terData,
-    preData:preData,
     sortName:sortName,
     sortNum:sortNum,
     timeFormater:timeFormater,
