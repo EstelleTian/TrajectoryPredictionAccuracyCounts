@@ -82,10 +82,6 @@ var UncorrectFlight = function () {
         }
       }
     })
-
-
-
-
     //点击获取日期时间限制
     $("#un-datepicker").on('click',function () {
       $("#un-datepicker").datetimepicker('setEndDate',new Date());
@@ -101,6 +97,8 @@ var UncorrectFlight = function () {
           $('.un-end-date-input').datetimepicker('setEndDate',$.parseFullTime($(".day-value").val().replace(/-/g,'')+'2359'))
           $('.un-end-date-input').datetimepicker('setDate',$.parseFullTime($(".day-value").val().replace(/-/g,'')+'2359'))
         }else{
+          //重新设置结束时间可选范围
+          $('.un-end-date-input').datetimepicker('setEndDate',new Date())
           setDefaultDates()
         }
     })
@@ -183,7 +181,7 @@ var UncorrectFlight = function () {
           $('.uncorrect_flight .charts-wrap .no-datas-tip').hide();
           $('.uncorrect_flight  .generate-time').text('数据生成时间: ' + $.formateTime(generateTime));
           tableDataConfig.inittableParams(tableDataConfig.unCorrectFlight);
-          tableObj = initGridTable()
+          tableObj = initGridTable(tableDataConfig.unCorrectFlight)
           fireTableDataChange(singleConverToCn(data),tableObj)
         }else{
           //显示提示
@@ -201,17 +199,17 @@ var UncorrectFlight = function () {
     });
   }
   //初始化表格
-  var initGridTable = function () {
+  var initGridTable = function (config) {
     var pagerId = 'un-table-pager';
     var table = new FlightGridTable({
       canvasId: 'un-canvas',
       tableId: 'un-grid-table',
       pagerId: pagerId,
-      colNames: tableDataConfig.unCorrectFlight.colName,
-      colModel: tableDataConfig.unCorrectFlight.colModel,
-      cmTemplate: tableDataConfig.unCorrectFlight.cmTemplate,
-      colDisplay: tableDataConfig.unCorrectFlight.colDisplay,
-      colTitle: tableDataConfig.unCorrectFlight.colTitle,
+      colNames: config.colName,
+      colModel: config.colModel,
+      cmTemplate: config.cmTemplate,
+      colDisplay: config.colDisplay,
+      colTitle: config.colTitle,
       colStyle: {},
       colEdit: {},
       search: false,
@@ -219,7 +217,7 @@ var UncorrectFlight = function () {
         shrinkToFit: true,
         rowNum: 999999,
         // sortorder: 'asc',
-        sortname: tableDataConfig.unCorrectFlight.defaultSort,//排序列
+        sortname: config.defaultSort,//排序列
         // 是否显示行号
         rownumbers: true,
         //是否显示快速过滤

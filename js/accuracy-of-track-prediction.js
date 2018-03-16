@@ -68,9 +68,11 @@ var PredictionData = function () {
   }
   // 初始化组件
   var initComponent = function () {
-    //初始化日历插件datepicker
+    //初始化航段飞行时间日历插件
     initDatepicker('.fly_time ');
+    //初始化终端区航路点时间日历插件
     initDatepicker('.ter_time ');
+    //初始化航班航路点预测精度时间日历插件
     initPreDatapicker();
     // 设置默认时间
     setDefaultDates();
@@ -95,43 +97,17 @@ var PredictionData = function () {
     $('.nav li', nav).on('click', function () {
       // 更新当前nav索引
       stateIndex = $(this).index();
-    });
-    //航段飞行时间误差统计导航点击事件
-    $('.nav_monitor').on('click', function () {
       // 清空警告
       clearAlert();
       $('li', nav).removeClass('active');
       $(this).addClass('active');
       //切换模块
       tabToggle(stateIndex, tabPage)
+      //更新未修正航班表单时间
+      if(tabPage[stateIndex] == "$('.uncorrect_flight')"){
+        UncorrectFlight.setDefaultDates()
+      }
     });
-    // 终端区航路点过点时间统计导航点击事件
-    $('.nav-history-data-statistics').on('click', function () {
-      // 清空警告
-      clearAlert();
-      $('li', nav).removeClass('active');
-      $(this).addClass('active');
-      //模块切换
-      tabToggle(stateIndex, tabPage)
-    });
-    //航班航路点预测精度展示
-    $('.precision-data-statistics').on('click', function () {
-      // 清空警告
-      clearAlert();
-      $('li', nav).removeClass('active');
-      $(this).addClass('active');
-      //模块切换
-      tabToggle(stateIndex, tabPage)
-    })
-    $('.uncorrect-flight').on('click',function () {
-      // 清空警告
-      clearAlert();
-      UncorrectFlight.setDefaultDates()
-      $('li', nav).removeClass('active');
-      $(this).addClass('active');
-      //模块切换
-      tabToggle(stateIndex, tabPage)
-    })
     //航段飞行起飞机场点击事件状态绑定
     initAirportState($('.fly_time .dep'), $('.fly_time .arr'))
     //终端区起飞机场点击事件状态绑定
@@ -339,7 +315,7 @@ var PredictionData = function () {
     return true;
   };
 
-  /**
+  /**设置开始时间
    * @method setStartdDataRange 设置其实日期范围
    * @param fatherDom 父级容器
    */
@@ -733,10 +709,24 @@ var PredictionData = function () {
     var loading = Ladda.create($('.loading-data')[stateIndex]);
     loading.start();
     $('.form-wrap').addClass('no-event');
-
+    //设置请求地址
     if (stateArr[stateIndex] == 'pre') {
+      //航班航路点预测精度url
       var url = searchUrl + formData.startDate.replace(/-/g,'') + '/' + formData.airportName;
     } else {
+      //处理表格内起飞降落机场文字
+      if ($.isValidVariable(formData.currentStatus)) {
+        if (formData.currentStatus == 'D') {
+          tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '起飞机场'
+          tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '起飞机场'
+          tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '起飞机场'
+        } else if (formData.currentStatus == 'A') {
+          tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '降落机场'
+          tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '降落机场'
+          tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '降落机场'
+        }
+      }
+      //航段飞行时间 终端区航路点 url
       var url = searchUrl + formData.startDate.replace(/-/g,'') + '/' + formData.endDate.replace(/-/g,'') + '/' + formData.airportName + '/' + formData.currentStatus + '';
     }
     $.ajax({
@@ -746,18 +736,6 @@ var PredictionData = function () {
       success: function (data, status, xhr) {
         // 当前数据
         if ($.isValidObject(data)) {
-          //处理表头
-          if ($.isValidVariable(formData.currentStatus)) {
-            if (formData.currentStatus == 'D') {
-              tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '起飞机场'
-              tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '起飞机场'
-              tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '起飞机场'
-            } else if (formData.currentStatus == 'A') {
-              tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '降落机场'
-              tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '降落机场'
-              tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '降落机场'
-            }
-          }
           if (stateArr[stateIndex] == 'fly' && searchState == 'fly') {
             // 判断数据是否为空
             if ($.isEmptyObject(data.map) && stateIndex != 2) {
@@ -933,7 +911,9 @@ var PredictionData = function () {
       validateDates();
     });
   };
-
+  /**
+   * 初始化航班航路点预测精度时间选择器
+   */
   var initPreDatapicker = function () {
     //时间输入栏
     $('.pre-start-date-input').datetimepicker({
