@@ -1,0 +1,29 @@
+.flight-table-container{
+    top:55px;
+    left: 0;
+    right:0;
+    bottom: 0;
+    position: absolute;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+.precent-table-container{
+    top:55px;
+    left: 0;
+    right:0;
+    bottom: 0;
+    position: absolute;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+.precent-table-container .fly_table .jqgrow td:nth-of-type(3) ,.flight-table-container .fly_table .jqgrow td:nth-of-type(3) {
+    color: #000;
+    text-decoration: none;
+}
+.flight-table-container .fly_table .jqgrow td:nth-of-type(2) {
+    color: #1B548D;
+    cursor: pointer;
+    text-decoration: underline;
+}

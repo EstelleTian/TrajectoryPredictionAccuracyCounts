@@ -49,6 +49,13 @@
         var preFlightName = parma[4];
         var pre = true
     }
+    //时间误差过大
+    if(parma[1] == 'out'){
+        var flightId = parma[2];
+        var dataTime = parma[3];
+        var outTimeData = JSON.parse(sessionStorage.getItem('outDetailObj'));
+        var out = true
+    }
 </script>
 <script src="js/iphost.js"></script>
 <script src="plugins/jquery/js/jquery.min.js"></script>

@@ -67,7 +67,7 @@ var DetailFlightTable = function () {
         title: "导出Excel",
         buttonicon: "glyphicon-export",
         onClickButton: function () {
-          table.export(flightName + '未修正航班统计详情');
+          table.export(flightName + '航班统计详情');
         },
         position: "first"
       });
@@ -238,6 +238,22 @@ var DetailFlightTable = function () {
       }
     });
   }
+  //时间误差过大统计详情
+  var getOutFlightGridData = function () {
+    var data = outTimeData;
+    //设置页面标题以及时间
+    $('.generate_time').text('数据生成时间: ' + $.formateTime(dataTime));
+    $('.win_head').text(flightId + "航段飞行时间详情");
+    if($.isValidObject(tableObj)){
+      tableObj.clearGridData()
+      fireTableDataChange(data,tableObj)
+    }else{
+      flightName = flightId + dataTime;
+      tableDataConfig.inittableParams(tableDataConfig.countFlightDetail)
+      tableObj = initGridTable(tableDataConfig.countFlightDetail)
+      fireTableDataChange(data.errorFlightRoutes,tableObj)
+    }
+  }
   /**
    * 航班航路点预测精度数据转换
    * @param originData
@@ -335,6 +351,9 @@ var DetailFlightTable = function () {
     }
     if(pre){
       getPreFlightGridData()
+    }
+    if(out){
+      getOutFlightGridData()
     }
   }
   return{

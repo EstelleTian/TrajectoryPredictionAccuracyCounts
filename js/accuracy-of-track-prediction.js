@@ -1,98 +1,23 @@
 var PredictionData = function () {
   // 当前nav索引
   var stateIndex = 0;
-  //状态与地址对应关系
-  var searchUrl = {
-    fly: ipHost + 'module-trajectoryCorrect-service/trajectory/correct/',
-    ter: ipHost + 'module-trajectoryCorrect-service/trajectory/correct/point/',
-    pre: ipHost + 'module-trajectoryCorrect-service/trajectory/flight/'
-  }
   //根据索引获取当前页面状态数组
-  var stateArr = ['fly', 'ter', 'pre','uncor']
+  var stateArr = ['fly', 'ter', 'pre','uncor','out']
   //搜索状态
   var searchState = '';
-  //表格对应id集合
-  var idsObj = {
-    fly:{
-      canvasId:'fly-canvas',
-      tableId:'fly-grid-table',
-      pagerId:'fly-grid-pager',
-    },
-    ter:{
-      top:{
-        canvasId:'ter-top-canvas',
-        tableId:'ter-top-grid-table',
-        pagerId:'ter-top-table-pager',
-      },
-      down:{
-        canvasId:'ter-down-canvas',
-        tableId:'ter-down-grid-table',
-        pagerId:'ter-down-table-pager',
-      }
-    },
-    pre:{
-      canvasId:'pre-canvas',
-      tableId:'pre-grid-table',
-      pagerId:'pre-table-pager',
-    },
-    uncor:{
-      canvasId:'un-canvas',
-      tableId:'un-grid-table',
-      pagerId:'un-table-pager',
-    }
-  }
-  //表格对象集合
-  var tableObject = {
-    fly:'',
-    ter:{
-      top:'',
-      down:''
-    },
-    pre:'',
-    uncor:''
-  }
-  //数据生成时间集合
-  var generateTimeObj = {
-    flyDataTime:'',
-    terDataTime:''
-  }
-  /*
-   * 表单查询对象
-   * */
-  var DataForm = {
-    startDate: '',
-    endDate: '',
-    currentType: '',
-    currentStatus: '',
-    airportName: ''
-  }
-  // 初始化组件
-  var initComponent = function () {
-    //初始化航段飞行时间日历插件
-    initDatepicker('.fly_time ');
-    //初始化终端区航路点时间日历插件
-    initDatepicker('.ter_time ');
-    //初始化航班航路点预测精度时间日历插件
-    initPreDatapicker();
-    // 设置默认时间
-    setDefaultDates();
-
-  };
   // 初始化事件绑定
   var initEvent = function () {
     // 导航点击事件
     initNavTabEvent();
-    // 提交按钮
+    //回车事件
     initSubmitEvent();
   };
-
   /**
    * 导航事件
    * */
-
   var initNavTabEvent = function () {
     //导航栏
-    var tabPage = [$('.fly_time'), $('.ter_time'), $('.precision_show'),$('.uncorrect_flight')]
+    var tabPage = [$('.fly_time'), $('.ter_time'), $('.precision_show'),$('.uncorrect_flight'),$('.timeout_flight')]
     var nav = $('#nav');
     $('.nav li', nav).on('click', function () {
       // 更新当前nav索引
@@ -108,10 +33,7 @@ var PredictionData = function () {
         UncorrectFlight.setDefaultDates()
       }
     });
-    //航段飞行起飞机场点击事件状态绑定
-    initAirportState($('.fly_time .dep'), $('.fly_time .arr'))
-    //终端区起飞机场点击事件状态绑定
-    initAirportState($('.ter_time .dep'), $('.ter_time .arr'))
+   
   }
   /*
    * tab页状态切换
@@ -131,17 +53,8 @@ var PredictionData = function () {
    * 提示前清空数据
    * */
   var alertClearData = function (table) {
-    if ($.isValidObject(table)) {
-      if (stateArr[stateIndex] == 'fly'&&$.isValidObject(table.fly)) {
-
-        table.fly.unloadGrid();
-      } else if (stateArr[stateIndex] == 'ter'&&$.isValidObject(table.ter.top)) {
-
-        table.ter.top.unloadGrid();
-        table.ter.down.unloadGrid();
-      } else if (stateArr[stateIndex] == 'pre'&&$.isValidObject(table.pre)) {
-        table.pre.unloadGrid();
-      }
+    if($.isValidObject(table)){
+      table.unloadGrid();
     }
   }
   /*
@@ -182,27 +95,13 @@ var PredictionData = function () {
     }
   }
   /*
-   * 获取表单数据
-   * */
-  var getFormData = function (formObj) {
-    if (stateArr[stateIndex] == 'fly') {
-      handelFormData('fly_time', formObj)
-    } else if (stateArr[stateIndex] == 'ter') {
-      handelFormData('ter_time', formObj)
-    } else if (stateArr[stateIndex] == 'pre') {
-      formObj.startDate = $(".pre-start-date-input").val().replace(/(^\s*)|(\s*$)/g, "");
-      formObj.airportName = $(".pre_airport_Name").val().toUpperCase().replace(/(^\s*)|(\s*$)/g, "");
-    }
-    return formObj;
-  }
-  /*
    * 获取表单数据处理
    * */
   var handelFormData = function (fatherDom, formObj) {
-    formObj.startDate = $("." + fatherDom + " .start-date-input").val().replace(/(^\s*)|(\s*$)/g, "");
-    formObj.endDate = $("." + fatherDom + " .flight-end-date").val().replace(/(^\s*)|(\s*$)/g, "");
+    formObj.startDate = $(" .start-date-input",fatherDom).val().replace(/(^\s*)|(\s*$)/g, "");
+    formObj.endDate = $(" .end-date-input",fatherDom).val().replace(/(^\s*)|(\s*$)/g, "");
     formObj.currentType = airportStatus().replace(/(^\s*)|(\s*$)/g, "");
-    formObj.airportName = $("." + fatherDom + " .flight_name").val().toUpperCase().replace(/(^\s*)|(\s*$)/g, "");
+    formObj.airportName = $( " .flight_name",fatherDom).val().toUpperCase().replace(/(^\s*)|(\s*$)/g, "");
     if (formObj.currentType == '起飞机场') {
       formObj.currentStatus = 'D'
     } else {
@@ -213,62 +112,18 @@ var PredictionData = function () {
    * 提交按钮事件
    * */
   var initSubmitEvent = function () {
-    $('.fly-data-btn').on('click', function () {
-      searchState = 'fly'
-      $(".fly_time .no-datas-tip").hide();
-      alertClearData(tableObject)
-      //获取 表单数据
-      getFormData(DataForm);
-      // 处理表单提交
-      handleSubmitForm(DataForm, 'fly_time');
-    });
-    $('.ter-data-btn').on('click', function () {
-      searchState = 'ter'
-      $(".ter_time .no-datas-tip").hide();
-      alertClearData(tableObject)
-      //获取 表单数据
-      getFormData(DataForm);
-      // 处理表单提交
-      handleSubmitForm(DataForm, 'ter_time');
-
-    });
-    $('.pre-data-btn').on('click', function () {
-      searchState = 'pre'
-      $(".precision_show .no-datas-tip").hide();
-      alertClearData(tableObject)
-      //获取 表单数据
-      getFormData(DataForm);
-      // 处理表单提交
-      handleSubmitForm(DataForm, 'precision_show');
-    });
     $(document).keyup(function (event) {
       if (event.keyCode == 13) {
         if (stateArr[stateIndex] == 'fly') {
-          searchState = 'fly'
-          $(".fly_time .no-datas-tip").hide();
-          alertClearData(tableObject)
-          //获取 表单数据
-          getFormData(DataForm);
-          // 处理表单提交
-          handleSubmitForm(DataForm, 'fly_time');
+          FlyTimeFlight.searchBefore()
         } else if (stateArr[stateIndex] == 'ter') {
-          searchState = 'ter'
-          $(".ter_time .no-datas-tip").hide();
-          alertClearData(tableObject)
-          //获取 表单数据
-          getFormData(DataForm);
-          // 处理表单提交
-          handleSubmitForm(DataForm, 'ter_time');
+          TerminalAreaFlight.searchBefore()
         } else if (stateArr[stateIndex] == 'pre') {
-          searchState = 'pre'
-          $(".precision_show .no-datas-tip").hide();
-          alertClearData(tableObject)
-          //获取 表单数据
-          getFormData(DataForm);
-          // 处理表单提交
-          handleSubmitForm(DataForm, 'precision_show');
+          PredictionAccurancyFlight.searchBefore()
         }else if(stateArr[stateIndex] == 'uncor'){
           UncorrectFlight.searchData();
+        }else if(stateArr[stateIndex] == 'out'){
+          TimeOutFlight.beforeSearch()
         }
       }
     });
@@ -287,7 +142,7 @@ var PredictionData = function () {
     // 若起止日期范围无效则弹出警告
     if (!bool) {
       // 弹出警告
-      showAlear($('.alert-container'), {
+      showAlear(fatherDom, {
         valid: false,
         mess: "起止时间跨度不能超过7天"
       })
@@ -302,7 +157,7 @@ var PredictionData = function () {
     // 起始时间值
     var start = $('.start-date-input').val();
     // 截止时间值
-    var end = $('.flight-end-date').val();
+    var end = $('.end-date-input').val();
     // 若起止时间数值均有效
     if ($.isValidVariable(start) && $.isValidVariable(end)) {
       // 求得起止时间相差天数
@@ -321,11 +176,11 @@ var PredictionData = function () {
    */
   var setStartdDataRange = function (fatherDom) {
     // 起始时间值
-    var start = $(fatherDom + '.start-date-input').val();
+    var start = $(' .start-date-input',fatherDom).val();
     var reg = /\-| |:/g;
     start =start.replace(reg,'');
     // 截止时间值
-    var end = $(fatherDom + '.flight-end-date').val();
+    var end = $('.end-date-input',fatherDom ).val();
     end = end.replace(reg,'')
     // 截止时间前1天
     var preDay = $.addStringTime(end + '0000', 3600 * 1000 * 24 * -1);
@@ -334,19 +189,19 @@ var PredictionData = function () {
     // 求得起止时间相差天数
     var diff = Math.abs($.calculateStringTimeDiff(start + '0000', end + '0000') / (1000 * 60 * 60 * 24));
     // 设置起止日期的可选开始日期
-    $(fatherDom + '.start-date-input').datetimepicker('setStartDate', $.parseFullTime(day7));
+    $(' .start-date-input',fatherDom).datetimepicker('setStartDate', $.parseFullTime(day7));
     // 设置起止日期的可选结束日期
-    $(fatherDom + '.start-date-input').datetimepicker('setEndDate', $.parseFullTime(end + '0000'));
+    $(' .start-date-input',fatherDom).datetimepicker('setEndDate', $.parseFullTime(end + '0000'));
     // 若截止日期小于起止日期,设置起止日期的默认选中日期为截止日期的前1天
     if (end * 1 < start * 1) {
       // 设置起止日期的默认选中日期为截止日期的前1天
-      $(fatherDom + '.start-date-input').datetimepicker('setDate', $.parseFullTime(preDay));
+      $(' .start-date-input',fatherDom).datetimepicker('setDate', $.parseFullTime(preDay));
     } else if (diff > 7) { // 若起止时间相差天数大于7天
       // 设置起止日期的默认选中日期为截止日期的前1天
-      $(fatherDom + '.start-date-input').datetimepicker('setDate', $.parseFullTime(preDay));
+      $(' .start-date-input',fatherDom).datetimepicker('setDate', $.parseFullTime(preDay));
     } else {
       // 设置起止日期的默认选中日期为当前数值(用于解决输入框数值与日历默认选中日期数值不一致的问题)
-      $(fatherDom + '.start-date-input').datetimepicker('setDate', $.parseFullTime(start + '0000'));
+      $(' .start-date-input',fatherDom).datetimepicker('setDate', $.parseFullTime(start + '0000'));
     }
   };
 
@@ -391,23 +246,10 @@ var PredictionData = function () {
     var canvasId = ids.canvasId;
     //判断默认排序字段
     var sortName = '';
-    //导出文件名
-    var fileName = DataForm.startDate + DataForm.endDate + DataForm.airportName  + '航段飞行时间误差统计';
     if (stateArr[stateIndex] == 'fly' || stateArr[stateIndex] == 'ter') {
       sortName = ''
     } else if (stateArr[stateIndex] == 'pre') {
       sortName = 'rdeptime';
-      fileName = DataForm.startDate + DataForm.airportName + '航班航路点预测精度';
-    }
-    //设置表头
-    var captionName = '';
-    if (pagerId == 'ter-top-table-pager') {
-      captionName = '过点时间统计';
-      fileName = DataForm.startDate + DataForm.endDate + DataForm.airportName + '终端区航路点' +captionName
-    }
-    if (pagerId == 'ter-down-table-pager') {
-      captionName = '过点高度统计'
-      fileName = DataForm.startDate + DataForm.endDate + DataForm.airportName + '终端区航路点' +captionName
     }
     var table = new FlightGridTable({
       canvasId:canvasId,
@@ -422,7 +264,7 @@ var PredictionData = function () {
       colEdit: {},
       search: false,
       params: {
-        caption:captionName,
+        caption:ids.captionName,
         shrinkToFit: config.isShrinkToFit,
         rowNum: 999999,
         sortname: sortName,
@@ -440,15 +282,22 @@ var PredictionData = function () {
           var colName = table.gridTableObject.jqGrid('getGridParam')['colNames'][index];
           if (colName == '样本数'&&stateArr[stateIndex] == 'fly') {
             var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].allName;
-            openDetailManageDialog(flightName,'fly',generateTimeObj.flyDataTime)
+            openDetailManageDialog(flightName,'fly',ids.generateTime)
           }else if(colName == '样本数'&&stateArr[stateIndex] == 'ter'){
             var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].allName;
-            openDetailManageDialog(flightName,'ter',generateTimeObj.terDataTime)
+            openDetailManageDialog(flightName,'ter',ids.generateTime)
           }
           if (colName == '航班号' && stateArr[stateIndex] == 'pre') {
             var title = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].flightInOId;
             var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].flightId;
             openDetailManageDialog(title,'pre','',flightName)
+          }
+          if(colName == '航班号'&&stateArr[stateIndex] == 'out'){
+            var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].flightId;
+            //按航班统计
+            sessionStorage.removeItem('outDetailObj');
+            sessionStorage.setItem('outDetailObj', JSON.stringify(table.tableData[rowid-1]));
+            openDetailManageDialog(flightName,'out',ids.generateTime,flightName)
           }
         }
       }
@@ -483,7 +332,7 @@ var PredictionData = function () {
         title: "导出Excel",
         buttonicon: "glyphicon-export",
         onClickButton: function () {
-          table.export(fileName);
+          table.export(ids.fileName);
         },
         position: "first"
       });
@@ -548,13 +397,13 @@ var PredictionData = function () {
   /**
    * @method handleSubmitForm 处理表单数据
    * @param obj 表单数据对象集合
-   * @param state 当前选中的页面的Class名称
+   * @param fatherDom 当前选中的页面的Class名称
    * */
-  var handleSubmitForm = function (obj, state) {
+  var handleSubmitForm = function (obj, fatherDom) {
     // 清空警告
     clearAlert();
     // 清空提示
-    clearTip(state);
+    clearTip(fatherDom);
     //校验表单;
     var validate = validateForm(obj);
     if (!validate.valid) {
@@ -563,13 +412,14 @@ var PredictionData = function () {
       //隐藏当前统计条件
       hideConditions();
       // 显示警告信息内容
-      showAlear($('.alert-container'), validate);
-      return;
+      showAlear(fatherDom, validate);
+      return false;
     } else {
       //显示当前统计条件
-      showConditions(obj, state);
-      //数据查询
-      searchData(DataForm, searchUrl[stateArr[stateIndex]]);
+      if(fatherDom.selector !='.timeout_flight'){
+        showConditions(obj, fatherDom);
+      }
+      return true;
     }
   }
   /**
@@ -583,7 +433,6 @@ var PredictionData = function () {
     //起始时间格式校验
     var endDateValid = regexp.test(obj.startDate);
     if (!endDateValid) {
-      alertClearData(tableObject);
       return {
         valid: false,
         mess: "请输入正确的起始时间,日期格式:YYYY-MM-DD"
@@ -593,7 +442,6 @@ var PredictionData = function () {
       //截止时间格式校验
       var endDateValid = regexp.test(obj.endDate);
       if (!endDateValid) {
-        alertClearData(tableObject);
         return {
           valid: false,
           mess: "请输入正确的截止时间,日期格式:YYYY-MM-DD"
@@ -602,7 +450,6 @@ var PredictionData = function () {
       // 起止时间范围校验
       var valid = validateDatesDifference();
       if (!valid) {
-        alertClearData(tableObject);
         return {
           valid: false,
           mess: "起止时间跨度不能超过7天"
@@ -611,7 +458,6 @@ var PredictionData = function () {
     }
     // 机场名称校验
     if (obj.airportName == "") {
-      alertClearData(tableObject);
       if (stateIndex != 2) {
         return {
           valid: false,
@@ -633,20 +479,19 @@ var PredictionData = function () {
    * @method showAlear 显示警告内容
    * @param validate 校验结果对象集合
    * */
-  var showAlear = function (domobj, validate) {
+  var showAlear = function (fatherDom, validate) {
     var mess = '';
     if ($.isValidObject(validate)) {
       mess = validate.mess;
     } else if ($.isValidVariable(validate)) {
       mess = validate;
     }
-    // var $dom = $('.alert-container');
 
     var str = '<div class="alert alert-danger alert-dismissible fade in" role="alert">' +
       '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
       '<p id="alert-mess">' + mess + ' </p>' +
       '</div>';
-    domobj.empty().append(str);
+    $('.alert-container',fatherDom).empty().append(str);
   };
 
   /**
@@ -670,7 +515,7 @@ var PredictionData = function () {
    * 清空提示
    * */
   var clearTip = function (fatherDom) {
-    $(fatherDom + ' .no-datas-tip').text('').hide();
+    $(' .no-datas-tip',fatherDom ).text('').hide();
   };
 
 
@@ -681,16 +526,18 @@ var PredictionData = function () {
    * */
   var showConditions = function (obj, state) {
     //当前选中的类型
-    if (state != 'precision_show') {
-      $('.' + state + ' .conditions-start-data').text(obj.startDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
-      $('.' + state + ' .conditions-end-data').text(obj.endDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
-      $('.' + state + ' .conditions-type').text('机场状态:' + obj.currentType).attr('title', '机场状态: ' + obj.currentType);
-      $('.' + state + ' .conditions-subtype').text('机场名称:' + obj.airportName).attr('title', '机场名称: ' + obj.airportName);
-      $('.' + state + ' .conditions-content').removeClass('hidden');
-    } else {
-      $('.' + state + ' .conditions-start-data').text(obj.startDate).attr('title', '时间: ' + obj.startDate);
-      $('.' + state + ' .conditions-subtype').text('航班号:' + obj.airportName).attr('title', '机场名称: ' + obj.airportName);
-      $('.' + state + ' .conditions-content').removeClass('hidden');
+     if (state != $('.precision_show')) {
+      //航段飞行时间 终端区航路点
+      $(' .conditions-start-data',state).text(obj.startDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
+      $( ' .conditions-end-data',state).text(obj.endDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
+      $( ' .conditions-type',state).text('机场状态:' + obj.currentType).attr('title', '机场状态: ' + obj.currentType);
+      $( ' .conditions-subtype',state).text('机场名称:' + obj.airportName).attr('title', '机场名称: ' + obj.airportName);
+      $(' .conditions-content',state).removeClass('hidden');
+    } else if(state == $('.precision_show')) {
+      // 航班航路点预测精度
+      $( ' .conditions-start-data',state).text(obj.startDate).attr('title', '时间: ' + obj.startDate);
+      $( ' .conditions-subtype',state).text('航班号:' + obj.airportName).attr('title', '机场名称: ' + obj.airportName);
+      $( ' .conditions-content',state).removeClass('hidden');
     }
   };
   /**
@@ -699,162 +546,6 @@ var PredictionData = function () {
   var hideConditions = function () {
     $('.conditions-content').addClass('hidden');
   };
-
-  /**
-   * @method searchData 搜索数据方法
-   * @param formData 表单数据对象集合
-   * @return searchUrl ajax请求地址
-   * */
-  var searchData = function (formData, searchUrl) {
-    var loading = Ladda.create($('.loading-data')[stateIndex]);
-    loading.start();
-    $('.form-wrap').addClass('no-event');
-    //设置请求地址
-    if (stateArr[stateIndex] == 'pre') {
-      //航班航路点预测精度url
-      var url = searchUrl + formData.startDate.replace(/-/g,'') + '/' + formData.airportName;
-    } else {
-      //处理表格内起飞降落机场文字
-      if ($.isValidVariable(formData.currentStatus)) {
-        if (formData.currentStatus == 'D') {
-          tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '起飞机场'
-          tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '起飞机场'
-          tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '起飞机场'
-        } else if (formData.currentStatus == 'A') {
-          tableDataConfig.flyErrorTableDataConfig.colName.flyDepPointType.cn = '降落机场'
-          tableDataConfig.terminalPointDataConfigTop.colName.depAirport.cn = '降落机场'
-          tableDataConfig.terminalPointDataConfigDown.colName.depAirport.cn = '降落机场'
-        }
-      }
-      //航段飞行时间 终端区航路点 url
-      var url = searchUrl + formData.startDate.replace(/-/g,'') + '/' + formData.endDate.replace(/-/g,'') + '/' + formData.airportName + '/' + formData.currentStatus + '';
-    }
-    $.ajax({
-      url: url,
-      type: 'GET',
-      dataType: 'json',
-      success: function (data, status, xhr) {
-        // 当前数据
-        if ($.isValidObject(data)) {
-          if (stateArr[stateIndex] == 'fly' && searchState == 'fly') {
-            // 判断数据是否为空
-            if ($.isEmptyObject(data.map) && stateIndex != 2) {
-              alertClearData(tableObject)
-              //显示提示
-              showTip($('.fly_time .charts-wrap .no-datas-tip'), '本次统计数据结果为空');
-              loading.stop();
-              $('.form-wrap').removeClass('no-event');
-              return;
-            } else {
-              //保存数据生成时间
-              generateTimeObj.flyDataTime = data.generateTime
-              //初始化航段飞行时间统计表格
-              tableDataConfig.inittableParams(tableDataConfig.flyErrorTableDataConfig);
-              //将详情页数据赋值给sessionStorage
-              // tableDataConfig.flyDetailDataConfig['originData'] = data.infoMap
-              sessionStorage.removeItem('flyDetailObj');
-              sessionStorage.setItem('flyDetailObj',JSON.stringify(data.infoMap));
-              tableObject.fly = initGridTable(tableDataConfig.flyErrorTableDataConfig,idsObj.fly);
-              var convertedData = dataConvert(data,'fly');
-              fireTableDataChange(convertedData,tableObject.fly);
-              // 更新数据时间
-              if ($.isValidVariable(generateTimeObj.flyDataTime)) {
-                // 更新数据时间
-                updateGeneratetime('fly_time', generateTimeObj.flyDataTime);
-              }
-            }
-          } else if (stateArr[stateIndex] == 'ter' && searchState == 'ter') {
-            // 判断数据是否为空
-            if ($.isEmptyObject(data.map) && stateIndex != 2) {
-              alertClearData(tableObject)
-              //显示提示
-              showTip($('.ter_time .charts-wrap .no-datas-tip'), '本次统计数据结果为空');
-              loading.stop();
-              $('.form-wrap').removeClass('no-event');
-              return;
-            } else {
-              //保存数据生成时间
-              generateTimeObj.terDataTime = data.generateTime
-              //初始化终端区航路点表格
-              tableDataConfig.inittableParams(tableDataConfig.terminalPointDataConfigTop);
-              tableObject.ter.top = initGridTable(tableDataConfig.terminalPointDataConfigTop, idsObj.ter.top)
-              var convertedData = dataConvert(data,'ter');
-              //将详情页数据赋值给sessionStorage
-              sessionStorage.removeItem('terDetailObj');
-              sessionStorage.setItem('terDetailObj',JSON.stringify(data.infoMap));
-              fireTableDataChange(convertedData,tableObject.ter.top);
-              tableDataConfig.inittableParams(tableDataConfig.terminalPointDataConfigDown);
-              tableObject.ter.down = initGridTable(tableDataConfig.terminalPointDataConfigDown, idsObj.ter.down)
-              fireTableDataChange(convertedData,tableObject.ter.down);
-              // 更新数据时间
-              if ($.isValidVariable(generateTimeObj.terDataTime)) {
-                // 更新数据时间
-                updateGeneratetime('ter_time', generateTimeObj.terDataTime);
-              }
-            }
-          } else if (stateArr[stateIndex] == 'pre' && searchState == 'pre') {
-            // 判断数据是否为空
-            if ($.isEmptyObject(data.flights) && stateArr[stateIndex] == 'pre') {
-              alertClearData(tableObject)
-              //显示提示
-              showTip($('.precision_show .charts-wrap .no-datas-tip'), '本次统计数据结果为空');
-              loading.stop();
-              $('.form-wrap').removeClass('no-event');
-              return;
-            } else {
-              //航班航路点预测精度
-              tableDataConfig.inittableParams(tableDataConfig.precisionTableDataConfig);
-              tableObject.pre = initGridTable(tableDataConfig.precisionTableDataConfig, idsObj.pre)
-              fireTableDataChange(data.flights,tableObject.pre)
-              // 更新数据时间
-              if ($.isValidVariable(data.generateTime)) {
-                // 更新数据时间
-                updateGeneratetime('precision_show', data.generateTime);
-              }
-            }
-          }
-          loading.stop();
-          $('.form-wrap').removeClass('no-event');
-        } else if ($.isValidObject(data) && $.isValidVariable(data.status) && '500' == data.status) {
-          if (stateArr[stateIndex] == 'fly') {
-            var err = "查询失败:" + data.error;
-            showAlear($(' .fly_time .alert-container'), err);
-          }
-          if (stateArr[stateIndex] == 'ter') {
-            var err = "查询失败:" + data.error;
-            showAlear($('.ter_time .alert-container'), err);
-          }
-          if (stateArr[stateIndex] == 'pre') {
-            var err = "查询失败:" + data.error;
-            showAlear($('.precision_show .alert-container'), err);
-          }
-          loading.stop();
-          $('.form-wrap').removeClass('no-event');
-        } else {
-          showAlear($('.alert-container'), "查询失败");
-          loading.stop();
-          $('.form-wrap').removeClass('no-event');
-        }
-
-      },
-      error: function (xhr, status, error) {
-        console.error('Search data failed');
-        console.error(error);
-        loading.stop();
-        hideConditions();
-        if (stateArr[stateIndex] == 'fly') {
-          showAlear($(' .fly_time .alert-container'), "查询失败");
-        }
-        if (stateArr[stateIndex] == 'ter') {
-          showAlear($('.ter_time .alert-container'), "查询失败");
-        }
-        if (stateArr[stateIndex] == 'pre') {
-          showAlear($('.precision_show .alert-container'), "查询失败");
-        }
-        $('.form-wrap').removeClass('no-event');
-      }
-    });
-  };
   /**
    * @method updateGeneratetime 更新当前数据刷新时间
    * @param fatherDom 模块名称
@@ -862,7 +553,7 @@ var PredictionData = function () {
    */
   var updateGeneratetime = function (fatherDom, time) {
     var timeFormatter = $.formateTime(time);
-    $('.' + fatherDom + ' .generate-time').text('数据生成时间: ' + timeFormatter);
+    $( ' .generate-time',fatherDom).text('数据生成时间: ' + timeFormatter);
   };
   /**
    *  清空数据时间
@@ -876,7 +567,7 @@ var PredictionData = function () {
    */
   var initDatepicker = function (fatherDom) {
     // 起始时间输入框
-    $(fatherDom + '.start-date-input').datetimepicker({
+    $(' .start-date-input',fatherDom).datetimepicker({
       language:"zh-CN",
       weekStart:1,
       todayBtn:false,
@@ -888,7 +579,7 @@ var PredictionData = function () {
       pickerPosition:'bottom-left'
     });
     // 截止时间输入框
-    $(fatherDom + '.flight-end-date').datetimepicker({
+    $(' .end-date-input',fatherDom).datetimepicker({
       language:"zh-CN",
       weekStart:1,
       todayBtn:false,
@@ -900,11 +591,11 @@ var PredictionData = function () {
       pickerPosition:'bottom-left'
     });
     //事件绑定
-    $(fatherDom + '.start-date-input').on('changeDate', function () {
+    $(' .start-date-input',fatherDom).on('changeDate', function () {
       // 校验起止日期范围是否有效，无效则弹出警告
       validateDates(fatherDom);
     });
-    $(fatherDom + '.flight-end-date').on('changeDate', function () {
+    $(' .end-date-input',fatherDom).on('changeDate', function () {
       // 设置起止时间输入框日历插件的可选范围及默认选中日期
       setStartdDataRange(fatherDom);
       // 校验起止日期范围是否有效，无效则弹出警告
@@ -932,34 +623,51 @@ var PredictionData = function () {
   /**
    * 设置默认日期
    * */
-  var setDefaultDates = function () {
+  var setDefaultDates = function (fatherDom) {
     //当前日期
     var now = $.getFullTime(new Date()).substring(0, 8);
     // 当前日期前1天
     var preDay = $.addStringTime(now + '0000', 3600 * 1000 * 24 * -1);
     //当前日期前7天
     var preSevenDay = $.addStringTime(now + '0000', 3600 * 1000 * 24 * -7);
-    // 设置起始日期
-    $('.start-date-input').datetimepicker('setDate', $.parseFullTime(preDay));
-    $('.start-date-input').datetimepicker('setStartDate', $.parseFullTime(preSevenDay));
-    $('.start-date-input').datetimepicker('setEndDate', $.parseFullTime(preDay));
-    // 设置截止日期
-    $('.flight-end-date').datetimepicker('setDate', $.parseFullTime(now + '0000'));
-    $('.flight-end-date').datetimepicker('setEndDate', $.parseFullTime(now + '0000'));
-    //设置默认时间
-    $('.pre-start-date-input').datetimepicker('setDate', $.parseFullTime(now + '0000'));
-    $('.pre-start-date-input').datetimepicker('setEndDate', $.parseFullTime(now + '0000'));
+    if($.isValidObject(fatherDom)){
+      // 设置起始日期
+      $('.start-date-input',fatherDom).datetimepicker('setDate', $.parseFullTime(preDay));
+      $('.start-date-input',fatherDom).datetimepicker('setStartDate', $.parseFullTime(preSevenDay));
+      $('.start-date-input',fatherDom).datetimepicker('setEndDate', $.parseFullTime(preDay));
+      // 设置截止日期
+      $('.end-date-input',fatherDom).datetimepicker('setDate', $.parseFullTime(now + '0000'));
+      $('.end-date-input',fatherDom).datetimepicker('setEndDate', $.parseFullTime(now + '0000'));
+    }else{
+      //设置默认时间
+      $('.pre-start-date-input').datetimepicker('setDate', $.parseFullTime(now + '0000'));
+      $('.pre-start-date-input').datetimepicker('setEndDate', $.parseFullTime(now + '0000'));
+    }
   };
   return {
     init: function () {
-      // 初始化组件
-      initComponent();
       // 初始化事件绑定
       initEvent();
-    }
+    },
+    initDatepicker:initDatepicker,//初始化时间选择器
+    initAirportState:initAirportState,//按钮组状态切换
+    setDefaultDates:setDefaultDates,//设置默认时间
+    handelFormData:handelFormData,//获取表单内容
+    alertClearData:alertClearData,//卸载表格
+    handleSubmitForm:handleSubmitForm,//处理表单数据
+    showTip:showTip,//展示提示
+    initGridTable:initGridTable,//初始化表格
+    dataConvert:dataConvert,//数据转换
+    fireTableDataChange:fireTableDataChange,//绘制表格
+    updateGeneratetime:updateGeneratetime,//更新当前数据时间
+    showAlear:showAlear,//显示警告
+    initPreDatapicker:initPreDatapicker,//初始化航班航路点预测时间选择器
+    hideConditions:hideConditions,//隐藏当前查询条件
+    tabToggle:tabToggle,
+    clearAlert:clearAlert
+
   }
 }();
-
 $(document).ready(function () {
   PredictionData.init();
 });
