@@ -281,16 +281,27 @@ var PredictionData = function () {
             openDetailManageDialog(flightName,'ter',ids.generateTime)
           }
           if (colName == '航班号' && stateArr[stateIndex] == 'pre') {
-            var title = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].flightInOId;
-            var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].flightId;
-            openDetailManageDialog(title,'pre','',flightName)
+            var data = table.gridTableObject.jqGrid('getGridParam')['data'];
+            $.each(data,function (i,e) {
+              if(e.flightInOId == rowid){
+                var title = e.flightId;
+                var flightName = e.flightInOId;
+                openDetailManageDialog(title,'pre','',flightName)
+              }
+            })
+
           }
           if(colName == '航班号'&&stateArr[stateIndex] == 'out'){
-            var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].flightId;
-            //按航班统计
-            sessionStorage.removeItem('outDetailObj');
-            sessionStorage.setItem('outDetailObj', JSON.stringify(table.tableData[rowid-1]));
-            openDetailManageDialog(flightName,'out',ids.generateTime,flightName)
+            var data = table.gridTableObject.jqGrid('getGridParam')['data'];
+            $.each(data,function (i,e) {
+              if(e.flightInOId == rowid){
+                var flightName = e.flightId;
+                //按航班统计
+                sessionStorage.removeItem('outDetailObj');
+                sessionStorage.setItem('outDetailObj', JSON.stringify(e));
+                openDetailManageDialog(flightName,'out',ids.generateTime,flightName)
+              }
+            })
           }
         }
       }
@@ -354,10 +365,12 @@ var PredictionData = function () {
           d[i] = '0';
         }
       })
-      //将id赋予表格的rowid
-      // d['id'] = d.flightInOId;
+      // 将id赋予表格的rowid
+      if($.isValidVariable(d.flightInOId)){
+        d['id'] = d.flightInOId;
+        tableMap[result[index].flightInOId] = d;
+      }
       tableData.push(d);
-      // tableMap[result[index].flightInOId] = d;
     }
     table.tableDataMap = tableMap;
     table.tableData = tableData;
@@ -371,7 +384,7 @@ var PredictionData = function () {
    */
   function openDetailManageDialog(title,type,time,flightName) {
     if($.isValidVariable(flightName)){
-      var winTitle = flightName + '航班详情';
+      var winTitle = title + '航班详情';
     }else{
       var winTitle = title + '航班详情';
     }

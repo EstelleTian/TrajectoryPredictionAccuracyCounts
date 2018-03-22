@@ -171,7 +171,7 @@ var DetailFlightTable = function () {
   }
   //航班航路点预测精度获取表格数据
   var getPreFlightGridData = function () {
-    var url = ipHost + 'module-trajectoryCorrect-service/trajectory/accuracy/check/'+flightid
+    var url = ipHost + 'module-trajectoryCorrect-service/trajectory/accuracy/check/'+flightId
     $.ajax({
       url: url,
       type: 'GET',

@@ -1450,7 +1450,7 @@ var tableDataConfig = function () {
       },
       savetime:{
         en:'savetime',
-        cn:'实际时间和存储时间差值'
+        cn:'实际时间和存储时间差值(分钟)'
       },
       rHlevel:{
         en:'rHlevel',
@@ -1462,17 +1462,17 @@ var tableDataConfig = function () {
       },
       errortime:{
         en:'errortime',
-        cn:'误差时间',
+        cn:'误差时间(分钟)',
       }
     },
     colTitle: {
       flightRoute:'航路点名称',
       rPasstime:'实际过点时间',
       sPasstime:'计划过点时间',
-      savetime:'实际时间和存储时间差值',
+      savetime:'实际时间和存储时间差值(分钟)',
       rHlevel:'实际飞行高度',
       sHlevel:'计划飞行高度',
-      errortime:'误差时间',
+      errortime:'误差时间(分钟)',
     },
     colModel: {},
     colDisplay: {},
