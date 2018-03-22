@@ -27,3 +27,8 @@
     cursor: pointer;
     text-decoration: underline;
 }
+@media (max-width: 1740px){
+    .flight-table-container, .precent-table-container{
+        top:90px;
+    }
+}

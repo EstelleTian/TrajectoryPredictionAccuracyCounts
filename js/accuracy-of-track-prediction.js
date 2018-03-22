@@ -244,13 +244,6 @@ var PredictionData = function () {
     var pagerId = ids.pagerId;
     var tableId = ids.tableId;
     var canvasId = ids.canvasId;
-    //判断默认排序字段
-    var sortName = '';
-    if (stateArr[stateIndex] == 'fly' || stateArr[stateIndex] == 'ter') {
-      sortName = ''
-    } else if (stateArr[stateIndex] == 'pre') {
-      sortName = 'rdeptime';
-    }
     var table = new FlightGridTable({
       canvasId:canvasId,
       tableId: tableId,
@@ -262,14 +255,14 @@ var PredictionData = function () {
       colTitle: config.colTitle,
       colStyle: {},
       colEdit: {},
+      headerGroup:config.headerGroup,
       search: false,
       params: {
-        caption:ids.captionName,
+        caption:config.captionName,
         shrinkToFit: config.isShrinkToFit,
         rowNum: 999999,
-        sortname: sortName,
-        sortorder: 'asc',
-        // sortname: 'SEQ',//排序列
+        sortorder: config.sortorder,
+        sortname: config.defaultSort,//排序列
         // 是否显示行号
         rownumbers: true,
         //是否显示快速过滤

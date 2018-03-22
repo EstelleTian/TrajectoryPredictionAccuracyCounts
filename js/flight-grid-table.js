@@ -35,6 +35,9 @@ function FlightGridTable(params) {
      */
     this.pagerId = params.pagerId;
 
+    //二级表头配置
+    this.headerGroup = params.headerGroup,
+
     /**
      * 表格jqGrid对象
      */
@@ -199,7 +202,7 @@ FlightGridTable.prototype.initGridTableObject = function () {
         // 是否显示表头信息
         headertitles: true,
         // 是否初始化时自适应容器宽度
-        //autowidth: true,
+        autowidth: true,
         // 是否列宽根据所在容器宽度自适应
         shrinkToFit: false,
         // 定义工具栏，须是有效的html元素
@@ -327,6 +330,10 @@ FlightGridTable.prototype.initGridTableObject = function () {
         thisProxy.resizeToFitContainer();
         thisProxy.frozenHeight = $('#'+thisProxy.tableId+'_frozen').parent().height();
         thisProxy.resizeFrozenTable();
+        if($.isValidObject(thisProxy.headerGroup)){
+            thisProxy.destroyHead();
+            thisProxy.setGroupHead();
+        }
     });
     // 默认关闭开启支持多选模式(有multiselect参数且为true即为支持多选模式)
     if(thisProxy.params.multiselect == true){
@@ -1883,5 +1890,23 @@ FlightGridTable.prototype.export = function (name) {
         },
     })
 };
+
+
+FlightGridTable.prototype.setGroupHead = function () {
+    var thisProxy = this;
+    var headers = thisProxy.headerGroup
+    if($.isValidObject(headers)){
+        thisProxy.gridTableObject.jqGrid('setGroupHeaders',{
+            useColSpanStyle : true ,//没有表头的列是否与表头所在行的空单元格合并
+            groupHeaders : headers
+        })
+    }else{
+        return
+    }
+}
+FlightGridTable.prototype.destroyHead = function () {
+    var thisProxy = this;
+    thisProxy.gridTableObject.jqGrid('destroyGroupHeader');
+}
 
 

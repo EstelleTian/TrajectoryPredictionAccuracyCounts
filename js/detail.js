@@ -25,8 +25,7 @@ var DetailFlightTable = function () {
         shrinkToFit: config.isShrinkToFit,
         rowNum: 999999,
         sortname: config.defaultSort,
-        // sortorder: 'asc',
-        // sortname: 'SEQ',//排序列
+        sortorder: 'asc',
         // 是否显示行号
         rownumbers: true,
         //是否显示快速过滤

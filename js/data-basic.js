@@ -878,6 +878,7 @@ var tableDataConfig = function () {
 
     },
     isShrinkToFit:true,
+    defaultSort:'rDeptime'
   }
   //航班航路点详情表格配置
   var precisionDetailDataConfig = {
@@ -1337,11 +1338,13 @@ var tableDataConfig = function () {
       },
       rDeptime:{
         en:'rDeptime',
-        cn:'实际起飞时间'
+        cn:'实际起飞时间',
+        formatter: unTimeFormater,
       },
       rArrtime:{
         en:'rArrtime',
-        cn:'实际降落时间'
+        cn:'实际降落时间',
+        formatter: unTimeFormater,
       }
     },
     colModel: {},
@@ -1426,7 +1429,8 @@ var tableDataConfig = function () {
 
     },
     isShrinkToFit:true,
-    // defaultSort:'rDeptime'
+    defaultSort:'executeDate',
+    sortorder:'desc'
   }
   var countFlightDetail = {
     colName: {
@@ -1544,6 +1548,7 @@ var tableDataConfig = function () {
 
     },
     isShrinkToFit:true,
+    defaultSort:'rPasstime'
   }
   //时间误差过大按比例统计
   var timeoutCountPrecent = {
@@ -1614,7 +1619,6 @@ var tableDataConfig = function () {
       numTo120:  '120以上分组中航班数量'
     },
     cmTemplate: {
-      width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -1685,6 +1689,30 @@ var tableDataConfig = function () {
 
     },
     isShrinkToFit:true,
+    // 二级表头
+    headerGroup : [
+      {
+        startColumnName : "pro0To15",//合并列的起始位置 colModel中的name
+        numberOfColumns : 2, //合并列数 包含起始列
+        titleText : "15分钟内航班"//表头
+      },{
+        startColumnName : "pro15To30",
+        numberOfColumns : 2,
+        titleText : "15到30分钟航班"
+      },{
+        startColumnName : "pro30To60",
+        numberOfColumns : 2,
+        titleText : "30-60分钟航班"
+      },{
+        startColumnName : "pro60To120",
+        numberOfColumns : 2,
+        titleText : "60-120分钟航班"
+      },{
+        startColumnName : "proTo120",
+        numberOfColumns : 2,
+        titleText : "120分钟以上航班"
+      }
+    ]
   }
 
   //列排序规则(中文)

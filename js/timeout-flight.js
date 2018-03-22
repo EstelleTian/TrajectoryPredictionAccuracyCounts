@@ -139,7 +139,7 @@ var TimeOutFlight = function () {
      * 查询数据
      */
     var searchData = function (url) {
-        var loading = Ladda.create($('.loading-data', $('.fly_time'))[0]);
+        var loading = Ladda.create($('.loading-data', $('.timeout_flight'))[0]);
         loading.start();
         $('.form-wrap').addClass('no-event');
         $.ajax({
@@ -224,32 +224,7 @@ var TimeOutFlight = function () {
     var setPrecentTable = function (data) {
         tableDataConfig.inittableParams(tableDataConfig.timeoutCountPrecent);
         precentTableObj = PredictionData.initGridTable(tableDataConfig.timeoutCountPrecent, timeoutPrecent)
-        precentTableObj .gridTableObject.jqGrid('setGroupHeaders',{
-            useColSpanStyle : true ,//没有表头的列是否与表头所在行的空单元格合并
-            groupHeaders : [
-                {
-                    startColumnName : "pro0To15",//合并列的起始位置 colModel中的name
-                    numberOfColumns : 2, //合并列数 包含起始列
-                    titleText : "15分钟内航班"//表头
-                },{
-                    startColumnName : "pro15To30",
-                    numberOfColumns : 2,
-                    titleText : "15到30分钟航班"
-                },{
-                    startColumnName : "pro30To60",
-                    numberOfColumns : 2,
-                    titleText : "30-60分钟航班"
-                },{
-                    startColumnName : "pro60To120",
-                    numberOfColumns : 2,
-                    titleText : "60-120分钟航班"
-                },{
-                    startColumnName : "proTo120",
-                    numberOfColumns : 2,
-                    titleText : "120分钟以上航班"
-                }
-            ]
-        })
+        precentTableObj.setGroupHead();
         precentTableObj.resizeToFitContainer();
         PredictionData.fireTableDataChange(data.flights, precentTableObj);
     }
