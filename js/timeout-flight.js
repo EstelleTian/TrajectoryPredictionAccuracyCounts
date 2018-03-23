@@ -86,8 +86,7 @@ var TimeOutFlight = function () {
         if (isCanSearch) {
             if (countState == 'flightCount') {
                 if(DataForm.flightName == ''){
-                    PredictionData.showAlear($('.flight-table-container'), "请输入正确的航班号")
-                    return;
+                    DataForm.flightName = null;
                 }
                 if(DataForm.depap == ''){
                     DataForm.depap = null;
