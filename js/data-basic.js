@@ -8,11 +8,12 @@ var tableDataConfig = function () {
       },
       point:{
         en:'point',
-        cn:'航路点'
+        cn:'航路点',
       },
       flightcount:{
         en:'flightcount',
-        cn:'样本数'
+        cn:'样本数',
+        classes:'table-click'
       },
       rdepAvgTime:{
         en:'rdepAvgTime',
@@ -111,7 +112,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -153,45 +155,46 @@ var tableDataConfig = function () {
       }
 
     },
+    colStyle:{},
     isShrinkToFit:true,
   }
   //航段飞行时间详情表格配置
   var flyDetailDataConfig = {
     colName: {
       id:{
-        en:"ID",
+        en:"id",
         cn:'ID',
       },
       flightID:{
-        en:"航班号",
+        en:"flightID",
         cn:'航班号',
       },
       aircraftType:{
-        en:"机型",
+        en:"aircraftType",
         cn:'机型',
       },
       rPastTime:{
-        en:"实际飞行时间(秒)",
+        en:"rPastTime",
         cn:'实际飞行时间(秒)',
       },
       schPastTime:{
-        en:"SHC飞行时间(秒)",
+        en:"schPastTime",
         cn:'SHC飞行时间(秒)',
       },
       fplPastTime:{
-        en:"FPL飞行时间(秒)",
+        en:"fplPastTime",
         cn:'FPL飞行时间(秒)',
       },
       depPastTime:{
-        en:"DEP飞行时间(秒)",
+        en:"depPastTime",
         cn:'DEP飞行时间(秒)',
       },
       dyn10PastTime:{
-        en:"DYN10飞行时间(秒)",
+        en:"dyn10PastTime",
         cn:'DYN10飞行时间(秒)',
       },
       dyn20PastTime:{
-        en:"DYN20飞行时间(秒)",
+        en:"dyn20PastTime",
         cn:'DYN20飞行时间(秒)',
       }
     },
@@ -237,7 +240,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -296,7 +300,8 @@ var tableDataConfig = function () {
       },
       flightcount:{
         en:'flightcount',
-        cn:'样本数'
+        cn:'样本数',
+        classes:'table-click'
       },
       schMeDis:{
         en:'schMeDis',
@@ -385,7 +390,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -433,55 +439,56 @@ var tableDataConfig = function () {
   var terminalPointDataConfigDown = {
     colName:{
       depAirport:{
-        en:'起飞机场',
+        en:'depAirport',
         cn:'起飞机场'
       },
       terPoint:{
-        en:'终端区航路点',
+        en:'terPoint',
         cn:'终端区航路点'
       },
       flightcount:{
-        en:'样本数',
-        cn:'样本数'
+        en:'flightcount',
+        cn:'样本数',
+        classes:'table-click'
       },
-      schMeDis:{
-        en:'schMeDis',
+      schMeHLevel:{
+        en:'schMeHLevel',
         cn:'SCH中位差',
       },
-      fplMeDis:{
-        en:'fplMeDis',
+      fplMeHLevel:{
+        en:'fplMeHLevel',
         cn:'FPL中位差',
       },
-      depMeDis:{
-        en:'depMeDis',
+      depMeHLevel:{
+        en:'depMeHLevel',
         cn:'DEP中位差',
       },
-      dyn10mMeDis:{
-        en:'dyn10mMeDis',
+      dyn10MeHLevel:{
+        en:'dyn10MeHLevel',
         cn:'DYN10中位差',
       },
-      dyn20mMeDis:{
-        en:'dyn20mMeDis',
+      dyn20MeHLevel:{
+        en:'dyn20MeHLevel',
         cn:'DYN20中位差',
       },
-      schAvgDis:{
-        en:'schAvgDis',
+      schAvgHLevel:{
+        en:'schAvgHLevel',
         cn:'SCH平均差',
       },
-      fplAvgDis:{
-        en:'fplAvgDis',
+      fplAvgHLevel:{
+        en:'fplAvgHLevel',
         cn:'FPL平均差',
       },
-      depAvgDis:{
-        en:'depAvgDis',
+      depAvgHLevel:{
+        en:'depAvgHLevel',
         cn:'DEP平均差',
       },
-      dyn10mAvgDis:{
-        en:'dyn10mAvgDis',
+      dyn10AvgHLevel:{
+        en:'dyn10AvgHLevel',
         cn:'DYN10平均差',
       },
-      dyn20mAvgDis:{
-        en:'dyn20mAvgDis',
+      dyn20AvgHLevel:{
+        en:'dyn20AvgHLevel',
         cn:'DYN20平均差'
       }
     } ,
@@ -531,7 +538,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -581,70 +589,70 @@ var tableDataConfig = function () {
     colName: {
       id:{
         cn:'ID',
-        en:'id',
+        en:'colName',
       },
       flightID:{
         cn:'航班号',
-        en:'航班号',
+        en:'flightID',
       },
       aircraftType:{
         cn:'机型',
-        en:'机型',
+        en:'aircraftType',
       },
       rPastTime:{
         cn:'实际过点时间',
-        en:'实际过点时间',
+        en:'rPastTime',
         formatter:unTimeFormater
       },
       schPastTime:{
         cn:'SHC过点时间',
-        en:'SHC过点时间',
+        en:'schPastTime',
         formatter:unTimeFormater
       },
       fplPastTime:{
         cn:'FPL过点时间',
-        en:'FPL过点时间',
+        en:'fplPastTime',
         formatter:unTimeFormater
       },
       depPastTime:{
         cn:'DEP过点时间',
-        en:'DEP过点时间',
+        en:'depPastTime',
         formatter:unTimeFormater
       },
       dyn10PastTime:{
         cn:'DYN10过点时间',
-        en:'DYN10过点时间',
+        en:'dyn10PastTime',
         formatter:unTimeFormater
       },
       dyn20PastTime:{
         cn:'DYN20过点时间',
-        en:'DYN20过点时间',
+        en:'dyn20PastTime',
         formatter:unTimeFormater
 
       },
       rPasthlevel:{
         cn:'实际过点高度',
-        en:'实际过点高度',
+        en:'rPasthlevel',
       },
       schhlevel:{
         cn:'SHC过点高度',
-        en:'SHC过点高度',
+        en:'schhlevel',
       },
       fplhlevel:{
         cn:'FPL过点高度',
-        en:'FPL过点高度',
+        en:'fplhlevel',
       },
       dephlevel:{
         cn:'DEP过点高度',
-        en:'DEP过点高度',
+        en:'dephlevel',
       },
       dyn10hlevel:{
         cn:'DYN10过点高度',
-        en:'DYN10过点高度',
+        en:'dyn10hlevel',
       },
       dyn20hlevel:{
         cn:'DYN20过点高度',
-        en:'DYN20过点高度',
+        en:'dyn20hlevel',
       }
     },
     colTitle:{
@@ -695,7 +703,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -751,6 +760,7 @@ var tableDataConfig = function () {
       flightId:{
         en:'flightId',
         cn:'航班号',
+        classes:'table-click'
       },
       executeDate:{
         en:'executeDate',
@@ -837,7 +847,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -1037,7 +1048,7 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+        attrs = ' title="' + title + '" classes'+colModel.classes;
         return attrs;
       },
       sortfunc : sortNum
@@ -1055,7 +1066,9 @@ var tableDataConfig = function () {
       flightId: {
         en: 'flightId',
         cn: '航班号',
-      }, saveTime: {
+        classes:'table-click'
+      },
+      saveTime: {
         en: 'saveTime',
         cn: '保存时间',
         formatter: unTimeFormater,
@@ -1098,7 +1111,7 @@ var tableDataConfig = function () {
       pArrap:'降落机场',
     },
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -1126,7 +1139,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -1324,7 +1338,7 @@ var tableDataConfig = function () {
       flightId: {
         en: 'flightId',
         cn: '航班号',
-        classes:'table-selected'
+        classes:'table-click'
       },
       executeDate: {
         en: 'executeDate',
@@ -1360,7 +1374,7 @@ var tableDataConfig = function () {
       rArrtime:'实际降落时间'
     },
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -1388,7 +1402,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -1621,6 +1636,7 @@ var tableDataConfig = function () {
       numTo120:  '120以上分组中航班数量'
     },
     cmTemplate: {
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -1648,7 +1664,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {
@@ -1727,6 +1744,7 @@ var tableDataConfig = function () {
       flightId: {
         en: 'flightId',
         cn: '航班号',
+        classes:'table-click'
       },
       executeDate: {
         en: 'executeDate',
@@ -1763,7 +1781,7 @@ var tableDataConfig = function () {
       rArrtime:'实际降落时间'
     },
     cmTemplate: {
-      width: 85,
+      // width: 85,
       align: 'center',
       sortable: true,
       // search: true,
@@ -1791,7 +1809,8 @@ var tableDataConfig = function () {
         } else if (regexp.test(title) && len == 14) { //14位有效时间
           title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
         }
-        attrs = ' title="' + title + '"';
+
+        attrs = ' title="' + title + '" class='+colModel.classes;
         return attrs;
       },
       sortfunc : function(a, b, direction) {

@@ -18,15 +18,6 @@
     display: flex;
     flex-direction: column;
 }
-.precent-table-container .fly_table .jqgrow td:nth-of-type(3) ,.flight-table-container .fly_table .jqgrow td:nth-of-type(3) {
-    color: #000;
-    text-decoration: none;
-}
-.flight-table-container .fly_table .jqgrow td:nth-of-type(2) {
-    color: #1B548D;
-    cursor: pointer;
-    text-decoration: underline;
-}
 @media (max-width: 1740px){
     .flight-table-container, .precent-table-container{
         top:90px;

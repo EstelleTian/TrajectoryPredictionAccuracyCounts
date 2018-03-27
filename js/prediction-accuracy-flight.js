@@ -78,7 +78,7 @@ var PredictionAccurancyFlight = function () {
                         // 更新数据时间
                         if ($.isValidVariable(data.generateTime)) {
                             // 更新数据时间
-                            PredictionData.updateGeneratetime('precision_show', data.generateTime);
+                            PredictionData.updateGeneratetime($('.precision_show'), data.generateTime);
                         }
                         loading.stop();
                     }

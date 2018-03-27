@@ -255,7 +255,7 @@ var PredictionData = function () {
       cmTemplate: config.cmTemplate,
       colDisplay: config.colDisplay,
       colTitle: config.colTitle,
-      colStyle: {},
+      colStyle: config.colStyle,
       colEdit: {},
       headerGroup:config.headerGroup,
       search: false,

@@ -57,6 +57,7 @@ var TerminalAreaFlight = function () {
     var searchBefore = function () {
         $(".ter_time .no-datas-tip").hide();
         PredictionData.alertClearData(tableObj.top)
+        PredictionData.alertClearData(tableObj.down)
         //获取 表单数据
         PredictionData.handelFormData($('.ter_time'), DataForm);
         // 处理表单提交
@@ -67,6 +68,7 @@ var TerminalAreaFlight = function () {
             searchData(DataForm, searchUrl);
         } else {
             PredictionData.alertClearData(tableObj.top)
+            PredictionData.alertClearData(tableObj.down)
         }
     }
 
@@ -120,8 +122,7 @@ var TerminalAreaFlight = function () {
                         sessionStorage.removeItem('terDetailObj');
                         sessionStorage.setItem('terDetailObj', JSON.stringify(data.infoMap));
                         PredictionData.fireTableDataChange(convertedData, tableObj.top);
-
-
+                        
                         tableDataConfig.inittableParams(tableDataConfig.terminalPointDataConfigDown);
                         ter.down.fileName = DataForm.startDate + DataForm.endDate + DataForm.airportName + '终端区航路点' +ter.down.captionName
                         tableObj.down = PredictionData.initGridTable(tableDataConfig.terminalPointDataConfigDown, ter.down)
@@ -129,7 +130,7 @@ var TerminalAreaFlight = function () {
                         // 更新数据时间
                         if ($.isValidVariable(data.generateTime)) {
                             // 更新数据时间
-                            PredictionData.updateGeneratetime($('.fly_time'), data.generateTime);
+                            PredictionData.updateGeneratetime($('.ter_time'), data.generateTime);
                         }
                         loading.stop();
                     }

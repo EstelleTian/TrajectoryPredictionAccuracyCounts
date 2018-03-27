@@ -143,17 +143,11 @@ label.text{
     font-weight: normal;
     color: #093857;
 }
-.fly_time .jqgrow td:nth-of-type(4),.ter_time .jqgrow td:nth-of-type(4) {
+.table-click {
     color: #1B548D;
     cursor: pointer;
     text-decoration: underline;
 }
-.precision_show .jqgrow td:nth-of-type(3) {
-    color: #1B548D;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
 .ter_time .ui-jqgrid .ui-jqgrid-titlebar {
     font-weight: normal;
     min-height: 28px;
