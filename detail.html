@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>未修正航班详情</title>
+    <title></title>
     <link rel="shortcut icon" href="index.ico"/>
     <link rel="stylesheet" href="plugins/bootstrap/dist/css/normalize.css">
     <link rel="stylesheet" href="plugins/bootstrap/dist/css/bootstrap.min.css">
@@ -56,6 +56,18 @@
         var dataTime = parma[3];
         var outTimeData = JSON.parse(sessionStorage.getItem('outDetailObj'));
         var out = true
+    }
+    //不连贯航班统计
+    if(parma[1].indexOf('incon')>=0){
+        if(parma[1].indexOf('Time')>=0){
+            var timeType = true;
+        }else{
+            var heightType = true;
+        }
+        var flightId = parma[2];
+        var dataTime = parma[3];
+        var inconData = JSON.parse(sessionStorage.getItem('inconDetailObj'));
+        var incon = true
     }
 </script>
 <script src="js/iphost.js"></script>

@@ -2,7 +2,7 @@ var PredictionData = function () {
   // 当前nav索引
   var stateIndex = 0;
   //根据索引获取当前页面状态数组
-  var stateArr = ['fly', 'ter', 'pre','uncor','out']
+  var stateArr = ['fly', 'ter', 'pre','uncor','out','incon']
   //搜索状态
   var searchState = '';
   // 初始化事件绑定
@@ -17,7 +17,7 @@ var PredictionData = function () {
    * */
   var initNavTabEvent = function () {
     //导航栏
-    var tabPage = [$('.fly_time'), $('.ter_time'), $('.precision_show'),$('.uncorrect_flight'),$('.timeout_flight')]
+    var tabPage = [$('.fly_time'), $('.ter_time'), $('.precision_show'),$('.uncorrect_flight'),$('.timeout_flight'),$('.inconherent_flight')]
     var nav = $('#nav');
     $('.nav li', nav).on('click', function () {
       // 更新当前nav索引
@@ -124,6 +124,8 @@ var PredictionData = function () {
           UncorrectFlight.searchData();
         }else if(stateArr[stateIndex] == 'out'){
           TimeOutFlight.beforeSearch()
+        }else if(stateArr[stateIndex] == 'incon'){
+          InconherentFlight.beforeSearch();
         }
       }
     });
@@ -300,6 +302,21 @@ var PredictionData = function () {
                 sessionStorage.removeItem('outDetailObj');
                 sessionStorage.setItem('outDetailObj', JSON.stringify(e));
                 openDetailManageDialog(flightName,'out',ids.generateTime,flightName)
+              }
+            })
+          }
+          if(colName == '航班号'&&stateArr[stateIndex] == 'incon'){
+            var data = table.gridTableObject.jqGrid('getGridParam')['data'];
+            $.each(data,function (i,e) {
+              if(e.flightInOId == rowid){
+                var flightName = e.flightId;
+                sessionStorage.removeItem('inconDetailObj');
+                sessionStorage.setItem('inconDetailObj', JSON.stringify(e));
+                if(table.tableId == 'in-time-grid-table'){
+                  openDetailManageDialog(flightName,'inconTime',ids.generateTime,flightName)
+                }else{
+                  openDetailManageDialog(flightName,'inconHeight',ids.generateTime,flightName)
+                }
               }
             })
           }
@@ -532,7 +549,7 @@ var PredictionData = function () {
    * */
   var showConditions = function (obj, state) {
     //当前选中的类型
-     if (state != $('.precision_show')) {
+     if (state != $('.precision_show')&&state == $('.inconherent_flight')) {
       //航段飞行时间 终端区航路点
       $(' .conditions-start-data',state).text(obj.startDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);
       $( ' .conditions-end-data',state).text(obj.endDate).attr('title', '时间: ' + obj.startDate + '-' + obj.endDate);

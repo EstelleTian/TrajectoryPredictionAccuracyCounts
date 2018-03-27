@@ -25,7 +25,8 @@ var DetailFlightTable = function () {
         shrinkToFit: config.isShrinkToFit,
         rowNum: 999999,
         sortname: config.defaultSort,
-        sortorder: 'asc',
+        // sortfunc:config.sortfunc,
+        sortorder: config.order,
         // 是否显示行号
         rownumbers: true,
         //是否显示快速过滤
@@ -253,6 +254,29 @@ var DetailFlightTable = function () {
       fireTableDataChange(data.errorFlightRoutes,tableObj)
     }
   }
+  //不连贯航班详情
+  var getInconFlightGridData = function () {
+    var data = inconData;
+    //设置页面标题以及时间
+    $('.generate_time').text('数据生成时间: ' + $.formateTime(dataTime));
+    $('.win_head').text(flightId + "航段飞行时间详情");
+    if($.isValidObject(tableObj)){
+      tableObj.clearGridData()
+      fireTableDataChange(data,tableObj)
+    }else{
+      flightName = flightId + dataTime;
+      if(timeType){
+        tableDataConfig.inittableParams(tableDataConfig.inconTimeDetailFlight)
+        tableObj = initGridTable(tableDataConfig.inconTimeDetailFlight)
+        fireTableDataChange(data.flightRoute,tableObj)
+      }else{
+        tableDataConfig.inittableParams(tableDataConfig.inconHeightDetailFlight)
+        tableObj = initGridTable(tableDataConfig.inconHeightDetailFlight)
+        var inconHData = positionConvert(data)
+        fireTableDataChange(inconHData.flightRoute,tableObj)
+      }
+    }
+  }
   /**
    * 航班航路点预测精度数据转换
    * @param originData
@@ -338,21 +362,44 @@ var DetailFlightTable = function () {
     })
     return CnData
   }
+  //不连贯航班详情按高度统计位置enToCn
+  var positionConvert = function (data) {
+    var CnData = data;
+    $.each(CnData.flightRoute,function (i,e) {
+      if(e.location == 'TOD'){
+        CnData.flightRoute[i].location = '下降阶段'
+      }else if(e.location == 'TOC'){
+        CnData.flightRoute[i].location = '爬升阶段'
+      }else{
+        CnData.flightRoute[i].location = '巡航阶段'
+      }
+    })
+    return CnData
+  }
   var initData = function () {
     if(fly){
       getFlyFlightGridData()
+      $('title').text('航段飞行时间误差航班详情')
     }
     if(uncor){
       getFlightGridData()
+      $('title').text('未修正航班详情')
     }
     if(ter){
       getTerFlightGridData()
+      $('title').text('终端区航路点过点时间航班详情')
     }
     if(pre){
       getPreFlightGridData()
+      $('title').text('航班航路点航班详情')
     }
     if(out){
       getOutFlightGridData()
+      $('title').text('时间误差过大航班详情')
+    }
+    if(incon){
+      getInconFlightGridData()
+      $('title').text('不连贯航班详情')
     }
   }
   return{

@@ -51,11 +51,19 @@ var TimeOutFlight = function () {
             $('.out-airport-input').show()
             PredictionData.tabToggle(1, pageArr)
             PredictionData.clearAlert();
+            if(tiemoutFlihgt.generateTime!=''){
+                // 更新数据时间
+                PredictionData.updateGeneratetime($('.timeout_flight'), tiemoutFlihgt.generateTime);
+            }
         })
         $('.precent-count').on('click', function () {
             $('.out-airport-input').hide()
             PredictionData.tabToggle(0, pageArr)
             PredictionData.clearAlert();
+            if(timeoutPrecent.generateTime!=''){
+                // 更新数据时间
+                PredictionData.updateGeneratetime($('.timeout_flight'), timeoutPrecent.generateTime);
+            }
 
         })
         // 查询
@@ -158,6 +166,8 @@ var TimeOutFlight = function () {
                             $('.form-wrap').removeClass('no-event');
                             return;
                         } else {
+                            //保存数据生成时间
+                            tiemoutFlihgt.generateTime = data.generateTime;
                             tiemoutFlihgt.fileName = data.generateTime + '时间误差过大按航班统计'
                             PredictionData.alertClearData(flightTableObj)
                             setFlightTable(data)
@@ -171,17 +181,17 @@ var TimeOutFlight = function () {
                             loading.stop();
                             $('.form-wrap').removeClass('no-event');
                         } else {
-                            tiemoutFlihgt.fileName = data.generateTime + '时间误差过大按比例统计'
+                            //保存数据生成时间
+                            timeoutPrecent.generateTime = data.generateTime;
+                            timeoutPrecent.fileName = data.generateTime + '时间误差过大按比例统计'
                             PredictionData.alertClearData(precentTableObj)
                             setPrecentTable(data)
                         }
                     }
-                    //保存数据生成时间
-                    tiemoutFlihgt.generateTime = data.generateTime;
                     // 更新数据时间
                     if ($.isValidVariable(data.generateTime)) {
                         // 更新数据时间
-                        PredictionData.updateGeneratetime($('.timeout_flight'), tiemoutFlihgt.generateTime);
+                        PredictionData.updateGeneratetime($('.timeout_flight'), data.generateTime);
                     }
                     loading.stop();
                     $('.form-wrap').removeClass('no-event');
