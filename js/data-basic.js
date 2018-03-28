@@ -1867,6 +1867,14 @@ var tableDataConfig = function () {
         cn: '实际过点时间',
         formatter: unTimeFormater,
       },
+      beforePoint:{
+        en: 'beforePoint',
+        cn: '前一航路点',
+      },
+      afterPoint:{
+        en: 'afterPoint',
+        cn: '后一航路点',
+      },
       status: {
         en: 'status',
         cn: '状态',
@@ -1882,6 +1890,8 @@ var tableDataConfig = function () {
     colTitle: {
       name:'航班点名称',
       pastTime:'时间过点时间',
+      beforePoint:'前一航路点',
+      afterPoint:'后一航路点',
       status: '状态',
       saveTime: '保存时间'
     },
@@ -1984,6 +1994,14 @@ var tableDataConfig = function () {
         en: 'hlevel',
         cn: '飞行高度',
       },
+      beforePoint:{
+        en: 'beforePoint',
+        cn: '前一航路点',
+      },
+      afterPoint:{
+        en: 'afterPoint',
+        cn: '后一航路点',
+      },
       location: {
         en: 'location',
         cn: '位置',
@@ -1997,6 +2015,8 @@ var tableDataConfig = function () {
       status: '状态',
       saveTime: '保存时间',
       hlevel:'飞行高度',
+      beforePoint:'前一航路点',
+      afterPoint:'后一航路点',
       location:'位置'
     },
     cmTemplate: {
@@ -2182,7 +2202,7 @@ var tableDataConfig = function () {
       if (cellvalue.length == 12) {
         return cellvalue.substring(6, 8) + '/' + cellvalue.substring(8, 10)+ ':' + cellvalue.substring(10, 12);
       } else if (cellvalue.length == 14) {
-        return cellvalue.substring(6, 8) + '/' + cellvalue.substring(8, 12);
+        return cellvalue.substring(6, 8) + '/' + cellvalue.substring(8, 10)+ ':' + cellvalue.substring(10, 12);
       }
     } else {
       return '';

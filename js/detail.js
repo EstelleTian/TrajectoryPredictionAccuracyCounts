@@ -243,7 +243,7 @@ var DetailFlightTable = function () {
     var data = outTimeData;
     //设置页面标题以及时间
     $('.generate_time').text('数据生成时间: ' + $.formateTime(dataTime));
-    $('.win_head').text(flightId + "航段飞行时间详情");
+    $('.win_head').text(flightId + "时间误差过大统计详情");
     if($.isValidObject(tableObj)){
       tableObj.clearGridData()
       fireTableDataChange(data,tableObj)
@@ -256,10 +256,10 @@ var DetailFlightTable = function () {
   }
   //不连贯航班详情
   var getInconFlightGridData = function () {
-    var data = inconData;
+    var data = inconFlightConvert(inconData.flightRoute);
     //设置页面标题以及时间
     $('.generate_time').text('数据生成时间: ' + $.formateTime(dataTime));
-    $('.win_head').text(flightId + "航段飞行时间详情");
+    $('.win_head').text(flightId + "不连贯航班详情");
     if($.isValidObject(tableObj)){
       tableObj.clearGridData()
       fireTableDataChange(data,tableObj)
@@ -268,12 +268,12 @@ var DetailFlightTable = function () {
       if(timeType){
         tableDataConfig.inittableParams(tableDataConfig.inconTimeDetailFlight)
         tableObj = initGridTable(tableDataConfig.inconTimeDetailFlight)
-        fireTableDataChange(data.flightRoute,tableObj)
+        fireTableDataChange(data,tableObj)
       }else{
         tableDataConfig.inittableParams(tableDataConfig.inconHeightDetailFlight)
         tableObj = initGridTable(tableDataConfig.inconHeightDetailFlight)
         var inconHData = positionConvert(data)
-        fireTableDataChange(inconHData.flightRoute,tableObj)
+        fireTableDataChange(inconHData,tableObj)
       }
     }
   }
@@ -348,6 +348,38 @@ var DetailFlightTable = function () {
     }
     return hlevelIn+'('+passHlevelIn+')';
   }
+  /**
+   * 不连贯航班统计详情数据转换
+   * @param originData
+     */
+  var inconFlightConvert = function (originData) {
+    //创建数据结果集
+    var objArr = [];
+    $.each(originData,function (i,e) {
+      //创建数据对象
+      var obj = {};
+      obj['name'] = e.name;
+      obj['pastTime'] = e.pastTime;
+      if($.isValidVariable(e.bfPastTime)||$.isValidVariable(e.afPastTime)){
+        obj['beforePoint'] = (e.bfName?(e.bfName+ ":"):'') + (e.bfPastTime?tableDataConfig.timeFormater(e.bfPastTime):'');
+        obj['afterPoint'] = (e.afName ?(e.afName+ ":"):'') + (e.afPastTime?tableDataConfig.timeFormater(e.afPastTime):'') ;
+      }
+      obj['status'] = e.status ;
+      obj['saveTime'] = e.saveTime ;
+      if($.isValidVariable(e.hlevel)){
+        obj['hlevel'] = e.hlevel ;
+      }
+      if($.isValidVariable(e.bfHlevel)||$.isValidVariable(e.afHlevel)){
+        obj['beforePoint'] = (e.bfName?(e.bfName+ ":"):'')  + (e.bfHlevel?e.bfHlevel:'');
+        obj['afterPoint'] = (e.afName?(e.afName+ ":"):'')  + (e.afHlevel?e.afHlevel:'');
+      }
+      if($.isValidVariable(e.location)){
+        obj['location'] = e.location ;
+      }
+      objArr.push(obj)
+    })
+    return objArr;
+  }
   //信号状态enToCn
   var singleConverToCn = function (data) {
     var CnData = data;
@@ -365,13 +397,13 @@ var DetailFlightTable = function () {
   //不连贯航班详情按高度统计位置enToCn
   var positionConvert = function (data) {
     var CnData = data;
-    $.each(CnData.flightRoute,function (i,e) {
+    $.each(CnData,function (i,e) {
       if(e.location == 'TOD'){
-        CnData.flightRoute[i].location = '下降阶段'
+        CnData[i].location = '下降阶段'
       }else if(e.location == 'TOC'){
-        CnData.flightRoute[i].location = '爬升阶段'
+        CnData[i].location = '爬升阶段'
       }else{
-        CnData.flightRoute[i].location = '巡航阶段'
+        CnData[i].location = '巡航阶段'
       }
     })
     return CnData
