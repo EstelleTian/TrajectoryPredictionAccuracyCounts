@@ -275,13 +275,17 @@ var PredictionData = function () {
         },
         onCellSelect: function (rowid, index, contents, event) {
           var colName = table.gridTableObject.jqGrid('getGridParam')['colNames'][index];
+          //航段飞行时间
           if (colName == '样本数'&&stateArr[stateIndex] == 'fly') {
             var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].allName;
             openDetailManageDialog(flightName,'fly',ids.generateTime)
-          }else if(colName == '样本数'&&stateArr[stateIndex] == 'ter'){
+          }
+          //终端区航路点
+          if(colName == '样本数'&&stateArr[stateIndex] == 'ter'){
             var flightName = table.gridTableObject.jqGrid('getGridParam')['data'][rowid - 1].allName;
             openDetailManageDialog(flightName,'ter',ids.generateTime)
           }
+          //航班航路点预测精度
           if (colName == '航班号' && stateArr[stateIndex] == 'pre') {
             var data = table.gridTableObject.jqGrid('getGridParam')['data'];
             $.each(data,function (i,e) {
@@ -293,6 +297,7 @@ var PredictionData = function () {
             })
 
           }
+          //时间误差过大统计
           if(colName == '航班号'&&stateArr[stateIndex] == 'out'){
             var data = table.gridTableObject.jqGrid('getGridParam')['data'];
             $.each(data,function (i,e) {
@@ -305,6 +310,7 @@ var PredictionData = function () {
               }
             })
           }
+          //不连贯航班
           if(colName == '航班号'&&stateArr[stateIndex] == 'incon'){
             var data = table.gridTableObject.jqGrid('getGridParam')['data'];
             $.each(data,function (i,e) {

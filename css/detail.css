@@ -41,4 +41,8 @@ html,body{
 .no-fit{
     overflow-x: auto !important;
 }
+.table-click{
+    color: #1B548D;
+    cursor: pointer;
+}
 .flight-table .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {padding: 3px;}

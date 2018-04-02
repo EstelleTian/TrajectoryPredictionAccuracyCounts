@@ -146,7 +146,6 @@ label.text{
 .table-click {
     color: #1B548D;
     cursor: pointer;
-    text-decoration: underline;
 }
 .ter_time .ui-jqgrid .ui-jqgrid-titlebar {
     font-weight: normal;

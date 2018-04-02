@@ -6,7 +6,7 @@ var DetailFlightTable = function () {
   var flightid = flightId.split("&")[0].replace('?','');
   var flightName = '';
   //初始化表格
-  var initGridTable = function (config) {
+  var initGridTable = function (config,flightID,data) {
     var pagerId = 'table-pager';
     tableDataConfig.inittableParams(tableDataConfig.flightDetail);
     var table = new FlightGridTable({
@@ -35,6 +35,24 @@ var DetailFlightTable = function () {
         afterSearchCallBack: function () {
 
         },
+        onCellSelect: function (rowid, index, contents, event) {
+          if(contents != "&nbsp;"){
+            var colName = table.gridTableObject.jqGrid('getGridParam')['colNames'][index];
+            var name = 'pass' + table.gridTableObject.jqGrid('getGridParam')['colModel'][index]['name']
+            if(colName =='时间差(预测值)'){
+              var flightRoute = data[rowid-1].flightRoute;
+              var time = data[rowid-1][name];
+              var flightId = flightID;
+              var opt = {
+                flightRoute:flightRoute,
+                time:time,
+                flightId:flightId
+              }
+              openAccDetailManageDialog(opt,'accDetail')
+            }
+
+          }
+        }
       }
     });
     table.initGridTableObject();
@@ -187,40 +205,40 @@ var DetailFlightTable = function () {
           fireTableDataChange(data.flightRouteResults,tableObj)
         }else{
           tableDataConfig.inittableParams(tableDataConfig.precisionDetailDataConfig)
-          tableObj = initGridTable(tableDataConfig.precisionDetailDataConfig)
+          tableObj = initGridTable(tableDataConfig.precisionDetailDataConfig,flightId,data.flightRouteResults)
           tableObj .gridTableObject.jqGrid('setGroupHeaders',{
             useColSpanStyle : true ,//没有表头的列是否与表头所在行的空单元格合并
             groupHeaders : [
               {
-                startColumnName : "timeIn0To15",//合并列的起始位置 colModel中的name
+                startColumnName : "TimeIn0To15",//合并列的起始位置 colModel中的name
                 numberOfColumns : 2, //合并列数 包含起始列
                 titleText : "过点时间和保存时间的差值在15分钟内"//表头
               },{
-                startColumnName : "timeIn15To30",
+                startColumnName : "TimeIn15To30",
                 numberOfColumns : 2,
                 titleText : "过点时间和保存时间的差值在15到30分钟"
               },{
-                startColumnName : "timeIn30To60",
+                startColumnName : "TimeIn30To60",
                 numberOfColumns : 2,
                 titleText : "过点时间和保存时间的差值在30-60分钟"
               },{
-                startColumnName : "timeIn60To120",
+                startColumnName : "TimeIn60To120",
                 numberOfColumns : 2,
                 titleText : "过点时间和保存时间的差值在60-120分钟"
               },{
-                startColumnName : "timeIn120",
+                startColumnName : "TimeIn120",
                 numberOfColumns : 2,
                 titleText : "过点时间和保存时间的差值在120分钟以上"
               },{
-                startColumnName : "timeDEP",
+                startColumnName : "TimeDEP",
                 numberOfColumns : 2,
                 titleText : "过点时间和DEP状态的时间差值"
               },{
-                startColumnName : "timeFPL",
+                startColumnName : "TimeFPL",
                 numberOfColumns : 2,
                 titleText : "过点时间和FPL状态的时间差值"
               },{
-                startColumnName : "timeSCH",
+                startColumnName : "TimeSCH",
                 numberOfColumns : 2,
                 titleText : "过点时间和SCH状态的时间差值"
               }
@@ -230,6 +248,33 @@ var DetailFlightTable = function () {
           fireTableDataChange(dataArr,tableObj)
           tableObj.resizeToFitContainer();
           $('.containers .ui-jqgrid-bdiv').addClass('no-fit')
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('Search data failed');
+        console.error(error);
+      }
+    });
+  }
+  //航班航路点预测精度详情页时间差表格
+  var getPreFlightGridDataCacu = function () {
+    var url = ipHost + 'module-trajectoryCorrect-service/trajectory/flight/'+flightId  +'/'+ time + '/'+ routue;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'json',
+      success: function (data, status, xhr) {
+        var generateTime = data.generateTime
+        //设置页面标题以及时间
+        $('.generate_time').text('数据生成时间: ' + $.formateTime(generateTime));
+        $('.win_head').text( '航班航路点预测精度航班详情');
+        if($.isValidObject(tableObj)){
+          tableObj.clearGridData()
+          fireTableDataChange(data.flights,tableObj)
+        }else{
+          tableDataConfig.inittableParams(tableDataConfig.preFlightDetail)
+          tableObj = initGridTable(tableDataConfig.preFlightDetail)
+          fireTableDataChange(data.flights,tableObj)
         }
       },
       error: function (xhr, status, error) {
@@ -290,22 +335,22 @@ var DetailFlightTable = function () {
       obj['routeseq'] = n.routeseq;
       obj['passTime'] = n.passTime;
       obj['hlevel'] = n.hlevel;
-      obj['timeIn0To15'] = valueComapre(n.timeIn0To15,n.passTimeIn0To15);
-      obj['timeIn0To15_sub'] = valueComapreSub(n.hlevelIn0To15,n.passHlevelIn0To15);
-      obj['timeIn15To30'] = valueComapre(n.timeIn15To30,n.passTimeIn15To30);
-      obj['timeIn15To30_sub'] = valueComapreSub(n.hlevelIn15To30,n.passHlevelIn15To30);
-      obj['timeIn30To60'] = valueComapre(n.timeIn30To60,n.passTimeIn30To60);
-      obj['timeIn30To60_sub'] = valueComapreSub(n.hlevelIn30To60,n.passHlevelIn30To60);
-      obj['timeIn60To120'] = valueComapre(n.timeIn60To120,n.passTimeIn60To120);
-      obj['timeIn60To120_sub'] = valueComapreSub(n.hlevelIn60To120,n.passHlevelIn60To120);
-      obj['timeIn120'] = valueComapre(n.timeIn120,n.passTimeIn120);
-      obj['timeIn120_sub'] = valueComapreSub(n.hlevelIn120,n.passHlevelIn120);
-      obj['timeDEP'] = valueComapre(n.timeDEP,n.passTimeDEP);
-      obj['timeDEP_sub'] = valueComapreSub(n.hlevelDEP,n.passHlevelDEP);
-      obj['timeFPL'] = valueComapre(n.timeFPL,n.passTimeFPL);
-      obj['timeFPL_sub'] = valueComapreSub(n.hlevelFPL,n.passHlevelFPL);
-      obj['timeSCH'] = valueComapre(n.timeSCH,n.passTimeSCH);
-      obj['timeSCH_sub'] = valueComapreSub(n.hlevelSCH,n.passHlevelSCH);
+      obj['TimeIn0To15'] = valueComapre(n.TimeIn0To15,n.passTimeIn0To15);
+      obj['TimeIn0To15_sub'] = valueComapreSub(n.hlevelIn0To15,n.passHlevelIn0To15);
+      obj['TimeIn15To30'] = valueComapre(n.TimeIn15To30,n.passTimeIn15To30);
+      obj['TimeIn15To30_sub'] = valueComapreSub(n.hlevelIn15To30,n.passHlevelIn15To30);
+      obj['TimeIn30To60'] = valueComapre(n.TimeIn30To60,n.passTimeIn30To60);
+      obj['TimeIn30To60_sub'] = valueComapreSub(n.hlevelIn30To60,n.passHlevelIn30To60);
+      obj['TimeIn60To120'] = valueComapre(n.TimeIn60To120,n.passTimeIn60To120);
+      obj['TimeIn60To120_sub'] = valueComapreSub(n.hlevelIn60To120,n.passHlevelIn60To120);
+      obj['TimeIn120'] = valueComapre(n.TimeIn120,n.passTimeIn120);
+      obj['TimeIn120_sub'] = valueComapreSub(n.hlevelIn120,n.passHlevelIn120);
+      obj['TimeDEP'] = valueComapre(n.TimeDEP,n.passTimeDEP);
+      obj['TimeDEP_sub'] = valueComapreSub(n.hlevelDEP,n.passHlevelDEP);
+      obj['TimeFPL'] = valueComapre(n.TimeFPL,n.passTimeFPL);
+      obj['TimeFPL_sub'] = valueComapreSub(n.hlevelFPL,n.passHlevelFPL);
+      obj['TimeSCH'] = valueComapre(n.TimeSCH,n.passTimeSCH);
+      obj['TimeSCH_sub'] = valueComapreSub(n.hlevelSCH,n.passHlevelSCH);
       resultArr.push(obj);
     })
     return resultArr;
@@ -408,6 +453,27 @@ var DetailFlightTable = function () {
     })
     return CnData
   }
+
+  /**
+   * 打开详情窗口
+   * @param title
+   * @param contents
+   * @param rowid
+   */
+  function openAccDetailManageDialog(opt,type) {
+    var winTitle = opt.flightRoute + '航路点详情';
+    var dialogId = 'grid_flight_talbe_data_' + new Date().getTime();
+    var winUrl = 'detail.html?/'+type+'/'+opt.flightId+'/'+opt.time+'/'+opt.flightRoute+ '/';
+    var winParams = {
+      id: dialogId,
+      width: 800,
+      height: 600,
+      center: true,
+      move: true
+    };
+    var winObj = DhxIframeDialog.create(winTitle, winUrl, winParams)
+  }
+
   var initData = function () {
     if(fly){
       getFlyFlightGridData()
@@ -432,6 +498,10 @@ var DetailFlightTable = function () {
     if(incon){
       getInconFlightGridData()
       $('title').text('不连贯航班详情')
+    }
+    if(accDetail){
+      getPreFlightGridDataCacu()
+      $('title').text('航班航路点航班时间差详情')
     }
   }
   return{

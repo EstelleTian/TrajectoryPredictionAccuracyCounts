@@ -914,83 +914,92 @@ var tableDataConfig = function () {
         en:'hlevel',
         cn:'飞行高度',
       },
-      timeIn0To15:{
-        en:'timeIn0To15',
+      TimeIn0To15:{
+        en:'TimeIn0To15',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeIn0To15_sub:{
-        en:'timeIn0To15_sub',
+      TimeIn0To15_sub:{
+        en:'TimeIn0To15_sub',
         cn:'高度差(预测值)',
         width:150,
       },
-      timeIn15To30:{
-        en:'timeIn15To30',
+      TimeIn15To30:{
+        en:'TimeIn15To30',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeIn15To30_sub:{
-        en:'timeIn15To30_sub',
+      TimeIn15To30_sub:{
+        en:'TimeIn15To30_sub',
         cn:'高度差(预测值)',
         width:150,
       },
-      timeIn30To60:{
-        en:'timeIn30To60',
+      TimeIn30To60:{
+        en:'TimeIn30To60',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeIn30To60_sub:{
-        en:'timeIn30To60_sub',
+      TimeIn30To60_sub:{
+        en:'TimeIn30To60_sub',
         cn:'高度差(预测值)',
         width:150,
       },
-      timeIn60To120:{
-        en:'timeIn60To120',
+      TimeIn60To120:{
+        en:'TimeIn60To120',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeIn60To120_sub:{
-        en:'timeIn60To120_sub',
+      TimeIn60To120_sub:{
+        en:'TimeIn60To120_sub',
         cn:'高度差(预测值)',
         width:150,
       },
-      timeIn120:{
-        en:'timeIn120',
+      TimeIn120:{
+        en:'TimeIn120',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeIn120_sub:{
-        en:'timeIn120_sub',
+      TimeIn120_sub:{
+        en:'TimeIn120_sub',
         cn:'高度差(预测值)',
         width:150,
       },
-      timeDEP:{
-        en:'timeDEP',
+      TimeDEP:{
+        en:'TimeDEP',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeDEP_sub:{
-        en:'timeDEP_sub',
+      TimeDEP_sub:{
+        en:'TimeDEP_sub',
         cn:'高度差(预测值)',
         width:150,
       },
-      timeFPL:{
-        en:'timeFPL',
+      TimeFPL:{
+        en:'TimeFPL',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeFPL_sub:{
-        en:'timeFPL_sub',
+      TimeFPL_sub:{
+        en:'TimeFPL_sub',
         cn:'高度差(预测值)',
         width:150,
+        
       },
-      timeSCH:{
-        en:'timeSCH',
+      TimeSCH:{
+        en:'TimeSCH',
         cn:'时间差(预测值)',
         width:150,
+        classes:'table-click'
       },
-      timeSCH_sub:{
-        en:'timeSCH_sub',
+      TimeSCH_sub:{
+        en:'TimeSCH_sub',
         cn:'高度差(预测值)',
         width:150,
       },
@@ -1000,22 +1009,95 @@ var tableDataConfig = function () {
       routeseq:'航路顺序',
       passTime:'实际过点时间',
       hlevel:'飞行高度',
-      timeIn0To15:'时间差(预测值)',
-      timeIn0To15_sub:'高度差(预测值)',
-      timeIn15To30:'时间差(预测值)',
-      timeIn15To30_sub:'高度差(预测值)',
-      timeIn30To60:'时间差(预测值)',
-      timeIn30To60_sub:'高度差(预测值)',
-      timeIn60To120:'时间差(预测值)',
-      timeIn60To120_sub:'高度差(预测值)',
-      timeIn120:'时间差(预测值)',
-      timeIn120_sub:'高度差(预测值)',
-      timeDEP:'时间差(预测值)',
-      timeDEP_sub:'高度差(预测值)',
-      timeFPL:'时间差(预测值)',
-      timeFPL_sub:'高度差(预测值)',
-      timeSCH:'时间差(预测值)',
-      timeSCH_sub:'高度差(预测值)',
+      TimeIn0To15:'时间差(预测值)',
+      TimeIn0To15_sub:'高度差(预测值)',
+      TimeIn15To30:'时间差(预测值)',
+      TimeIn15To30_sub:'高度差(预测值)',
+      TimeIn30To60:'时间差(预测值)',
+      TimeIn30To60_sub:'高度差(预测值)',
+      TimeIn60To120:'时间差(预测值)',
+      TimeIn60To120_sub:'高度差(预测值)',
+      TimeIn120:'时间差(预测值)',
+      TimeIn120_sub:'高度差(预测值)',
+      TimeDEP:'时间差(预测值)',
+      TimeDEP_sub:'高度差(预测值)',
+      TimeFPL:'时间差(预测值)',
+      TimeFPL_sub:'高度差(预测值)',
+      TimeSCH:'时间差(预测值)',
+      TimeSCH_sub:'高度差(预测值)',
+    },
+    colModel: {},
+    colDisplay: {},
+    cmTemplate: {
+      width: 95,
+      align: 'center',
+      sortable: true,
+      // search: true,
+      searchoptions: {
+        sopt: ['cn', 'nc', 'eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'in', 'ni', 'ew', 'en'],
+      },
+      cellattr: function (rowId, value, rowObject, colModel, arrData) {
+        // 需要赋予表格的属性
+        var attrs = '';
+        // 无效数值不做处理
+        if (!$.isValidVariable(value)) {
+          return attrs;
+        }
+
+        var title = rowObject[colModel.name];
+        if (!$.isValidVariable(title)) {
+          title = '';
+        }
+        var len = title.length;
+        //时间格式化 YYYYMMDD HH:MM
+        var regexp = /(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))0229)/;
+        //12位有效时间
+        if (regexp.test(title) && len == 12) {
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12);
+        } else if (regexp.test(title) && len == 14) { //14位有效时间
+          title = title.substring(0, 8) + ' ' + title.substring(8, 10) + ":" + title.substring(10, 12) + ':' + title.substring(12, 14);
+        }
+        attrs = ' title="' + title + '" class='+colModel.classes;
+        return attrs;
+      },
+      sortfunc : sortNum
+    },
+    isShrinkToFit:false,
+    defaultSort:'routeseq'
+  }
+  //航班航路点内点击详情
+  var preFlightDetail = {
+    colName: {
+      name:{
+        en:'name',
+        cn:'航路点名称',
+      },
+      routeseq:{
+        en:'routeseq',
+        cn:'航路顺序',
+      },
+      sPastTime:{
+        en:'sPastTime',
+        cn:'计划通过时间',
+        formatter:timeFormater
+      },
+      rPastTime:{
+        en:'passTime',
+        cn:'实际通过时间',
+        formatter:timeFormater
+      },
+      difTime:{
+        en:'difTime',
+        cn:'过点时间差值',
+      },
+
+    },
+    colTitle: {
+      flightRoute:'航路点名称',
+      routeseq:'航路顺序',
+      sPastTime:'计划通过时间',
+      rPastTime:'实际通过时间',
+      difTime:'过点时间差值'
     },
     colModel: {},
     colDisplay: {},
@@ -1053,9 +1135,10 @@ var tableDataConfig = function () {
       },
       sortfunc : sortNum
     },
-    isShrinkToFit:false,
+    isShrinkToFit:true,
     defaultSort:'routeseq'
   }
+
   //未修正表格配置
   var unCorrectFlight = {
     colName: {
@@ -2218,6 +2301,7 @@ var tableDataConfig = function () {
     flyDetailDataConfig: flyDetailDataConfig,
     terminalDetailDataConfig: terminalDetailDataConfig,
     precisionDetailDataConfig:precisionDetailDataConfig,
+    preFlightDetail:preFlightDetail,
     timeoutCountFlight:timeoutCountFlight,
     countFlightDetail:countFlightDetail,
     timeoutCountPrecent:timeoutCountPrecent,
