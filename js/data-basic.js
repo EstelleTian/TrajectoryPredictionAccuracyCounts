@@ -1661,6 +1661,10 @@ var tableDataConfig = function () {
         en: 'totalNums',
         cn: '航班总数',
       },
+      totalNum : {
+        en: 'totalNum ',
+        cn: '航路点总数',
+      },
       pro0To15: {
         en: 'pro0To15',
         cn: '占比例',
