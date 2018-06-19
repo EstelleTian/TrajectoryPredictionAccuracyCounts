@@ -766,13 +766,13 @@ var tableDataConfig = function () {
         en:'executeDate',
         cn:'执行日期',
       },
-      sArrap:{
-        en:'sArrap',
-        cn:'计划降落机场',
-      },
       sDepap:{
         en:'sDepap',
         cn:'计划起飞机场',
+      },
+      sArrap:{
+        en:'sArrap',
+        cn:'计划降落机场',
       },
       sDeptime:{
         en:'sDeptime',
@@ -784,22 +784,22 @@ var tableDataConfig = function () {
         cn:'计划降落时间',
         formatter:unTimeFormater
       },
-      rArrap:{
-        en:'rArrap',
-        cn:'实际降落机场',
-      },
       rDepap:{
         en:'rDepap',
         cn:'实际起飞机场',
       },
-      rArrtime:{
-        en:'rArrtime',
-        cn:'实际降落时间',
-        formatter:unTimeFormater
+      rArrap:{
+        en:'rArrap',
+        cn:'实际降落机场',
       },
       rDeptime:{
         en:'rDeptime',
         cn:'实际飞行时间',
+        formatter:unTimeFormater
+      },
+      rArrtime:{
+        en:'rArrtime',
+        cn:'实际降落时间',
         formatter:unTimeFormater
       }
     } ,
@@ -807,14 +807,14 @@ var tableDataConfig = function () {
       flightInOId:'航班在oracle数据库中的id',
       flightId:'航班号',
       executeDate:'航班执行日期',
-      sArrap:'时刻表降落机场',
       sDepap:'时刻表起飞机场',
+      sArrap:'时刻表降落机场',
       sDeptime:'时刻表起飞时间',
       sArrtime:'时刻表降落时间',
-      rArrap:'实际降落机场',
       rDepap:'实际起飞机场',
-      rArrtime:'实际降落时间',
-      rDeptime:'实际飞行时间'
+      rArrap:'实际降落机场',
+      rDeptime:'实际飞行时间',
+      rArrtime:'实际降落时间'
     },
     colModel: {},
     colDisplay: {},
